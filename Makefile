@@ -1,4 +1,3 @@
-
 # LIBFT SOURCE FILES
 LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 			libft/ft_is/ft_isalnum.c libft/ft_is/ft_isalpha.c libft/ft_is/ft_isascii.c \
@@ -37,7 +36,7 @@ FLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 
 # OUTPUT EXECUTABLE
-NAME = shell
+NAME = minishell
 
 # RULES
 all: $(NAME)

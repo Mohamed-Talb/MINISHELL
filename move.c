@@ -29,3 +29,8 @@ char	**getargs(t_data *data, char *line)
 
 	}
 }
+
+int parser(t_data *data)
+{
+	
+}

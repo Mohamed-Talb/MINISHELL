@@ -27,6 +27,7 @@ typedef struct s_dlist
 
 typedef struct s_data
 {
+	char *line;
 	int anything;
 	t_dlist *cmd_list;
 } t_data;
@@ -39,5 +40,6 @@ void	ft_dlstclear(t_dlist **Head);
 t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 
-int init_data();
+t_data *init_data();
 void free_data(t_data *data);
+int	parser(t_data *data);
