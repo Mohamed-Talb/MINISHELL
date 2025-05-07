@@ -6,11 +6,17 @@ void errors(t_data *data, char *error)
 	free_data(data);
 }
 
-int init_data(t_data *data)
+t_data *init_data()
 {
-	if (!data)
-		return (errors(data, MALLOC_ERROR), 1);
+	t_data *data;
+
+	data = malloc(sizeof(t_data));
+	if (data == NULL)
+	{
+		errors(data, MALLOC_ERROR);
+		return (NULL);
+	}
+	data->anything = 5;
 	data->cmd_list = NULL;
-	data->anything = -1;
-	return 0;
+	return (data);
 }

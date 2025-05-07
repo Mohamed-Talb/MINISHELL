@@ -4,7 +4,6 @@
 #include "libft/libft.h"
 #include <readline/history.h>
 
-
 // ERRORS
 #define MALLOC_ERROR "emory allocation faild"
 #define CMD_NOTFOUND "command not found"
@@ -18,24 +17,19 @@
 #define LEFT_HER 5
 #define RIGHT_HER 6
 
-
-
 typedef struct s_dlist
 {
-
 	int				type;
-	struct s_dlist	*prev;
 	void			*content;
+	struct s_dlist	*prev;
 	struct s_dlist	*next;
 }	t_dlist;
-
 
 typedef struct s_data
 {
 	int anything;
 	t_dlist *cmd_list;
 } t_data;
-
 
 // double linked list utils
 void errors(t_data *data, char *error);
@@ -45,6 +39,5 @@ void	ft_dlstclear(t_dlist **Head);
 t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 
-
-int init_data(t_data *data);
+int init_data();
 void free_data(t_data *data);

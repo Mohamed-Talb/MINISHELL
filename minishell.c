@@ -1,13 +1,11 @@
 #include "minishell.h"
+
 int main()
 {
-	t_data *data = malloc(sizeof(t_dlist));
-	data->anything = 5
-
-	t_data *data2;
 	char *line;
-
-	init_data(data);
+	t_data *data;
+	
+	data = init_data();
 	while (1)
 	{
    	 	line = readline("shell>> ");
