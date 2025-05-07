@@ -27,19 +27,21 @@ typedef struct s_dlist
 
 typedef struct s_data
 {
-	char *line;
-	int anything;
-	t_dlist *cmd_list;
+	char	*line;
+	int		anything;
+	t_dlist	*cmd_list;
 } t_data;
 
 // double linked list utils
-void errors(t_data *data, char *error);
+void	errors(t_data *data, char *error);
 int		ft_dlstsize(t_dlist *lst);
 t_dlist	*ft_dlstlast(t_dlist *lst);
 void	ft_dlstclear(t_dlist **Head);
 t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
+void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
+void 	f(void *content);
 
-t_data *init_data();
-void free_data(t_data *data);
-int	parser(t_data *data);
+t_data	*init_data();
+void	free_data(t_data *data);
+int		parser(t_data *data);

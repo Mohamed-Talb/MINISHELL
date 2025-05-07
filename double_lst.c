@@ -95,3 +95,22 @@ int	ft_dlstsize(t_dlist *lst)
 	}
 	return (i);
 }
+
+void f(void *content)
+{
+	char *str;
+
+	str = (char *) content;
+	printf("str is: %s\n", str);
+}
+
+void	ft_dlstiter(t_dlist *lst, void (*f)(void *))
+{
+	if (!lst)
+		return ;
+	while (lst != NULL)
+	{
+		f(lst->content);
+		lst = lst->next;
+	}
+}
