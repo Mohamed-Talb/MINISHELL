@@ -6,8 +6,13 @@ int expand()
 	return (0);
 }
 
-int single_q()
+int single_q(t_data *data, t_dlist *curr_arg, int *i)
 {
+	while (data->line[(*i)] != '\0' && data->line[(*i)] != '\'')
+	{
+		curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
+		(*i)++;
+	}
 	return (0);
 }
 
@@ -34,12 +39,18 @@ char	**getargs(t_data *data, char *line)
 
 int handle_arg(t_data *data, int *i)
 {
-	t_dlist *current_arg;
+	t_dlist *curr_arg;
 
-	current_arg = ft_dlstlast(data->cmd_list);
+	curr_arg = ft_dlstlast(data->cmd_list);
 	while (data->line[(*i)] != '\0' && !isspace(data->line[(*i)]))
 	{
-		current_arg->content = ft_append(current_arg->content, data->line[(*i)], -1);
+		if (data->line[(*i)] == '\'')
+		{
+			(*i)++;
+			single_q(data, curr_arg, i);
+		}
+		else
+			curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
 		(*i)++;
 	}
 	return (0);
@@ -67,7 +78,7 @@ int main()
 {
 	t_data data = {0};
 
-	data.line = "echo hello world 'haha nigga'";
+	data.line = "echo hello world 'haha nigga' lol!";
 	parser(&data);
 	ft_dlstiter(data.cmd_list, f);
 }
