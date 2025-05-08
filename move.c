@@ -63,7 +63,7 @@ int parser(t_data *data)
 	i = 0;
 	while (1)
 	{
-		if (!isspace(data->line[i]))
+		if (!ft_iswhitespace(data->line[i]))
 		{
 			ft_dlstback(&data->cmd_list, ft_strdup(""));
 			handle_arg(data, &i);
@@ -74,11 +74,11 @@ int parser(t_data *data)
 	}
 }
 
-int main()
-{
-	t_data data = {0};
+// int main()
+// {
+// 	t_data data = {0};
 
-	data.line = "echo hello world 'haha nigga' lol!";
-	parser(&data);
-	ft_dlstiter(data.cmd_list, f);
-}
+// 	data.line = "echo hello world 'haha nigga' lol!";
+// 	parser(&data);
+// 	ft_dlstiter(data.cmd_list, f);
+// }
