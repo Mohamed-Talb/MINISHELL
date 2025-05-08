@@ -1,19 +1,50 @@
 
 #include "minishell.h"
 
-int expand()
+char *expand(t_data *data, char *token, char **line)
 {
-	return (0);
+	char *env_var;
+	char *result;
+	char *s;
+
+	env_var = NULL;
+	s = *line + 1;
+	if (*s == '?')
+	{
+		token = ft_append(token, data->last_exit_status, -1);
+		s++;
+	}
+	while (ft_isalnum(*s) || *s == '_')
+	{
+		env_var = ft_append(env_var, *s, -1);
+		s++;
+	}
+	result = getenv(env_var);
+	if (result != NULL)
+	{
+		ft_strjoin_px(&token, result, 1);
+	}
+	free(env_var);
+	*line = s;
+	return (token);
 }
 
-int single_q(t_data *data, t_dlist *curr_arg, int *i)
+char *single_q(t_data *data, char *token, char **line)
 {
-	while (data->line[(*i)] != '\0' && data->line[(*i)] != '\'')
+	char *s;
+
+	s = *line + 1;
+	while (*s != '\0' && *s != '\'')
 	{
-		curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
-		(*i)++;
+		token = ft_append(token, *s, -1);
+		s++;
 	}
-	return (0);
+	if (*s == '\'')
+		s++;
+	else
+		errors(data, "minishell: syntax error: unclosed quote\n");
+	*line = s;
+	return (token);
 }
 
 int double_q()
@@ -21,64 +52,47 @@ int double_q()
 	return (0);
 }
 
-char	**getargs(t_data *data, char *line)
+int handle_arg(t_data *data, t_dlist *token, char **line)
 {
-	int i;
-	int state;  // 0- string; 1- single quotes; 2- double quotes....
-	char	**ptr;
+	char *s;
 
-	state = 0;
-	i = 0;
-	(void) data; (void) ptr; // shuting up the stupid compiler
-	while (line[i])
+	s = *line;
+	while (*s != '\0' && !ft_iswhitespace(*s))
 	{
-		i++;
-	}
-	return (NULL);
-}
-
-int handle_arg(t_data *data, int *i)
-{
-	t_dlist *curr_arg;
-
-	curr_arg = ft_dlstlast(data->cmd_list);
-	while (data->line[(*i)] != '\0' && !isspace(data->line[(*i)]))
-	{
-		if (data->line[(*i)] == '\'')
-		{
-			(*i)++;
-			single_q(data, curr_arg, i);
-		}
+		if (*s == '\'')
+			token->content = single_q(data, token->content, &s);
+		else if(*s == '$')
+			token->content = expand(data, token->content, &s);
 		else
-			curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
-		(*i)++;
+		{
+			token->content = ft_append(token->content, *s, -1);
+			s++;
+		}
 	}
+	*line = s;
 	return (0);
 }
 
-int parser(t_data *data)
+int parser(t_data *data, char *line)
 {
-	int i;
-
-	i = 0;
 	while (1)
 	{
-		if (!ft_iswhitespace(data->line[i]))
+		if (!ft_iswhitespace(*line))
 		{
 			ft_dlstback(&data->cmd_list, ft_strdup(""));
-			handle_arg(data, &i);
+			handle_arg(data, ft_dlstlast(data->cmd_list), &line);
 		}
-		if (data->line[i] == '\0')
+		if (*line == '\0')
 			return (0);
-		i++;
+		line++;
 	}
 }
 
-// int main()
-// {
-// 	t_data data = {0};
+int main()
+{
+	t_data *data = calloc(1, sizeof(data));
 
-// 	data.line = "echo hello world 'haha nigga' lol!";
-// 	parser(&data);
-// 	ft_dlstiter(data.cmd_list, f);
-// }
+	data->line = ft_strdup("./'mini shell' hello world 'haha nigga \"$USER\"' $USER $HOME/file lol!");
+	parser(data, data->line);
+	ft_dlstiter(data->cmd_list, f);
+}
