@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 void redirect_helper(t_data *data, t_dlist *token, char **line)
 {
@@ -59,8 +59,6 @@ void redirect(t_data *data, t_dlist *token, char **line)
 		}
 	}
 	if (*s != '|')
-	{
 		redirect_helper(data, token, &s);
-	}
 	*line = s;
 }

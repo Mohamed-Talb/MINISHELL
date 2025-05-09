@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 char *expand(t_data *data, char *token, char **line)
 {

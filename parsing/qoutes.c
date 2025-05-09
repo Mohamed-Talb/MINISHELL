@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 char *single_q(t_data *data, char *token, char **line)
 {

@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../minishell.h"
 
 int hpipe(t_data *data, t_dlist *token, char **line)
 {
