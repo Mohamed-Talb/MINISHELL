@@ -6,6 +6,20 @@ int expand()
 	return (0);
 }
 
+int hpipe(t_data *data, t_dlist *curr_arg,  int *i)
+{
+	if(ft_strlen(curr_arg->content) != 0)
+		ft_dlstback(&data->cmd_list, ft_strdup(""));
+	curr_arg = ft_dlstlast(data->cmd_list);
+	if (!(ft_strcmp(curr_arg->prev->content, "|")))
+	{
+		printf("errro\n");
+		exit(1);
+	}
+	curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
+	return 0;
+}
+
 int single_q(t_data *data, t_dlist *curr_arg, int *i)
 {
 	while (data->line[(*i)] != '\0' && data->line[(*i)] != '\'')
@@ -16,8 +30,18 @@ int single_q(t_data *data, t_dlist *curr_arg, int *i)
 	return (0);
 }
 
-int double_q()
+int double_q(t_data *data, t_dlist *node, int *i)
 {
+	while(data->line[*i] != '"' && data->line[*i])
+	{
+		if(data->line[*i] == '$')
+		{
+			expand();
+			(*i)++;
+		}
+		node->content = ft_append(node->content, data->line[(*i)], -1);
+		(*i)++;
+	}
 	return (0);
 }
 
@@ -49,6 +73,16 @@ int handle_arg(t_data *data, int *i)
 			(*i)++;
 			single_q(data, curr_arg, i);
 		}
+		else if(data->line[(*i)] == '"')
+		{
+			(*i)++;
+			double_q(data, curr_arg, i);
+		}
+		else if(data->line[(*i)] == '|')
+		{
+			hpipe(data, curr_arg, i);
+			return 0;
+		}
 		else
 			curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
 		(*i)++;
@@ -74,11 +108,11 @@ int parser(t_data *data)
 	}
 }
 
-// int main()
-// {
-// 	t_data data = {0};
+int main()
+{
+	t_data data = {0};
 
-// 	data.line = "echo hello world 'haha nigga' lol!";
-// 	parser(&data);
-// 	ft_dlstiter(data.cmd_list, f);
-// }
+	data.line = "echo hello \"world\"dcghdj|'haha nigga'lol!";
+	parser(&data);
+	ft_dlstiter(data.cmd_list, f);
+}
