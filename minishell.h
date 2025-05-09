@@ -28,7 +28,7 @@ typedef struct s_dlist
 typedef struct s_data
 {
 	char	*line;
-	int		anything;
+	int		last_exit_status;
 	t_dlist	*cmd_list;
 } t_data;
 
@@ -44,4 +44,5 @@ void 	f(void *content);
 
 t_data	*init_data();
 void	free_data(t_data *data);
-int		parser(t_data *data);
+int		parser(t_data *data, char *line);
+char	*ft_strjoin_px(char **str, char *buff, int choice);

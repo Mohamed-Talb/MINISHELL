@@ -1,16 +1,32 @@
 
 #include "minishell.h"
 
-
-int herdoc(t_data *data, t_dlist *curr_arg,  int *i)
+char *expand(t_data *data, char *token, char **line)
 {
-	if (data->line[*i] == "")
-	curr_arg->type = 
-}
+	char *env_var;
+	char *result;
+	char *s;
 
-int expand()
-{
-	return (0);
+	env_var = NULL;
+	s = *line + 1;
+	if (*s == '?')
+	{
+		token = ft_append(token, data->last_exit_status, -1);
+		s++;
+	}
+	while (ft_isalnum(*s) || *s == '_')
+	{
+		env_var = ft_append(env_var, *s, -1);
+		s++;
+	}
+	result = getenv(env_var);
+	if (result != NULL)
+	{
+		ft_strjoin_px(&token, result, 1);
+	}
+	free(env_var);
+	*line = s;
+	return (token);
 }
 
 int hpipe(t_data *data, t_dlist *curr_arg,  int *i)
@@ -27,67 +43,101 @@ int hpipe(t_data *data, t_dlist *curr_arg,  int *i)
 	return 0;
 }
 
-int single_q()
+char *single_q(t_data *data, char *token, char **line)
 {
-	return 0;
+	char *s;
+
+	s = *line + 1;
+	while (*s != '\0' && *s != '\'')
+	{
+		token = ft_append(token, *s, -1);
+		s++;
+	}
+	if (*s == '\'')
+		s++;
+	else
+		errors(data, "minishell: syntax error: unclosed quote\n");
+	*line = s;
+	return (token);
 }
 
-int double_q(t_data *data, t_dlist *node, int *i)
+
+int double_q(t_data *data, t_dlist *token, char **line)
 {
-	while(data->line[*i] != '"' && data->line[*i])
+	char *s;
+	
+	s = *line;
+	while(*s != '"' && *s != 0)
 	{
-		if(data->line[*i] == '$')
-		{
-			expand();
-			(*i)++;
-		}
-		node->content = ft_append(node->content, data->line[(*i)], -1);
-		(*i)++;
+		if(*s == '$')
+			token->content = expand(data, token->content, &s);
+		token->content = ft_append(token->content, *s, -1);
 	}
 	return (0);
 }
 
-char	**getargs(t_data *data, char *line)
+void redirect(t_data *data, t_dlist *token, char **line)
 {
-	int i;
-	int state;  // 0- string; 1- single quotes; 2- double quotes....
-	char	**ptr;
+	char *s;
 
-	state = 0;
-	i = 0;
-	(void) data; (void) ptr; // shuting up the stupid compiler
-	while (line[i])
+	s = *line;
+	if (*s == '>')
 	{
-		i++;
+		token->type = RIGHT_RED;
+		s++;
+		if (*s == '>')
+		{
+			token->type = RIGHT_HER;
+			s++;
+		}
 	}
-	return (NULL);
+	else if (*s == '<')
+	{
+		token->type = LEFT_RED;
+		s++;
+		if (*s == '<')
+		{
+			token->type = RIGHT_HER;
+			s++;
+		}
+	}
 }
 
-int handle_arg(t_data *data, int *i)
+int handle_arg(t_data *data, t_dlist *token, char **line)
 {
-	t_dlist *curr_arg;
+	char *s;
 
-	curr_arg = ft_dlstlast(data->cmd_list);
-	while (data->line[(*i)] != '\0' && !isspace(data->line[(*i)]))
+	s = *line;
+	while (*s != '\0' && !ft_iswhitespace(*s))
 	{
-		if (data->line[(*i)] == '\'')
-		{
-			(*i)++;
-			single_q(data, curr_arg, i);
-		}
-		else if(data->line[(*i)] == '"')
-		{
-			(*i)++;
-			double_q(data, curr_arg, i);
-		}
-		else if(data->line[(*i)] == '|')
-		{
-			hpipe(data, curr_arg, i);
-			return 0;
-		}
+		if (*s == '\'')
+			token->content = single_q(data, token->content, &s);
+		else if (*s == '"')
+			double_q(data, token, &s);
+		else if (*s == '<' || *s == '>')
+			redirect(data, token, &s);
 		else
-			curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
-		(*i)++;
+		{
+			token->content = ft_append(token->content, *s, -1);
+			s++;
+		}
+	}
+	*line = s;
+	return (0);
+}
+
+int parser(t_data *data, char *line)
+{
+	while (*line != '\0')
+	{
+		if (!ft_iswhitespace(*line))
+		{
+			ft_dlstback(&data->cmd_list, ft_strdup(""));
+			handle_arg(data, ft_dlstlast(data->cmd_list), &line);
+		}
+		if (*line == '\0')
+			return (0);
+		line++;
 	}
 	return (0);
 }
