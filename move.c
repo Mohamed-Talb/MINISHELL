@@ -152,7 +152,7 @@ int parser(t_data *data)
 		if (!ft_iswhitespace(data->line[i]))
 		{
 			ft_dlstback(&data->cmd_list, ft_strdup(""));
-			handle_arg(data, &i);
+			handle_arg(data, ft_dlstlast(data->cmd_list), &line);
 		}
 		if (data->line[i] == '\0')
 			return (0);
