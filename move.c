@@ -1,6 +1,13 @@
 
 #include "minishell.h"
 
+
+int herdoc(t_data *data, t_dlist *curr_arg,  int *i)
+{
+	if (data->line[*i] == "")
+	curr_arg->type = 
+}
+
 int expand()
 {
 	return (0);
@@ -20,14 +27,9 @@ int hpipe(t_data *data, t_dlist *curr_arg,  int *i)
 	return 0;
 }
 
-int single_q(t_data *data, t_dlist *curr_arg, int *i)
+int single_q()
 {
-	while (data->line[(*i)] != '\0' && data->line[(*i)] != '\'')
-	{
-		curr_arg->content = ft_append(curr_arg->content, data->line[(*i)], -1);
-		(*i)++;
-	}
-	return (0);
+	return 0;
 }
 
 int double_q(t_data *data, t_dlist *node, int *i)
@@ -116,3 +118,4 @@ int main()
 	parser(&data);
 	ft_dlstiter(data.cmd_list, f);
 }
+
