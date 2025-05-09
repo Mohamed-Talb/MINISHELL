@@ -52,6 +52,36 @@ int double_q()
 	return (0);
 }
 
+void redirect(t_data *data, t_dlist *token, char **line)
+{
+	char *s;
+	// > 0
+	// >> 1
+	// < 2
+	// << 3
+	s = *line;
+	if (*s == '>')
+	{
+		token->type = 0;
+		s++;
+		if (*s == '>')
+		{
+			token->type = 1;
+			s++;
+		}
+	}
+	if (*s == '<')
+	{
+		token->type = 2;
+		s++;
+		if (*s == '<')
+		{
+			token->type = 3;
+			s++;
+		}
+	}
+}
+
 int handle_arg(t_data *data, t_dlist *token, char **line)
 {
 	char *s;
@@ -61,8 +91,10 @@ int handle_arg(t_data *data, t_dlist *token, char **line)
 	{
 		if (*s == '\'')
 			token->content = single_q(data, token->content, &s);
-		else if(*s == '$')
+		else if (*s == '$')
 			token->content = expand(data, token->content, &s);
+		else if (*s == '<' || *s == '>')
+			token->content = expand(data, token, &s);
 		else
 		{
 			token->content = ft_append(token->content, *s, -1);
@@ -75,7 +107,7 @@ int handle_arg(t_data *data, t_dlist *token, char **line)
 
 int parser(t_data *data, char *line)
 {
-	while (1)
+	while (*line != '\0')
 	{
 		if (!ft_iswhitespace(*line))
 		{
@@ -86,13 +118,14 @@ int parser(t_data *data, char *line)
 			return (0);
 		line++;
 	}
+	return (0);
 }
 
-int main()
-{
-	t_data *data = calloc(1, sizeof(data));
+// int main()
+// {
+// 	t_data *data = calloc(1, sizeof(data));
 
-	data->line = ft_strdup("./'mini shell' hello world 'haha nigga \"$USER\"' $USER $HOME/file lol!");
-	parser(data, data->line);
-	ft_dlstiter(data->cmd_list, f);
-}
+// 	data->line = ft_strdup("./'mini shell' hello world 'haha nigga \"$USER\"' $USER $HOME/file lol!");
+// 	parser(data, data->line);
+// 	ft_dlstiter(data->cmd_list, f);
+// }
