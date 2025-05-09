@@ -27,7 +27,10 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 
 # PIPEX SOURCE FILES
-SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c move.c
+SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c move.c\
+			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
+			parsing/redirection.c
+			
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
 # COMPILER & FLAGS
@@ -42,7 +45,7 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(SHELL_OBJ) $(LIBFT_OBJ)
-	@$(CC) $(SHELL_OBJ) $(LIBFT_OBJ)  -o $(NAME) $(LDFLAGS)
+	@$(CC) $(SHELL_OBJ) $(LIBFT_OBJ) -o $(NAME) $(LDFLAGS)
 
 
 # COMPILE OBJECTS
