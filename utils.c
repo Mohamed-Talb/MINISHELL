@@ -7,39 +7,29 @@ void errors(t_data *data, char *error)
 	exit(1);
 }
 
-t_data *init_data()
+int init_data(t_data *data)
 {
-	t_data *data;
-
-	data = ft_calloc(1, sizeof(t_data));
 	if (data == NULL)
 	{
 		errors(data, MALLOC_ERROR);
-		return (NULL);
+		return (1);
 	}
-	return (data);
+	data->cmd_list = NULL;
+	data->line = NULL;
+	return 0;
 }
 
-char	*ft_strjoin_px(char **str, char *buff, int choice)
+char	*ft_strjoin_fc(char *str, char *buff, int choice)
 {
-	char	*result;
-	int		len1;
-	int		len2;
+	char	*new;
 
-	if (!str || !(*str) || !buff)
+	if (!str || !buff)
 		return (NULL);
-	len1 = ft_strlen(*str);
-	len2 = ft_strlen(buff);
-	result = malloc((len1 + len2 + 1) * sizeof(char));
-	if (result == NULL)
-		return (NULL);
-	ft_memcpy(result, *str, len1);
-	ft_memcpy(result + len1, buff, len2);
-	result[len1 + len2] = 0;
+	new = ft_strjoin(str, buff);
 	if (choice == 1 || choice == 3)
-		free(*str);
+		free(str);
 	if (choice == 2 || choice == 3)
 		free(buff);
-	*str = result;
-	return (*str);
+	return (new);
 }
+

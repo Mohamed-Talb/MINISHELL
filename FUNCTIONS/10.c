@@ -29,11 +29,12 @@ No special linking required for `chdir`.
 #include <unistd.h>
 
 int main() {
-    if (chdir("/home/user") == 0) {
+    if (chdir("/bin") == 0) {
         printf("Changed directory successfully.\n");
     } else {
         perror("chdir");
     }
-
+    char *flags[3] = {"ls", "-l", NULL};
+    execve("/bin/ls", flags, NULL);
     return 0;
 }

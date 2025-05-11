@@ -27,7 +27,8 @@ No special linking required for `opendir`.
 #include <stdio.h>
 #include <dirent.h>
 
-int main() {
+int main() 
+{
     DIR *dir = opendir("/home/user");
 
     if (dir == NULL) {
@@ -36,7 +37,6 @@ int main() {
     }
 
     // Read and process directory entries here...
-
     closedir(dir); // Always close the directory when done
     return 0;
 }

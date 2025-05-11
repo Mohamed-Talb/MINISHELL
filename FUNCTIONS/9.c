@@ -29,7 +29,7 @@ No special linking required for `getcwd`.
 #include <unistd.h>
 
 int main() {
-    char cwd[1024];
+    char cwd[2000];
 
     if (getcwd(cwd, sizeof(cwd)) != NULL) {
         printf("Current working directory: %s\n", cwd);

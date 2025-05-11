@@ -32,7 +32,7 @@ t_dlist *ft_dlstback(t_dlist **head, void *content)
 	new_node->prev = NULL;
 	new_node->content = content;
 	new_node->next = NULL;
-	if(*head == NULL) 
+	if((*head) == NULL) 
 	{
 		*head = new_node;
 		return (*head);

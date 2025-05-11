@@ -21,7 +21,7 @@ char *expand(t_data *data, char *token, char **line)
 	result = getenv(env_var);
 	if (result != NULL)
 	{
-		ft_strjoin_px(&token, result, 1);
+		token = ft_strjoin_fc(token, result, 1);
 	}
 	free(env_var);
 	*line = s;
