@@ -33,24 +33,25 @@ typedef struct s_data
 } t_data;
 
 // double linked list utils
-void	errors(t_data *data, char *error);
+t_data	*init_data();
+void 	f(void *content);
+void	free_data(t_data *data);
 int		ft_dlstsize(t_dlist *lst);
 t_dlist	*ft_dlstlast(t_dlist *lst);
 void	ft_dlstclear(t_dlist **Head);
+int		parser(t_data *data, char *line);
+void	errors(t_data *data, char *error);
 t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
-void 	f(void *content);
-t_data	*init_data();
-void	free_data(t_data *data);
-int		parser(t_data *data, char *line);
 char	*ft_strjoin_px(char **str, char *buff, int choice);
 
 // PARSING 
-char *expand(t_data *data, char *token, char **line);
-int handle_arg(t_data *data, t_dlist *token, char **line);
-int parser(t_data *data, char *line);
-int hpipe(t_data *data, t_dlist *token, char **line);
-char *single_q(t_data *data, char *token, char **line);
-int double_q(t_data *data, t_dlist *token, char **line, int state);
-void redirect(t_data *data, t_dlist *token, char **line);
+char	*expand(t_data *data, char *token, char **line);
+int		handle_arg(t_data *data, t_dlist *token, char **line);
+int		parser(t_data *data, char *line);
+int		hpipe(t_data *data, t_dlist *token, char **line);
+char	*single_q(t_data *data, char *token, char **line);
+int		double_q(t_data *data, t_dlist *token, char **line, int state);
+void	redirect(t_data *data, t_dlist *token, char **line);
+int		in_set(char *set, char c);

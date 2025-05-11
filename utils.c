@@ -43,3 +43,15 @@ char	*ft_strjoin_px(char **str, char *buff, int choice)
 	*str = result;
 	return (*str);
 }
+
+int in_set(char *set, char c)
+{
+	int i = 0;
+	while (set[i] != '\0')
+	{
+		if (set[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
+}

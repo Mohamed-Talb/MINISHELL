@@ -20,11 +20,12 @@ int handle_arg(t_data *data, t_dlist *token, char **line)
 		else if (*s == '<' || *s == '>')
 		{
 			redirect(data, token, &s);
+			break;
 		}
 		else if (*s == '|')
 		{
 			hpipe(data, token, &s);
-			return 0;
+			break;
 		}
 		else
 		{
