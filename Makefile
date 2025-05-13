@@ -8,7 +8,6 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 			libft/ft_linkedlist/ft_lstclear.c libft/ft_linkedlist/ft_lstaddfront.c \
 			libft/ft_linkedlist/ft_lstsize.c libft/ft_linkedlist/ft_lstlast.c libft/ft_linkedlist/ft_lstnew.c \
 			libft/ft_linkedlist/ft_lstaddback.c libft/ft_linkedlist/ft_lstiter.c libft/ft_linkedlist/ft_lstdelone.c \
-			libft/ft_strings/ft_atoi.c libft/ft_strings/ft_strcmp.c libft/ft_strings/ft_strncmp.c \
 			libft/ft_strings/ft_strlcat.c libft/ft_strings/ft_itoa.c libft/ft_strings/ft_strdup2.c \
 			libft/ft_strings/ft_split.c libft/ft_strings/ft_append.c libft/ft_strings/ft_strlen2.c \
 			libft/ft_strings/ft_append2.c libft/ft_strings/ft_substr.c libft/ft_strings/ft_strchr.c \
@@ -17,6 +16,7 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 			libft/ft_strings/ft_bzero.c libft/ft_strings/ft_strdup.c libft/ft_strings/ft_lsttostr2.c \
 			libft/ft_strings/ft_striteri.c libft/ft_strings/ft_strmapi.c libft/ft_strings/ft_strnstr.c \
 			libft/ft_strings/ft_strjoin.c libft/ft_strings/ft_strtrim.c libft/ft_strings/ft_freedouble.c \
+			libft/ft_strings/ft_atoi.c libft/ft_strings/ft_strcmp.c libft/ft_strings/ft_strncmp.c libft/ft_strings/ft_remove.c \
 			libft/ft_printf/printchar.c \
 			libft/ft_printf/flags.c libft/ft_printf/ft_printf.c libft/ft_printf/inits.c \
 			libft/ft_printf/utils.c libft/ft_printf/checks.c libft/ft_printf/precision.c \
@@ -27,7 +27,7 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 
 # PIPEX SOURCE FILES
-SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c move.c\
+SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c envutils.c\
 			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
 			parsing/redirection.c
 			

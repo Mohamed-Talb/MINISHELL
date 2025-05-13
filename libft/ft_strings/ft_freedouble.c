@@ -6,11 +6,12 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:04:03 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/02/23 15:32:36 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/05/12 11:58:49 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+#include <stdio.h>
 
 void	ft_freedouble(char ***ptr)
 {

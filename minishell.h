@@ -28,6 +28,7 @@ typedef struct s_dlist
 typedef struct s_data
 {
 	char	*line;
+	char    **env;
 	// char 	**env;
 	int		last_exit_status;
 	t_dlist	*cmd_list;
