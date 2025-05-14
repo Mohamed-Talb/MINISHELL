@@ -13,6 +13,12 @@ char *expand(t_data *data, char *token, char **line)
 		token = ft_append(token, data->last_exit_status, -1);
 		s++;
 	}
+	else if (*s == '\0' || ft_iswhitespace(*s))
+	{
+		token = ft_append(token, '$', -1);
+		*line = s;
+		return (token);
+	}
 	while (ft_isalnum(*s) || *s == '_')
 	{
 		env_var = ft_append(env_var, *s, -1);
