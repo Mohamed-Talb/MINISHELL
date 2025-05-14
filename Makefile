@@ -29,7 +29,7 @@ LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 # PIPEX SOURCE FILES
 SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c envutils.c\
 			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
-			parsing/redirection.c
+			parsing/redirection.c move.c
 			
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 

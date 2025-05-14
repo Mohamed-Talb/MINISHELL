@@ -43,6 +43,7 @@ t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
 void 	f(void *content);
+int in_set(char *set, char c);
 int 	init_data(t_data *data);
 void	free_data(t_data *data);
 int		parser(t_data *data, char *line);
