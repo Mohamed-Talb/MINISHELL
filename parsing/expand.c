@@ -8,6 +8,11 @@ char *expand(t_data *data, char *token, char **line)
 
 	env_var = NULL;
 	s = *line + 1;
+	if (*s == ' ')
+	{
+		*line = s;
+		return NULL;
+	}
 	if (*s == '?')
 	{
 		token = ft_append(token, data->last_exit_status, -1);
@@ -20,10 +25,10 @@ char *expand(t_data *data, char *token, char **line)
 	}
 	result = getenv(env_var);
 	if (result != NULL)
-	{
 		token = ft_strjoin_fc(token, result, 1);
-	}
 	free(env_var);
 	*line = s;
 	return (token);
 }
+ 
+ /// ?- $2HOME

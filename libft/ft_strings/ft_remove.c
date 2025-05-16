@@ -1,21 +1,23 @@
+
+
 #include "../libft.h"
 
 void ft_remove(char ***str, int index)
 {
     int i;
-	int j;
+    int j;
     char **new;
 
-    if (!str || !*str)
-        return;
+    if(!str || !*str)
+        return ;
     if (index < 0 || index >= ft_strlen2(*str))
-        return;
-    new = malloc((ft_strlen2(*str)) * sizeof(char *));
+        return ;
+    new = malloc(ft_strlen2(*str) * sizeof(char *));
     if (!new)
-        return;
+        return ;
     i = 0;
     j = 0;
-    while ((*str)[i])
+    while((*str)[i])
     {
         if (i == index)
         {
@@ -26,12 +28,12 @@ void ft_remove(char ***str, int index)
         if (!new[j])
         {
             ft_freedouble(&new);
-            return;
+            return ;
         }
         i++;
         j++;
     }
     new[j] = NULL;
-    ft_freedouble(str); 
-    *str = new;     
+    ft_freedouble(str);
+    *str = new;
 }

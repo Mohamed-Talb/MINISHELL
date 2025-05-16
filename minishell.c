@@ -2,15 +2,9 @@
 
 // int main()
 // {
-// 	t_data *data;
+// 	t_data *data = malloc(sizeof(t_data));
 
-// 	data = init_data();
-// 	if (data == NULL)
-// 	{
-// 		// N = sizeof(data)
-// 		ft_putstr_fd("minishell: xmalloc: failed to allocate N bytes", 1);
-// 		return (1);
-// 	}
+// 	init_data(data);
 // 	while (1)
 // 	{
 // 		data->line = readline("\e[91m\e[1mminishell:\e[92m~$ \e[0m");
