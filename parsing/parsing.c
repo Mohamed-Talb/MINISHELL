@@ -25,6 +25,7 @@ int handle_arg(t_data *data, t_dlist *token, char **line)
 		else if (*s == '|')
 		{
 			hpipe(data, token, &s);
+			data->pipes_nb++;
 			break;
 		}
 		else
@@ -39,22 +40,15 @@ int handle_arg(t_data *data, t_dlist *token, char **line)
 
 int parser(t_data *data, char *line)
 {
-	int flag;
 	t_dlist *last;
 
-	flag = 0;
 	while (*line != '\0')
 	{
 		if (!ft_iswhitespace(*line))
 		{
-			if (flag == 0)
-				ft_dlstback(&data->cmd_list, ft_strdup(""));
+			ft_dlstback(&data->cmd_list, ft_strdup(""));
 			handle_arg(data, ft_dlstlast(data->cmd_list), &line);
 			last = ft_dlstlast(data->cmd_list);
-			if (last->content == 0)
-				flag = 1;
-			else 
-				flag = 0;
 		}
 		if (*line == '\0')
 			return (0);

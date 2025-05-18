@@ -7,18 +7,6 @@ void errors(t_data *data, char *error)
 	exit(1);
 }
 
-int init_data(t_data *data)
-{
-	if (data == NULL)
-	{
-		errors(data, MALLOC_ERROR);
-		return (1);
-	}
-	data->cmd_list = NULL;
-	data->line = NULL;
-	return 0;
-}
-
 char	*ft_strjoin_fc(char *str, char *buff, int choice)
 {
 	char	*new;
@@ -43,4 +31,14 @@ int in_set(char *set, char c)
 		i++;
 	}
 	return (-1);
+}
+
+void printdoule(char **str)
+{
+	int i = 0;
+	while(str[i])
+	{
+		printf("%s ", str[i]);
+		i++;
+	}
 }

@@ -14,6 +14,7 @@ int hpipe(t_data *data, t_dlist *token, char **line)
 		exit(1);
 	}
 	token->content = ft_append(token->content, *s, -1);
+	token->type = PIPE;
 	*line = s;
 	return 0;
 }

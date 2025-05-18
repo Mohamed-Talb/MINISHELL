@@ -25,16 +25,26 @@ typedef struct s_dlist
 	struct s_dlist	*next;
 }	t_dlist;
 
+
+typedef struct s_cmds
+{
+	char **cmd;
+	t_dlist *inred;
+	t_dlist *outred;
+} t_cmds;
+
 typedef struct s_data
 {
 	char	*line;
-	char    **env;
-	// char 	**env;
+	char	**env;
 	int		last_exit_status;
+	int 	pipes_nb;
 	t_dlist	*cmd_list;
+	t_cmds	**cmds;
+
 } t_data;
 
-// double linked list utils
+
 void	errors(t_data *data, char *error);
 int		ft_dlstsize(t_dlist *lst);
 t_dlist	*ft_dlstlast(t_dlist *lst);
@@ -43,11 +53,14 @@ t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
 void 	f(void *content);
-int in_set(char *set, char c);
+int 	in_set(char *set, char c);
+void printdoule(char **str);
 int 	init_data(t_data *data);
 void	free_data(t_data *data);
+int 	init_cmds(t_data *data);
 int		parser(t_data *data, char *line);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
+void grammer(t_data *data);
 
 // PARSING 
 char *expand(t_data *data, char *token, char **line);

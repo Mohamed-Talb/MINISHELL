@@ -6,11 +6,12 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 19:06:35 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/02/15 20:06:56 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/05/18 08:36:12 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+#include "stdio.h"
 
 char	**ft_append2(char **src, char *str, int pos)
 {
@@ -19,13 +20,20 @@ char	**ft_append2(char **src, char *str, int pos)
 	int (i), (j);
 	if (!str)
 		return (NULL);
+	if (!src || !src[0])
+	{
+		ptr = malloc(sizeof(char *) * 2);
+		ptr[0] = ft_strdup(str);
+		ptr[1] = NULL;
+		return (ptr);
+	}
 	ptr = malloc(sizeof(char *) * (ft_strlen2(src) + 2));
 	if (!ptr)
 		return (NULL);
 	(1) && (i = 0, j = 0);
 	while (src[j])
 	{
-		if (i == pos - 1)
+		if (i == pos)
 		{
 			ptr[i] = ft_strdup(str);
 			i++;
@@ -37,23 +45,11 @@ char	**ft_append2(char **src, char *str, int pos)
 		i++;
 		j++;
 	}
+	if (i == pos)
+	{
+		ptr[i] = ft_strdup(str);
+		i++;
+	}
 	ptr[i] = NULL;
-	return (ft_freedouble(&src), ptr);
+	return (ptr);
 }
-// int main()
-// {
-//     char **ptr1 = ft_split("echo hello wold if i need", ' ');
-//     int i = 0;
-//     while(ptr1[i])
-//     {
-//         printf("%s\n", ptr1[i]);
-//         i++;
-//     }
-//     i = 0;
-//     char **ptr = ft_append2(ptr1, "-e", 2);
-//     while(ptr[i])
-//     {
-//         printf("%s\n", ptr[i]);
-//         i++;
-//     }
-// }

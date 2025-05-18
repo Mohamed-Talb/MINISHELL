@@ -108,9 +108,10 @@ void	ft_dlstiter(t_dlist *lst, void (*f)(void *))
 {
 	if (!lst)
 		return ;
-	while (lst != NULL)
+	t_dlist *curr = lst;
+	while (curr != NULL)
 	{
-		f(lst->content);
-		lst = lst->next;
+		f(curr->content);
+		curr = curr->next;
 	}
 }

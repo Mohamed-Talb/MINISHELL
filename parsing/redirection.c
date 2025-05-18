@@ -60,6 +60,9 @@ void redirect(t_data *data, t_dlist *token, char **line)
 {
 	char *s;
 
+	if(ft_strlen(token->content) != 0)
+		ft_dlstback(&data->cmd_list, ft_strdup(""));
+	token = ft_dlstlast(data->cmd_list);
 	s = *line;
 	if (*s == '>')
 	{
