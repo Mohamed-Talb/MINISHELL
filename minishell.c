@@ -1,9 +1,9 @@
 #include "minishell.h"
 
-int main()
+int main(int ac, char **av, char **penv)
 {
 	t_data *data = malloc(sizeof(t_data));
-	init_data(data);
+	init_data(data, penv);
 	while (1)
 	{
 		data->line = readline("\e[91m\e[1mminishell:\e[92m~$ \e[0m");

@@ -55,7 +55,7 @@ void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
 void 	f(void *content);
 int 	in_set(char *set, char c);
 void printdoule(char **str);
-int 	init_data(t_data *data);
+int init_data(t_data *data, char **penv);
 void	free_data(t_data *data);
 int 	init_cmds(t_data *data);
 int		parser(t_data *data, char *line);
