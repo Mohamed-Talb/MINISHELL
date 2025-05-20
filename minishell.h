@@ -44,7 +44,6 @@ typedef struct s_data
 	int 	index;
 	t_dlist	*cmd_list;
 	t_cmds	**cmds;
-
 } t_data;
 
 
