@@ -41,9 +41,7 @@ typedef struct s_data
 	int 	pipes_nb;
 	t_dlist	*cmd_list;
 	t_cmds	**cmds;
-
 } t_data;
-
 
 void	errors(t_data *data, char *error);
 int		ft_dlstsize(t_dlist *lst);
