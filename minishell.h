@@ -5,7 +5,7 @@
 #include <readline/history.h>
 
 // ERRORS
-#define MALLOC_ERROR "emory allocation faild"
+#define MALLOC_ERROR "memory allocation faild"
 #define CMD_NOTFOUND "command not found"
 #define PER_ERROR "Permission denied"
 
