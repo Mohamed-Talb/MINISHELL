@@ -17,7 +17,7 @@ char **rmvar(char **env, char *var)
 	{
 		if (!ft_strncmp(env[i], var, ft_strlen(var)))
 		{
-			ft_remove(&env, i);
+			ft_remove2(&env, i);
 			break ;
 		}
 		i++;

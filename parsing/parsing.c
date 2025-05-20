@@ -40,7 +40,7 @@ int handle_arg(t_data *data, t_dlist *token, char **line)
 
 int parser(t_data *data, char *line)
 {
-	t_dlist *last;
+	// t_dlist *last;
 
 	while (*line != '\0')
 	{
@@ -48,7 +48,7 @@ int parser(t_data *data, char *line)
 		{
 			ft_dlstback(&data->cmd_list, ft_strdup(""));
 			handle_arg(data, ft_dlstlast(data->cmd_list), &line);
-			last = ft_dlstlast(data->cmd_list);
+			/*last = */ft_dlstlast(data->cmd_list);
 		}
 		if (*line == '\0')
 			return (0);
