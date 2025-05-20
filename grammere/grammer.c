@@ -7,7 +7,7 @@ int getredirections(t_data *data, t_dlist *list, int i)
 		ft_dlstback(&(data->cmds[i]->inred), list->content);
 		data->cmds[i]->inred->type = list->type;
 	}
-	else if(list->type == RIGHT_HER || list->type == RIGHT_HER)
+	else if(list->type == RIGHT_HER || list->type == RIGHT_RED)
 	{	
 		ft_dlstback(&(data->cmds[i]->outred), list->content);
 		data->cmds[i]->outred->type = list->type;

@@ -11,9 +11,15 @@ char *expand(t_data *data, char *token, char **line)
 		token = ft_append(token, data->last_exit_status, -1);
 		s++;
 	}
-	else if (ft_isdigit(*s) || *s == '\0' || ft_iswhitespace(*s) || *s == '\'' || *s == '\"')
+	else if (ft_isdigit(*s) || *s == '\0' || ft_iswhitespace(*s))
 	{
 		token = ft_append(token, '$', -1);
+		*line = s;
+		return (token);
+	}
+	else if ( *s == '\'' || *s == '\"')
+	{
+		token = NULL;
 		*line = s;
 		return (token);
 	}
@@ -38,3 +44,6 @@ char *expand(t_data *data, char *token, char **line)
 	*line = s;
 	return (token);
 }
+
+// echo $"test1""$USER"
+	// test1mtaleb
