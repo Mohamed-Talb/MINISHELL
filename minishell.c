@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 #include "minishell.h"
 
 int main(int ac, char **av, char **penv)
@@ -37,4 +35,3 @@ int main(int ac, char **av, char **penv)
 	rl_clear_history();
 	return (0);
 }
->>>>>>> 80385ede3cda425364690bb91a472e593c1ab0c0
