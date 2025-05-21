@@ -1,17 +1,5 @@
 #include "../minishell.h"
 
-void ft_putnstr_fd(char *str, int n, int fd)
-{
-	int i;
-
-	i = 0;
-	while (i < n)
-	{
-		write(fd, &str[i], 1);
-		i++;
-	}
-}
-
 void redirect_helper(t_data *data, t_dlist *token, char **line)
 {
 	char *s;
@@ -26,7 +14,7 @@ void redirect_helper(t_data *data, t_dlist *token, char **line)
 			ft_putstr_fd("newline", 2);
 		else
 			ft_putchar_fd(*s, 2);
-		errors(data, "'\n");
+		errors(data, "'\n", 1);
 	}
 	while (!(*s == '\0' || in_set("|><", *s) > -1 || ft_iswhitespace(*s)))
 	{

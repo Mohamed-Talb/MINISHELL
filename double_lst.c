@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+
 t_dlist *ft_dlstfront(t_dlist **head, void *content)
 {
 	t_dlist *new_node;

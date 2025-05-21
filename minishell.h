@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include "libft/libft.h"
 #include <readline/history.h>
@@ -39,14 +41,16 @@ typedef struct s_data
 	char	**env;
 	int		last_exit_status;
 	int 	pipes_nb;
+	int 	index;
 	t_dlist	*cmd_list;
 	t_cmds	**cmds;
 
 } t_data;
 
 
-void	errors(t_data *data, char *error);
+void 	errors(t_data *data, char *error, int exitcode);
 int		ft_dlstsize(t_dlist *lst);
+void  	infiles_manager(t_data *data);
 t_dlist	*ft_dlstlast(t_dlist *lst);
 void	ft_dlstclear(t_dlist **Head);
 t_dlist	*ft_dlstback(t_dlist **head, void *content);
@@ -54,13 +58,13 @@ t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
 void 	f(void *content);
 int 	in_set(char *set, char c);
-void printdoule(char **str);
-int init_data(t_data *data, char **penv);
+void 	printdoule(char **str);
+int 	init_data(t_data *data, char **penv);
 void	free_data(t_data *data);
 int 	init_cmds(t_data *data);
 int		parser(t_data *data, char *line);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
-void grammer(t_data *data);
+void 	grammer(t_data *data);
 
 // PARSING 
 char *expand(t_data *data, char *token, char **line);
