@@ -5,6 +5,7 @@
 #include <readline/readline.h>
 #include "libft/libft.h"
 #include <readline/history.h>
+# include <fcntl.h>
 
 // ERRORS
 #define MALLOC_ERROR "memory allocation faild"
@@ -33,6 +34,8 @@ typedef struct s_cmds
 	char **cmd;
 	t_dlist *inred;
 	t_dlist *outred;
+	int pipein;
+	int pipeout;
 } t_cmds;
 
 typedef struct s_data
@@ -63,7 +66,9 @@ void	free_data(t_data *data);
 int 	init_cmds(t_data *data);
 int		parser(t_data *data, char *line);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
-void 	grammer(t_data *data);
+void grammer(t_data *data);
+void redir_setup(t_data *data);
+void executor(t_data *data);
 
 // PARSING 
 char *expand(t_data *data, char *token, char **line);

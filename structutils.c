@@ -17,7 +17,7 @@ int init_data(t_data *data, char **penv)
 
 int init_cmds(t_data *data)
 {
-	data->cmds = malloc((data->pipes_nb + 1) * sizeof(char *));
+	data->cmds = malloc((data->pipes_nb + 1) * sizeof(char *)); // why not just sizeof(t_cmds *)
 	if (data->cmds == NULL)
 	{
 		errors(data, MALLOC_ERROR, 1);
