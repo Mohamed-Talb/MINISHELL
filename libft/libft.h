@@ -52,7 +52,7 @@ char	**ft_lsttostr2(t_list *head);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(char const *s, char c);
-void 	ft_remove2(char **str, int index);
+char 	**ft_remove2(char **str, int index);
 char 	*ft_remove(char *str, int pos);
 char	*ft_append(char *org, char c, int position);
 char	*ft_strjoin(char const *s1, char const *s2);

@@ -32,7 +32,7 @@ int main(int ac, char **av, char **penv)
 			ft_dlstiter(data->cmds[i]->outred, f);
 			i++;
 		}
-		infiles_manager(data);
+		// infiles_manager(data);
 		printf("\n\n\n");
 		i = 0;
 		while (i < data->pipes_nb)

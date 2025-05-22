@@ -73,7 +73,7 @@ void redir_setup(t_data *data)
     {
         if (pipe(pipefd) == -1)
         {
-            errors(data, "pipe");
+            errors(data, "pipe", 1);
         }
         if (i == 0 && data->pipes_nb > 1)
         {
