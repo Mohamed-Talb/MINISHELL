@@ -15,9 +15,12 @@ int main(int ac, char **av, char **penv)
 		add_history(data->line);
 		parser(data, data->line);
 		grammer(data);
+		redir_setup(data);
+		executor(data);
 		ft_dlstiter(data->cmd_list, f);
 		free(data->line);
 		printf("\n\n\n");
+		printf("nopipes: %d\n", data->pipes_nb);
 		int i = 0;
 		while (i < data->pipes_nb)
 		{
