@@ -1,10 +1,10 @@
 #include "minishell.h"
 
-void errors(t_data *data, char *error)
+void errors(t_data *data, char *error, int exitcode)
 {
 	ft_putstr_fd(error, 1);
 	free_data(data);
-	exit(1);
+	exit(exitcode);
 }
 
 char	*ft_strjoin_fc(char *str, char *buff, int choice)
@@ -35,6 +35,8 @@ int in_set(char *set, char c)
 
 void printdoule(char **str)
 {
+	if(!str || !*str)
+		return ;
 	int i = 0;
 	while(str[i])
 	{

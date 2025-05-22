@@ -1,6 +1,6 @@
 #include "../libft.h"
 
-void ft_remove2(char ***str, int index)
+void ft_remove2(char **str, int index)
 {
     int i;
     int j;
@@ -32,6 +32,6 @@ void ft_remove2(char ***str, int index)
         j++;
     }
     new[j] = NULL;
-    ft_freedouble(str);
-    *str = new;
+    ft_freedouble(&str);
+    return (new);
 }

@@ -50,29 +50,3 @@ char **upvar(char **env, char *newvar)
 	newenv = ft_append2(env, newvar, i+1);
 	return newenv;
 }
-
-// int main(int ac, char **av, char **env)
-// {
-// 	char **myenv;
-// 	myenv = ft_strdup2(env);
-// 	(void)ac;
-// 	(void)av;
-
-// 	int i = 0;
-// 	char *var = "mtaleb=0";
-// 	myenv = addvar(myenv, var);
-// 	while (myenv[i])
-// 	{
-// 		printf("%s\n", myenv[i]);
-// 		i++;
-// 	}
-// 	printf("\n\n\n\n\n");
-// 	i = 0;
-// 	char *newvar="mtaleb=1";
-// 	myenv = upvar(myenv, newvar);
-// 	while (myenv[i])
-// 	{
-// 		printf("%s\n", myenv[i]);
-// 		i++;
-// 	}
-// }
