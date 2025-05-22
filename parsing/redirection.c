@@ -1,5 +1,17 @@
 #include "../minishell.h"
 
+void ft_putnstr_fd(char *str, int n, int fd)
+{
+	int i;
+
+	i = 0;
+	while (i < n)
+	{
+		write(fd, &str[i], 1);
+		i++;
+	}
+}
+
 void redirect_helper(t_data *data, t_dlist *token, char **line)
 {
 	char *s;
