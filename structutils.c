@@ -32,7 +32,7 @@ int init_cmds(t_data *data)
 			errors(data, MALLOC_ERROR, 1);
 			return (1);
 		}
-		data->cmds[i]->inred = NULL;
+		data->cmds[i]->allred = NULL;
 		data->cmds[i]->outred = NULL;
 		data->cmds[i]->cmd = NULL;
 		i++;

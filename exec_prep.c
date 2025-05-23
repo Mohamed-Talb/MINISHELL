@@ -1,10 +1,5 @@
 #include "minishell.h"
 
-// int child(int infile, char **cmd, int outfile)
-// {
-
-// }
-
 int heredoc(char *eof)
 {
     (void) eof;
@@ -58,8 +53,6 @@ void starter(int pipein, t_data *data, t_cmds *fullcmd, int pipeout)
     }
     fullcmd->pipein = pipein;
     fullcmd->pipeout = pipeout;
-    // pipex(pipein, data, fullcmd, pipeout);
-    // close(pipein); close(pipeout);
 }
 
 void redir_setup(t_data *data)
@@ -77,7 +70,7 @@ void redir_setup(t_data *data)
         }
         if (i == 0 && data->pipes_nb > 1)
         {
-            starter(prevfd, data, data->cmds[i], pipefd[1]); // we will then close after each exec to avoid hanging
+            starter(prevfd, data, data->cmds[i], pipefd[1]); 
             prevfd = pipefd[0];
         }
         else if (i == 0 && data->pipes_nb == 1)
@@ -101,3 +94,12 @@ void redir_setup(t_data *data)
         i++;
     }
 }
+
+
+
+
+
+// int main()
+// {
+//     randomnbr();
+// }

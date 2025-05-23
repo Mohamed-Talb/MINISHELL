@@ -22,14 +22,14 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 			libft/ft_printf/utils.c libft/ft_printf/checks.c libft/ft_printf/precision.c \
 			libft/ft_printf/width.c libft/ft_printf/printint.c libft/ft_printf/printstring.c \
 			libft/ft_printf/printhexa.c libft/ft_printf/printunsigned.c libft/ft_printf/printmemory.c \
-			libft/ft_others/ft_getnextline.c libft/ft_strings/ft_remove2.c
+			libft/ft_others/ft_getnextline.c libft/ft_strings/ft_remove2.c libft/ft_strings/ft_uitoa.c
 	
 LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 
 # PIPEX SOURCE FILES
 SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c structutils.c  move.c\
 			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
-			parsing/redirection.c grammere/grammer.c exec_prep.c executor.c
+			parsing/redirection.c grammere/grammer.c  executor.c filesmanagment/exec_files.c
 			
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 

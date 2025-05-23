@@ -47,6 +47,7 @@ typedef struct flags {
 // FT_STRINGS:
 char	*ft_itoa(int n);
 char	**ft_strdup2(char **str);
+char	*ft_uitoa(unsigned int n);
 char	*ft_strdup(const char *s);
 char	**ft_lsttostr2(t_list *head);
 char	*ft_strchr(const char *s, int c);

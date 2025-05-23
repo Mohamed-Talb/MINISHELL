@@ -6,11 +6,15 @@
 #include "libft/libft.h"
 #include <readline/history.h>
 # include <fcntl.h>
+# include <dirent.h>
 
 // ERRORS
 #define MALLOC_ERROR "memory allocation faild"
 #define CMD_NOTFOUND "command not found"
 #define PER_ERROR "Permission denied"
+#define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `"
+#define REDIRECTION_SET "<|>"
+
 
 // types macros
 #define CMD 1
@@ -32,7 +36,7 @@ typedef struct s_dlist
 typedef struct s_cmds
 {
 	char **cmd;
-	t_dlist *inred;
+	t_dlist *allred;
 	t_dlist *outred;
 	int pipein;
 	int pipeout;
@@ -52,9 +56,9 @@ typedef struct s_data
 
 void 	errors(t_data *data, char *error, int exitcode);
 int		ft_dlstsize(t_dlist *lst);
-void  	infiles_manager(t_data *data);
 t_dlist	*ft_dlstlast(t_dlist *lst);
 void	ft_dlstclear(t_dlist **Head);
+int 	duplication(t_data *data, t_cmds *cmd);
 t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 void	ft_dlstiter(t_dlist *lst, void (*f)(void *));

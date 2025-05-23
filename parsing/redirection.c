@@ -12,23 +12,28 @@ void ft_putnstr_fd(char *str, int n, int fd)
 	}
 }
 
+void checkerrors(t_data *data, char c)
+{
+	if (c == '\0' || in_set(REDIRECTION_SET , c) == 0)
+	{
+		ft_putstr_fd(UNEXPECTED_TOKEN, 2);
+		if (c == '\0')
+			ft_putstr_fd("newline", 2);
+		else
+			ft_putchar_fd(c, 2);
+		errors(data, "'\n", 1);
+	}
+}
+
 void redirect_helper(t_data *data, t_dlist *token, char **line)
 {
 	char *s;
-
+	
 	while (ft_iswhitespace(**line))
 		(*line)++;
 	s = *line;
-	if (*s == '\0' || in_set("|><", *s) > -1)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-		if (*s == '\0')
-			ft_putstr_fd("newline", 2);
-		else
-			ft_putchar_fd(*s, 2);
-		errors(data, "'\n", 1);
-	}
-	while (!(*s == '\0' || in_set("|><", *s) > -1 || ft_iswhitespace(*s)))
+	checkerrors(data, *s);
+	while (!(*s == '\0' || in_set(REDIRECTION_SET, *s) == 0 || ft_iswhitespace(*s)))
 	{
 		if(*s == '"')
 		{
@@ -47,14 +52,9 @@ void redirect_helper(t_data *data, t_dlist *token, char **line)
 			s++;
 		}
 	}
-	if (strcmp(token->content, "") == 0)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putnstr_fd(*line, s - *line, 2);
-		ft_putstr_fd(": ambiguous redirect\n", 2);
-	}
 	*line = s;
 }
+
 
 void redirect(t_data *data, t_dlist *token, char **line)
 {
