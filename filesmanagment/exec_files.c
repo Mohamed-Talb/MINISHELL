@@ -90,15 +90,16 @@ void files_manager(t_data *data, t_cmds *cmd)
 
 int duplication(t_data *data, t_cmds *cmd)
 {
-    files_manager(data, cmd);
     t_dlist *infile = NULL;
     t_dlist *outfile = NULL;
+
+    files_manager(data, cmd);
     t_dlist *list = cmd->allred;
     while (list)
     {
-        if (list->type == LEFT_HER || LEFT_RED)
+        if (list->type == LEFT_HER || list->type == LEFT_RED)
             infile = list;
-        if (list->type == RIGHT_RED || RIGHT_HER)
+        if (list->type == RIGHT_RED ||list->type == RIGHT_HER)
             outfile = list;
         list = list->next;
     }
@@ -113,12 +114,14 @@ int duplication(t_data *data, t_cmds *cmd)
     }
     if (outfile != NULL)
     {
-        int outfd;
+        int outfd = -1;
         if (outfile->type == RIGHT_HER)
-            outfd = open(infile->content, O_RDWR | O_APPEND);
+        {
+            outfd = open(outfile->content, O_RDWR | O_APPEND);
+        }
         else 
-            outfd = open(infile->content, O_RDWR | O_TRUNC);
-        dup2(1, outfd);
+            outfd = open(outfile->content, O_RDWR | O_TRUNC);
+        dup2(outfd, 1);
     }
     else if (outfile == NULL && cmd->pipeout != -1)
     {

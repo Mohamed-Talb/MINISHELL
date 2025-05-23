@@ -14,14 +14,9 @@ int main(int ac, char **av, char **penv)
 		add_history(data->line);
 		parser(data, data->line);
 		grammer(data);
-		// redir_setup(data);
-		// executor(data);
-		ft_dlstiter(data->cmd_list, f);
 		free(data->line);
-		// grammer(data);
-		// printf("hello\n");
+		duplication(data, data->cmds[0]);
 		printf("\n\n\n");
-		// printf("nopipes: %d\n", data->pipes_nb);
 		int i = 0;
 		while (i < data->pipes_nb)
 		{
@@ -29,19 +24,6 @@ int main(int ac, char **av, char **penv)
 			printdoule(data->cmds[i]->cmd);
 			printf("\n");
 			ft_dlstiter(data->cmds[i]->allred, f);
-			ft_dlstiter(data->cmds[i]->outred, f);
-			i++;
-		}
-		duplication(data, data->cmds[0]);
-		printf("\n\n\n");
-		i = 0;
-		while (i < data->pipes_nb)
-		{
-			printf("cmd %d\n", i);
-			printdoule(data->cmds[i]->cmd);
-			printf("\n");
-			ft_dlstiter(data->cmds[i]->allred, f);
-			ft_dlstiter(data->cmds[i]->outred, f);
 			i++;
 		}
 	}
