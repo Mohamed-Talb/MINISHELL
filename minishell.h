@@ -48,11 +48,10 @@ typedef struct s_data
 	char	**env;
 	int		last_exit_status;
 	int 	pipes_nb;
-	int 	index;
+	// int 	index; this is not used, why keep it??!?!
 	t_dlist	*cmd_list;
 	t_cmds	**cmds;
 } t_data;
-
 
 void	grammer(t_data *data);
 void	printdoule(char **str);
@@ -76,6 +75,7 @@ void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
 
 // MANAGE DATA
 void	free_data(t_data *data);
+void	reset_data(t_data *data);
 int 	init_cmds(t_data *data);
 int 	init_data(t_data *data, char **penv);
 
