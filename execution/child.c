@@ -9,13 +9,13 @@ int	child(t_data *data, t_cmds *command)
 	{
 		check(data, command);
         duplication(data, command);
-        // execve(command->cmd[0], &command->cmd[1], data->env);
-        execve(command->cmd[0], command->cmd, data->env);
+        execve(command->cmd, command->flags, data->env);
         errors(data, "execve failed\n", 126);
 	}
 	else if (pid > 0)
 	{
-		//close
+		close(command->pipein);
+		close(command->pipeout);
 	}
 	else
 		errors(data, "Unable to create a new process\n", 1);

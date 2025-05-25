@@ -36,7 +36,8 @@ typedef struct s_dlist
 
 typedef struct s_cmds
 {
-	char **cmd;
+	char *cmd;
+	char **flags;
 	int pipein;
 	int pipeout;
 	t_dlist *allred;

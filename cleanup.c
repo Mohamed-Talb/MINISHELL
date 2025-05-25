@@ -9,7 +9,7 @@ void reset_data(t_data *data)
 		i = 0;
 		while (data->cmds[i])
 		{
-			ft_freedouble(&data->cmds[i]->cmd);
+			free(data->cmds[i]->cmd);
 			// ft_dlstclear(&data->cmds[i]->allred);
 			free(data->cmds[i]);
 			i++;

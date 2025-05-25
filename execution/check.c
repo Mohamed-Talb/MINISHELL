@@ -25,7 +25,7 @@ char 	**helper(t_data *data, t_cmds *command)
 	char **paths = malloc(2 * sizeof(char *));
 	if (!paths)
 		errors(data, MALLOC_ERROR, 1);
-	paths[0] = ft_strdup(command->cmd[0]);
+	paths[0] = ft_strdup(command->cmd);
 	paths[1] = NULL;
 	return paths;
 }
@@ -35,7 +35,7 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 	int i;
 	char **paths;
 
-	if (ft_strchr(command->cmd[0], '/'))
+	if (ft_strchr(command->cmd, '/'))
 	{
 		paths = helper(data, command);
 		return paths;
@@ -47,7 +47,7 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 		paths[i] = ft_strjoin_fc(paths[i], "/", 1);
 		if (!paths[i])
 			errors(data, MALLOC_ERROR, 1);
-		paths[i] = ft_strjoin_fc(paths[i], command->cmd[0], 1);
+		paths[i] = ft_strjoin_fc(paths[i], command->cmd, 1);
 		if (!paths[i])
 			errors(data, MALLOC_ERROR, 1);
 		i++;
@@ -66,7 +66,7 @@ void	check(t_data *data, t_cmds *command)
 	found = false;
 	permission = false;
 	paths = getabspaths(data, command);
-	if (!paths || !paths[0])
+	if (!paths || !paths)
 		errors(data, MALLOC_ERROR, 1);
 	while (paths[i])
 	{
@@ -76,10 +76,10 @@ void	check(t_data *data, t_cmds *command)
 			if (access(paths[i], X_OK) == 0)
 			{
 				permission = true;
-				if (command->cmd[0])
-					free(command->cmd[0]);
-				command->cmd[0] = ft_strdup(paths[i]);
-				if (!command->cmd[0])
+				if (command->cmd)
+					free(command->cmd);
+				command->cmd = ft_strdup(paths[i]);
+				if (!command->cmd)
 					errors(data, MALLOC_ERROR, 1);
 				break ;
 			}
