@@ -34,6 +34,8 @@ int init_cmds(t_data *data)
 		}
 		data->cmds[i]->allred = NULL;
 		data->cmds[i]->cmd = NULL;
+		data->cmds[i]->pipein = -1;
+		data->cmds[i]->pipeout = -1;
 		i++;
 	}
 	data->cmds[i] = NULL;

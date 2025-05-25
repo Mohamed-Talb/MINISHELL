@@ -43,15 +43,19 @@ int duplication(t_data *data, t_cmds *cmd)
 {
     t_dlist *infile = NULL;
     t_dlist *outfile = NULL;
-
-    files_manager(data, cmd);
-    last_in_out(cmd, infile, outfile);
+    
+    if (cmd->allred)
+    {
+        last_in_out(cmd, infile, outfile);
+        files_manager(data, cmd);
+    }
     if (infile != NULL)
     {
         int infd = open(infile->content, O_RDONLY);
         if (infd == -1)
             errors(data, strerror(errno), 1);
         dup2(infd, 0);
+        close(infd);
     }
     else if (infile == NULL && cmd->pipein != -1)
           dup2(cmd->pipein, 0);
@@ -65,6 +69,7 @@ int duplication(t_data *data, t_cmds *cmd)
         if (outfd == -1)
             errors(data, strerror(errno), 1);
         dup2(outfd, 1);
+        close(outfd);
     }
     else if (outfile == NULL && cmd->pipeout != -1)
           dup2(cmd->pipeout, 1);
