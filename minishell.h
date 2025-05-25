@@ -7,6 +7,8 @@
 #include <readline/history.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <errno.h>
+# include <sys/wait.h>
 
 // ERRORS
 #define MALLOC_ERROR "memory allocation faild"
@@ -32,14 +34,12 @@ typedef struct s_dlist
 	struct s_dlist	*next;
 }	t_dlist;
 
-
 typedef struct s_cmds
 {
 	char **cmd;
-	t_dlist *allred;
-	t_dlist *outred;
 	int pipein;
 	int pipeout;
+	t_dlist *allred;
 } t_cmds;
 
 typedef struct s_data
@@ -54,31 +54,40 @@ typedef struct s_data
 } t_data;
 
 
-void 	errors(t_data *data, char *error, int exitcode);
+void	grammer(t_data *data);
+void	printdoule(char **str);
+void	executor(t_data *data);
+void 	open_herdocs(t_data *data, t_dlist *node);
+void	redir_setup(t_data *data);
+char	*ft_strjoin_fc(char *str, char *buff, int choice);
+void	check(t_data *data, t_cmds *command);
+int	parent(t_data *data);
+int	child(t_data *data, t_cmds *command);
+
+// 2D LIST UTILS 
+void	f(void *content);
 int		ft_dlstsize(t_dlist *lst);
 t_dlist	*ft_dlstlast(t_dlist *lst);
 void	ft_dlstclear(t_dlist **Head);
-int 	duplication(t_data *data, t_cmds *cmd);
+int		duplication(t_data *data, t_cmds *cmd);
 t_dlist	*ft_dlstback(t_dlist **head, void *content);
 t_dlist	*ft_dlstfront(t_dlist **head, void *content);
 void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
-void 	f(void *content);
-int 	in_set(char *set, char c);
-void 	printdoule(char **str);
-int 	init_data(t_data *data, char **penv);
+
+// MANAGE DATA
 void	free_data(t_data *data);
 int 	init_cmds(t_data *data);
-int		parser(t_data *data, char *line);
-char	*ft_strjoin_fc(char *str, char *buff, int choice);
-void grammer(t_data *data);
-void redir_setup(t_data *data);
-void executor(t_data *data);
+int 	init_data(t_data *data, char **penv);
 
+// UTILES
+void 	errors(t_data *data, char *error, int exitcode);
+int 	in_set(char *set, char c);
+char 	*randomnbr();
 // PARSING 
-char *expand(t_data *data, char *token, char **line);
-int handle_arg(t_data *data, t_dlist *token, char **line);
-int parser(t_data *data, char *line);
-int hpipe(t_data *data, t_dlist *token, char **line);
-char *single_q(t_data *data, char *token, char **line);
-int double_q(t_data *data, t_dlist *token, char **line, int state);
-void redirect(t_data *data, t_dlist *token, char **line);
+int		parser(t_data *data, char *line);
+char	*expand(t_data *data, char *token, char **line);
+int		hpipe(t_data *data, t_dlist *token, char **line);
+char	*single_q(t_data *data, char *token, char **line);
+void	redirect(t_data *data, t_dlist *token, char **line);
+int		handle_arg(t_data *data, t_dlist *token, char **line);
+int		double_q(t_data *data, t_dlist *token, char **line, int state);

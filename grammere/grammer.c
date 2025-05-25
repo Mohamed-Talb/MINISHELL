@@ -2,6 +2,10 @@
 
 int getredirections(t_data *data, t_dlist *list, int i)
 {
+	if (list->type == LEFT_HER)
+	{
+		open_herdocs(data, list);
+	}
 	ft_dlstback(&(data->cmds[i]->allred), list->content);
 	ft_dlstlast(data->cmds[i]->allred)->type = list->type;
 	return 0;
@@ -35,4 +39,10 @@ void grammer(t_data *data)
 			getcommand(data, list, i);
 		list = list->next;
 	}
+	// i = 0;
+	// while (i < data->pipes_nb);
+	// {
+	// 	open_herdocs(data, data->cmds[i]);
+	// 	i++;
+	// }
 }

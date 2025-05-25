@@ -27,8 +27,10 @@ int double_q(t_data *data, t_dlist *token, char **line, int state)
 	s++;
 	while(*s != '"' && *s != 0)
 	{
-		if(*s == '$' && state == 1)
+		if(*s == '$' && state == 1 && *(s + 1) != '"')
+		{
 			token->content = expand(data, token->content, &s);
+		}
 		else
 		{
 			token->content = ft_append(token->content, *s, -1);

@@ -17,9 +17,8 @@ char *expand(t_data *data, char *token, char **line)
 		*line = s;
 		return (token);
 	}
-	else if ( *s == '\'' || *s == '\"')
+	else if (*s == '\'' || *s == '\"')
 	{
-		token = NULL;
 		*line = s;
 		return (token);
 	}

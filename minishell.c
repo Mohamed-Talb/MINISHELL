@@ -13,22 +13,20 @@ int main(int ac, char **av, char **penv)
 			break;
 		add_history(data->line);
 		parser(data, data->line);
+		ft_dlstiter(data->cmd_list, f);
 		grammer(data);
-		free(data->line);
-		duplication(data, data->cmds[0]);
-		printf("\n\n\n");
-		int i = 0;
-		while (i < data->pipes_nb)
-		{
-			printf("cmd %d\n", i);
-			printdoule(data->cmds[i]->cmd);
-			printf("\n");
-			ft_dlstiter(data->cmds[i]->allred, f);
-			i++;
-		}
+		parent(data);
+		// int i = 0;
+		// while (i < data->pipes_nb)
+		// {
+		// 	printf("cmd %d\n", i);
+		// 	printdoule(data->cmds[i]->cmd);
+		// 	printf("\n");
+		// 	ft_dlstiter(data->cmds[i]->allred, f);
+		// 	i++;
+		// }
+		free_data(data);
 	}
-	ft_dlstclear(&data->cmd_list);
-	free_data(data);
 	ft_putstr_fd("exit\n", 1);
 	rl_clear_history();
 	return (0);

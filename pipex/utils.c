@@ -64,11 +64,4 @@ void	closefds(int fd1, int fd2, int fd3, int fd4)
 		close (fd4);
 }
 
-int	exitestatus(int status)
-{
-	if (WEXITSTATUS(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (WTERMSIG(status));
-	return (0);
-}
+

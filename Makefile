@@ -27,10 +27,10 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 
 # PIPEX SOURCE FILES
-SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c structutils.c  move.c\
+SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c structutils.c \
 			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
-			parsing/redirection.c grammere/grammer.c  executor.c filesmanagment/exec_files.c
-			
+			parsing/redirection.c grammere/grammer.c  executor.c grammere/herdocs.c execution/check.c execution/child.c execution/parent.c \
+			filesmanagment/duplication.c 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
 # COMPILER & FLAGS

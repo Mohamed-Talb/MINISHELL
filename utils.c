@@ -44,3 +44,24 @@ void printdoule(char **str)
 		i++;
 	}
 }
+
+
+char *randomnbr()
+{
+    int fd;
+    int buff[11];
+    unsigned int sum = 0;
+    int i;
+
+    fd = open("/dev/random", O_RDONLY);
+    read(fd, buff, 5);
+    i = 0;
+    buff[5] = 0;
+    while(i < 5)
+    {
+        sum += buff[i];
+        i++;
+    }  
+    char *str = ft_uitoa(sum);
+    return (str);
+}
