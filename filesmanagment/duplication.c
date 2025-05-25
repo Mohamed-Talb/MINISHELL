@@ -28,6 +28,8 @@ void files_manager(t_data *data, t_cmds *cmd)
 }
 void last_in_out(t_cmds *cmd, t_dlist *infile, t_dlist *outfile)
 {
+    (void) infile;
+    (void) outfile;
     t_dlist *list = cmd->allred;
     while (list)
     {

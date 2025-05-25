@@ -1,5 +1,18 @@
 #include "minishell.h"
 
+void print_cmds(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (data->cmds[i])
+	{
+		printdoule(data->cmds[i]->cmd);
+		i++;
+	}
+	printf("\n");
+}
+
 int main(int ac, char **av, char **penv)
 {
 	(void) ac;
@@ -13,9 +26,11 @@ int main(int ac, char **av, char **penv)
 			break;
 		add_history(data->line);
 		parser(data, data->line);
-		ft_dlstiter(data->cmd_list, f);
+		// ft_dlstiter(data->cmd_list, f);
 		grammer(data);
+		print_cmds(data);
 		parent(data);
+		printf("here\n");
 		// int i = 0;
 		// while (i < data->pipes_nb)
 		// {
@@ -25,7 +40,7 @@ int main(int ac, char **av, char **penv)
 		// 	ft_dlstiter(data->cmds[i]->allred, f);
 		// 	i++;
 		// }
-		free_data(data);
+		reset_data(data);
 	}
 	ft_putstr_fd("exit\n", 1);
 	rl_clear_history();
