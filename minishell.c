@@ -27,21 +27,8 @@ int main(int ac, char **av, char **penv)
 			break;
 		add_history(data->line);
 		parser(data, data->line);
-		// ft_dlstiter(data->cmd_list, f);
 		grammer(data);
-		// print_cmds(data);
 		parent(data);
-		// printf("here\n");
-		// int i = 0;
-		// while (i < data->pipes_nb)
-		// {
-		// 	printf("cmd %d\n", i);
-		// 	printf("%s\n", data->cmds[i]->cmd);
-		// 	printdoule(data->cmds[i]->flags);
-		// 	printf("\n");
-		// 	ft_dlstiter(data->cmds[i]->allred, f);
-		// 	i++;
-		// }
 		reset_data(data);
 	}
 	ft_putstr_fd("exit\n", 1);
