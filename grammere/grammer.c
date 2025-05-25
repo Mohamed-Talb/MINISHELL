@@ -15,7 +15,6 @@ int getcommand(t_cmds *command, t_dlist *list)
 {
 	char **tmp = NULL;
 	int len;
-	// char ptr;
 
 	if (command->cmd)
 	{
@@ -25,6 +24,7 @@ int getcommand(t_cmds *command, t_dlist *list)
 	}
 	else
 	{
+		command->flags = ft_append2(command->flags, list->content, 0);
 		command->cmd = ft_strdup(list->content); 
 	}
 	if (tmp)

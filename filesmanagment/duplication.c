@@ -26,18 +26,16 @@ void files_manager(t_data *data, t_cmds *cmd)
 		curr = curr->next;
 	}
 }
-void last_in_out(t_cmds *cmd, t_dlist *infile, t_dlist *outfile)
+void last_in_out(t_cmds *cmd, t_dlist **infile, t_dlist **outfile)
 {
-    (void) infile;
-    (void) outfile;
     t_dlist *list = cmd->allred;
     while (list)
     {
         if (list->type == LEFT_HER || list->type == LEFT_RED)
-            infile = list;
-        if (list->type == RIGHT_RED ||list->type == RIGHT_HER)
-            outfile = list;
-        list = list->next;
+            *infile = list;
+        if (list->type == RIGHT_RED || list->type == RIGHT_HER)
+            *outfile = list;
+    list = list->next;
     }
 }
 
@@ -48,8 +46,8 @@ int duplication(t_data *data, t_cmds *cmd)
     
     if (cmd->allred)
     {
-        last_in_out(cmd, infile, outfile);
         files_manager(data, cmd);
+        last_in_out(cmd, &infile, &outfile);
     }
     if (infile != NULL)
     {
