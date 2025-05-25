@@ -27,7 +27,7 @@ int main(int ac, char **av, char **penv)
 			break;
 		add_history(data->line);
 		parser(data, data->line);
-		ft_dlstiter(data->cmd_list, f);
+		// ft_dlstiter(data->cmd_list, f);
 		grammer(data);
 		// print_cmds(data);
 		parent(data);

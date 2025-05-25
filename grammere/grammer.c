@@ -6,7 +6,7 @@ int getredirections(t_data *data, t_dlist *list, int i)
 	{
 		open_herdocs(data, list);
 	}
-	ft_dlstback(&(data->cmds[i]->allred), list->content);
+	ft_dlstback(&(data->cmds[i]->allred), ft_strdup(list->content));
 	ft_dlstlast(data->cmds[i]->allred)->type = list->type;
 	return 0;
 }
