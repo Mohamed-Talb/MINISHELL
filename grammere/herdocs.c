@@ -10,29 +10,105 @@ char *getname()
     return randomname;
 }
 
+char *getdelimiter(char *str, int *expand)
+{
+	int i = 0;
+	char *ret = NULL;
+	while(str[i])
+	{
+		if (str[i] == '"' || str[i] == '\'')
+		{
+			i++;
+			*expand = 1;
+			continue ;
+		}
+		ret = ft_append(ret, str[i], -1);
+		i++;
+	}
+	return ret;
+}
+
+char  *herdoc_expand(t_data *data, char *line)
+{
+	int i = 0;
+	char *var = NULL;
+	char *result = ft_strdup("");
+	char *varvalue = NULL;
+	if (line == NULL)
+		return NULL;
+	while(line[i]  != '$')
+	{
+		result = ft_append(result, line[i], -1);
+		i++;
+	}
+	i++;
+	if (line[i] == '?')
+	{
+		result = ft_append(line, data->last_exit_status, -1);
+		i++;
+	}
+	else if (ft_isdigit(line[i]) || line[i] == '\0' || ft_iswhitespace(line[i]))
+	{
+		result = ft_append(result, '$', -1);
+		return (result);
+	}
+	else if (line[i] == '\'' || line[i] == '\"')
+	{
+		return (result);
+	}
+	else
+	{
+		while (ft_isalnum(line[i]) || line[i] == '_')
+		{
+			var = ft_append(var, line[i], -1);
+			i++;
+		}
+		if (var == NULL)
+		{
+			result = ft_append(result, '$', -1);
+			i++;
+			return (result);
+		}
+		varvalue = getenv(var);
+		if (varvalue != NULL)
+			result = ft_strjoin_fc(result, varvalue, 1);
+		free(var);
+	}
+	free(line);
+	line = NULL;
+	return (result);
+}
+
 void heredoc(t_data *data, t_dlist *node)
 {
 	char	*line;
     char    *rname;
 	int		fd;
+	char 	*del;
+	int expand = 0;
 
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
 	if (!fd)
 		errors(data, MALLOC_ERROR, 1);
+	del = getdelimiter(node->content, &expand);
 	line = readline(">>>> ");
-	while (line && ft_strcmp(node->content, line))
+	while (line && ft_strcmp(del, line))
 	{
+		if (expand == 0)
+		line = herdoc_expand(data, line);
 		ft_putstr_fd(line, fd);
 		ft_putstr_fd("\n", fd);
 		free(line);
 		line = readline(">>>> ");
 	}
-	free(line);
 	close(fd);
+	free(del);
+	free(line);
     free(node->content);
     node->content = rname;
 }
+
 
 void open_herdocs(t_data *data, t_dlist *node)
 {

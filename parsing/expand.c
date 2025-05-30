@@ -43,6 +43,3 @@ char *expand(t_data *data, char *token, char **line)
 	*line = s;
 	return (token);
 }
-
-// echo $"test1""$USER"
-	// test1mtaleb

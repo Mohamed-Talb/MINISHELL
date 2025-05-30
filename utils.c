@@ -65,3 +65,17 @@ char *randomnbr()
     char *str = ft_uitoa(sum);
     return (str);
 }
+
+void print_cmds(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (data->cmds[i])
+	{
+		printf("%s\n", data->cmds[i]->cmd);
+		printdoule(data->cmds[i]->flags);
+		i++;
+	}
+	printf("\n");
+}

@@ -1,3 +1,4 @@
+#define _POSIX_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -9,7 +10,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <sys/wait.h>
-
+# include <signal.h>
 // ERRORS
 #define MALLOC_ERROR "memory allocation faild"
 #define CMD_NOTFOUND "command not found"
@@ -30,6 +31,7 @@ typedef struct s_dlist
 {
 	int				type;
 	void			*content;
+	int 			expandher;
 	struct s_dlist	*prev;
 	struct s_dlist	*next;
 }	t_dlist;
@@ -83,6 +85,7 @@ int 	init_data(t_data *data, char **penv);
 // UTILES
 void 	errors(t_data *data, char *error, int exitcode);
 int 	in_set(char *set, char c);
+void	print_cmds(t_data *data);
 char 	*randomnbr();
 // PARSING 
 int		parser(t_data *data, char *line);
@@ -92,3 +95,7 @@ char	*single_q(t_data *data, char *token, char **line);
 void	redirect(t_data *data, t_dlist *token, char **line);
 int		handle_arg(t_data *data, t_dlist *token, char **line);
 int		double_q(t_data *data, t_dlist *token, char **line, int state);
+
+
+//SIGNALS 
+void signals(struct sigaction *sa);

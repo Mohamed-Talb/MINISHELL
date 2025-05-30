@@ -25,6 +25,7 @@ Requires linking with the `termcap` or `ncurses` library.
 */
 #include <stdio.h>
 #include <termcap.h>
+#include <stdlib.h>
 
 int main() {
     char *term = getenv("TERM");

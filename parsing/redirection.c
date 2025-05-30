@@ -36,12 +36,8 @@ void redirect_helper(t_data *data, t_dlist *token, char **line)
 	while (!(*s == '\0' || in_set(REDIRECTION_SET, *s) == 0 || ft_iswhitespace(*s)))
 	{
 		if(*s == '"')
-		{
 			if (token->type == RIGHT_RED || token->type == LEFT_RED || token->type == RIGHT_HER)
 				double_q(data, token, &s, 1);
-			else
-				double_q(data, token, &s, 0);
-		}
 		if (*s == '$' && token->type != LEFT_HER)
 			token->content = expand(data, token->content, &s);
 		else if(*s == '\'')

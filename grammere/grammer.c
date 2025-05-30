@@ -6,7 +6,7 @@ int getredirections(t_data *data, t_dlist *list, int i)
 	{
 		open_herdocs(data, list);
 	}
-	ft_dlstback(&(data->cmds[i]->allred), ft_strdup(list->content));
+	ft_dlstback(&(data->cmds[i]->allred), list->content);
 	ft_dlstlast(data->cmds[i]->allred)->type = list->type;
 	return 0;
 }
@@ -25,7 +25,7 @@ int getcommand(t_cmds *command, t_dlist *list)
 	else
 	{
 		command->flags = ft_append2(command->flags, list->content, 0);
-		command->cmd = ft_strdup(list->content);
+		command->cmd = ft_strdup(list->content); 
 	}
 	if (tmp)
 		ft_freedouble(&tmp);
@@ -49,4 +49,10 @@ void grammer(t_data *data)
 			getcommand(data->cmds[i], list);
 		list = list->next;
 	}
+	// i = 0;
+	// while (i < data->pipes_nb);
+	// {
+	// 	open_herdocs(data, data->cmds[i]);
+	// 	i++;
+	// }
 }
