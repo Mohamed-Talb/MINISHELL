@@ -58,13 +58,13 @@ typedef struct s_data
 
 void	grammer(t_data *data);
 void	printdoule(char **str);
-void	executor(t_data *data);
+
 void 	open_herdocs(t_data *data, t_dlist *node);
-void	redir_setup(t_data *data);
+void 	signals(struct sigaction *sa, int option);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
 void	check(t_data *data, t_cmds *command);
-int	parent(t_data *data);
-int	child(t_data *data, t_cmds *command);
+int		parent(t_data *data);
+int		child(t_data *data, t_cmds *command);
 
 // 2D LIST UTILS 
 void	f(void *content);
@@ -98,4 +98,4 @@ int		double_q(t_data *data, t_dlist *token, char **line, int state);
 
 
 //SIGNALS 
-void signals(struct sigaction *sa);
+void 	signals(struct sigaction *sa, int option);

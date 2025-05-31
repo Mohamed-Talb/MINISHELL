@@ -7,6 +7,8 @@ int	child(t_data *data, t_cmds *command)
 	pid = fork();
 	if (pid == 0)
 	{
+		struct sigaction sa;
+		signals(&sa, 2);
 		check(data, command);
         duplication(data, command);
         execve(command->cmd, command->flags, data->env);

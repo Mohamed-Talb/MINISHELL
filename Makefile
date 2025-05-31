@@ -42,11 +42,13 @@ LDFLAGS = -lreadline
 NAME = minishell
 
 # RULES
-all: $(NAME)
+all: $(NAME) cleanup
 
 $(NAME): $(SHELL_OBJ) $(LIBFT_OBJ)
 	@$(CC) $(SHELL_OBJ) $(LIBFT_OBJ) -o $(NAME) $(LDFLAGS)
 
+cleanup:
+	@rm -f $(SHELL_OBJ) $(LIBFT_OBJ)
 
 # COMPILE OBJECTS
 # libft/%.o: libft/%.c

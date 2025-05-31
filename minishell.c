@@ -28,7 +28,7 @@ int main(int ac, char **av, char **penv)
 	init_data(data, penv);
 	while (1)
 	{
-		signals(&sa);
+		signals(&sa, 1);
 		data->line = readline("\e[91m\e[1mminishell:\e[92m~$ \e[0m");
 		if (data->line == NULL || !ft_strncmp("exit", data->line, 4))
 			break;
