@@ -25,14 +25,14 @@ int	parent(t_data *data)
 {
 	int	end[2];
 	int	i = 0;
-    int pid;
-    int status;
-	
+	int pid;
+	int status;
+
 	while (data->cmds[i + 1])
 	{
 		if (pipe(end) == -1)
 			errors(data, "Pipe creation failed\n", 1);
-        data->cmds[i]->pipeout = end[1];
+		data->cmds[i]->pipeout = end[1];
 		child(data, data->cmds[i]);
 		data->cmds[i + 1]->pipein = end[0];
 		i++;
@@ -41,5 +41,6 @@ int	parent(t_data *data)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
-	return (exitestatus(status));
+	data->last_exit_status = exitestatus(status);
+	return (data->last_exit_status);
 }

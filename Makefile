@@ -30,7 +30,8 @@ LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 SHELL_SRC = minishell.c utils.c cleanup.c double_lst.c structutils.c \
 			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
 			parsing/redirection.c grammere/grammer.c  executor.c grammere/herdocs.c execution/check.c execution/child.c execution/parent.c \
-			filesmanagment/duplication.c 
+			filesmanagment/duplication.c builtin/echo.c builtin/cd.c builtin/check_builtin.c builtin/execute_builtin.c builtin/pwd.c builtin/export.c \
+			builtin/unset.c builtin/env.c
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
 # COMPILER & FLAGS

@@ -34,6 +34,6 @@ int main() {
     } else {
         printf("PATH environment variable not found.\n");
     }
-
+    
     return 0;
 }

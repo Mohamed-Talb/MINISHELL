@@ -4,6 +4,8 @@ void reset_data(t_data *data)
 {
 	int i;
 
+	if (data == NULL)
+		return ;
 	if (data->cmds)
 	{
 		i = 0;
@@ -32,9 +34,9 @@ void reset_data(t_data *data)
 
 void free_data(t_data *data)
 {
-	reset_data(data);
 	if (data != NULL)
 	{
+		reset_data(data);
 		free(data);
 		data = NULL;
 	}

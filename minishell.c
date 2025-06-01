@@ -19,16 +19,25 @@ int main(int ac, char **av, char **penv)
 	(void) ac;
 	(void) av;
 	t_data *data = malloc(sizeof(t_data));
+
 	init_data(data, penv);
 	while (1)
 	{
 		data->line = readline("\e[91m\e[1mminishell:\e[92m~$ \e[0m");
 		if (data->line == NULL || !ft_strncmp("exit", data->line, 4))
 			break;
+		if (data->line[0] == 0)
+		{
+			reset_data(data);
+			continue;
+		}
 		add_history(data->line);
 		parser(data, data->line);
 		grammer(data);
-		parent(data);
+		if (data->pipes_nb == 1 && check_builtin(data->cmds[0]->flags[0]))
+			execute_builtin(data, data->cmds[0]);
+		else
+			parent(data);
 		reset_data(data);
 	}
 	ft_putstr_fd("exit\n", 1);
