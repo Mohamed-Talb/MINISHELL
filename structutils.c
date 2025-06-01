@@ -7,11 +7,9 @@ int init_data(t_data *data, char **penv)
 		errors(data, MALLOC_ERROR, 1);
 		return (1);
 	}
-	data->cmd_list = NULL;
-	data->line = NULL;
 	data->env = ft_strdup2(penv);
+	data->exported = ft_strdup2(penv);
 	data->pipes_nb = 1;
-	data->cmds = NULL;
 	return 0;
 }
 

@@ -8,7 +8,7 @@ char *expand(t_data *data, char *token, char **line)
 
 	if (*s == '?')
 	{
-		token = ft_append(token, data->last_exit_status, -1);
+		token = ft_strjoin_fc(token, ft_itoa(data->last_exit_status), 3);
 		s++;
 	}
 	else if (ft_isdigit(*s) || *s == '\0' || ft_iswhitespace(*s))

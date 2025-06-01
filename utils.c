@@ -2,7 +2,7 @@
 
 void errors(t_data *data, char *error, int exitcode)
 {
-	ft_putstr_fd(error, 1);
+	ft_putstr_fd(error, 2);
 	free_data(data);
 	exit(exitcode);
 }
@@ -40,7 +40,7 @@ void printdoule(char **str)
 	int i = 0;
 	while(str[i])
 	{
-		printf("%s ", str[i]);
+		printf("%s\n", str[i]);
 		i++;
 	}
 }

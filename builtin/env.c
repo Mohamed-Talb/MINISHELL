@@ -1,6 +1,9 @@
 #include "../minishell.h"
 
-void ft_env(t_data *data)
+int ft_env(int argc, char **argv, t_data *data)
 {
-	printdoule(data->env);	
+    (void) argc;
+    (void) argv;
+	printdoule(data->env);
+    return (0);
 }

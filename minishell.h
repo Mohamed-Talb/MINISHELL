@@ -18,7 +18,6 @@
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `"
 #define REDIRECTION_SET "<|>"
 
-
 // types macros
 #define CMD 1
 #define PIPE 2
@@ -51,6 +50,7 @@ typedef struct s_data
 	char	**env;
 	int		last_exit_status;
 	int 	pipes_nb;
+	char	**exported;
 	// int 	index; this is not used, why keep it??!?!
 	t_dlist	*cmd_list;
 	t_cmds	**cmds;
@@ -87,6 +87,7 @@ void 	errors(t_data *data, char *error, int exitcode);
 int 	in_set(char *set, char c);
 void	print_cmds(t_data *data);
 char 	*randomnbr();
+
 // PARSING 
 int		parser(t_data *data, char *line);
 char	*expand(t_data *data, char *token, char **line);
@@ -96,6 +97,15 @@ void	redirect(t_data *data, t_dlist *token, char **line);
 int		handle_arg(t_data *data, t_dlist *token, char **line);
 int		double_q(t_data *data, t_dlist *token, char **line, int state);
 
-
 //SIGNALS 
 void 	signals(struct sigaction *sa, int option);
+
+// BUILT-INS
+int		check_builtin(char *cmd);
+void	execute_builtin(t_data *data, t_cmds *command);
+int 	ft_echo(int argc, char **argv, t_data *data);
+int		ft_cd(int argc, char **argv, t_data *data);
+int		ft_pwd(int argc, char **argv, t_data *data);
+int		ft_export(int argc, char **argv, t_data *data);
+int		ft_unset(int argc, char **argv, t_data *data);
+int		ft_env(int argc, char **argv, t_data *data);

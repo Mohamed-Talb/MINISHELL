@@ -25,6 +25,7 @@ int main(int ac, char **av, char **penv)
 	(void) av;
 	struct sigaction sa;
 	t_data *data = malloc(sizeof(t_data));
+
 	init_data(data, penv);
 	while (1)
 	{
@@ -35,7 +36,10 @@ int main(int ac, char **av, char **penv)
 		completline(data);
 		parser(data, data->line);
 		grammer(data);
-		parent(data);
+		if (data->pipes_nb == 1 && check_builtin(data->cmds[0]->flags[0]))
+			execute_builtin(data, data->cmds[0]);
+		else
+			parent(data);
 		add_history(data->line);
 		reset_data(data);
 	}
