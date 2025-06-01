@@ -1,5 +1,5 @@
 # Ignore all files in the .vscode folder
-.vscode/settings.json
+.vscode
 
 *.o
 *.a
