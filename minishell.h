@@ -85,6 +85,7 @@ int 	init_data(t_data *data, char **penv);
 // UTILES
 void 	errors(t_data *data, char *error, int exitcode);
 int 	in_set(char *set, char c);
+int		set_index(char *set, char c);
 void	print_cmds(t_data *data);
 char 	*randomnbr();
 

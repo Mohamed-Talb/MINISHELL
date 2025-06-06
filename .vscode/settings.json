@@ -4,6 +4,7 @@
 		"signal.h": "c",
 		"minishell.h": "c",
 		"stdlib.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"climits": "c"
 	}
 }

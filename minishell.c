@@ -31,12 +31,10 @@ int main(int ac, char **av, char **penv)
 	{
 		signals(&sa, 1);
 		data->line = readline("\e[91m\e[1mminishell:\e[92m~$ \e[0m");
-		if (data->line == NULL || !ft_strncmp("exit", data->line, 4))
-			break;
 		completline(data);
 		parser(data, data->line);
 		grammer(data);
-		if (data->pipes_nb == 1 && check_builtin(data->cmds[0]->flags[0]))
+		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
 			execute_builtin(data, data->cmds[0]);
 		else
 			parent(data);

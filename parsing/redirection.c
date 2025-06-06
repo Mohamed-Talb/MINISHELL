@@ -49,8 +49,8 @@ void redirect_helper(t_data *data, t_dlist *token, char **line)
 		}
 	}
 	*line = s;
+	printf("delemiter: %s\n", (char *) token->content);
 }
-
 
 void redirect(t_data *data, t_dlist *token, char **line)
 {

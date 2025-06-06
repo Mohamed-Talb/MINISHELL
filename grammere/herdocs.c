@@ -92,9 +92,11 @@ void heredoc(t_data *data, t_dlist *node)
 	if (!fd)
 		errors(data, MALLOC_ERROR, 1);
 	del = getdelimiter(node->content, &expand);
+	fprintf(stderr, "del: %s\n", del);
 	line = readline(">>>> ");
 	while (line && ft_strcmp(del, line))
 	{
+		fprintf(stderr, "test\n");
 		if (expand == 0)
 		line = herdoc_expand(data, line);
 		ft_putstr_fd(line, fd);
@@ -102,16 +104,19 @@ void heredoc(t_data *data, t_dlist *node)
 		free(line);
 		line = readline(">>>> ");
 	}
+	fprintf(stderr, "after\n");
 	close(fd);
 	free(del);
 	free(line);
     free(node->content);
     node->content = rname;
+	fprintf(stderr, "really after\n");
 }
-
 
 void open_herdocs(t_data *data, t_dlist *node)
 {
 	if (node->type == LEFT_HER)
-	    heredoc(data, node);
+	{
+		heredoc(data, node);
+	}
 }
