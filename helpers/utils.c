@@ -21,6 +21,18 @@ char	*ft_strjoin_fc(char *str, char *buff, int choice)
 	return (new);
 }
 
+int		in_set(char *set, char c)
+{
+	int i = 0;
+	while (set[i] != '\0')
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		set_index(char *set, char c)
 {
 	int i = 0;

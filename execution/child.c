@@ -1,13 +1,5 @@
 #include "../minishell.h"
 
-void execute(t_data *data, t_cmds *command)
-{
-	check(data, command);
-	duplication(data, command);
-	execve(command->cmd, command->flags, data->env);
-	errors(data, "execve failed\n", 126);
-}
-
 void run_builtin(t_data *data, t_cmds *command)
 {
 	duplication(data, command);
@@ -29,18 +21,23 @@ int	child(t_data *data, t_cmds *command)
 {
 	int	pid;
 
+	fprintf(stderr, "in parent\n");
 	pid = fork();
 	if (pid == 0)
 	{
 		struct sigaction sa;
 		signals(&sa, 2);
-		check(data, command);
         duplication(data, command);
         if (check_builtin(command->flags[0]))
+		{
 			run_builtin(data, command);
+		}
 		else
-			execute(data, command);
-        errors(data, "execve failed\n", 126);
+		{
+			check(data, command);
+			execve(command->cmd, command->flags, data->env);
+			errors(data, "execve failed\n", 126);
+		}
 	}
 	else if (pid > 0)
 	{

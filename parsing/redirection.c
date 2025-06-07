@@ -14,7 +14,7 @@ void ft_putnstr_fd(char *str, int n, int fd)
 
 void checkerrors(t_data *data, char c)
 {
-	if (c == '\0' || in_set(REDIRECTION_SET , c) == 0)
+	if (c == '\0' || in_set(REDIRECTION_SET , c) == 1)
 	{
 		ft_putstr_fd(UNEXPECTED_TOKEN, 2);
 		if (c == '\0')
@@ -33,7 +33,7 @@ void redirect_helper(t_data *data, t_dlist *token, char **line)
 		(*line)++;
 	s = *line;
 	checkerrors(data, *s);
-	while (!(*s == '\0' || in_set(REDIRECTION_SET, *s) == 0 || ft_iswhitespace(*s)))
+	while (*s != '\0' && in_set(REDIRECTION_SET, *s) != 1 && !ft_iswhitespace(*s))
 	{
 		if(*s == '"')
 			if (token->type == RIGHT_RED || token->type == LEFT_RED || token->type == RIGHT_HER)

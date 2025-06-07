@@ -49,6 +49,7 @@ void grammer(t_data *data)
 			getcommand(data->cmds[i], list);
 		list = list->next;
 	}
+	printf("end of grammer\n");
 	// i = 0;
 	// while (i < data->pipes_nb);
 	// {

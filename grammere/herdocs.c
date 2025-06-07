@@ -28,6 +28,95 @@ char *getdelimiter(char *str, int *expand)
 	return ret;
 }
 
+char *single_qh(t_data *data, char *token, char **line)
+{
+	char *s;
+
+	s = *line + 1;
+	while (*s != '\0' && *s != '\'')
+	{
+		token = ft_append(token, *s, -1);
+		s++;
+	}
+	if (*s == '\'')
+		s++;
+	else
+		errors(data, "minishell: syntax error: unclosed quote\n", 1);
+	*line = s;
+	return (token);
+}
+
+
+char *double_qh(t_data *data, char *token, char **line, int state)
+{
+	char *s;
+	
+	s = *line;
+	s++;
+	while(*s != '"' && *s != 0)
+	{
+		if(*s == '$' && state == 1 && *(s + 1) != '"')
+		{
+			token = expand(data, token, &s);
+		}
+		else
+		{
+			token = ft_append(token, *s, -1);
+			s++;
+		}
+	}
+	if (*s == '"')
+		s++;
+	else
+		errors(data, "minishell: syntax error: unclosed quote\n", 1);
+	*line = s;
+	return (token);
+}
+
+char *getdelemiter2(t_data *data, char *s, int *expand)
+{
+	char *ret;
+
+	ret = NULL;
+	while (*s && !ft_iswhitespace(*s))
+	{
+		if (*s == '$')
+		{
+			s++;
+			if (*s == '"')
+			{
+				*expand = 1;
+				ret = double_qh(data, ret, &s, 0);
+			}
+			else if (*s == '\'')
+			{
+				*expand = 1;
+				ret = single_qh(data, ret, &s);
+			}
+			else
+			{
+				ret = ft_append(ret, '$', -1);
+			}
+		}
+		if (*s == '"')
+		{
+			*expand = 1;
+			ret = double_qh(data, ret, &s, 0);
+		}
+		else if (*s == '\'')
+		{
+			*expand = 1;
+			ret = single_qh(data, ret, &s);
+		}
+		else
+		{
+			ret = ft_append(ret, *s, -1);
+			s++;
+		}
+	}
+	return (ret);
+}
+
 char  *herdoc_expand(t_data *data, char *line)
 {
 	int i = 0;
@@ -90,8 +179,9 @@ void heredoc(t_data *data, t_dlist *node)
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
 	if (!fd)
-		errors(data, MALLOC_ERROR, 1);
-	del = getdelimiter(node->content, &expand);
+		errors(data, strerror(errno), 1);
+	fprintf(stderr, "del before: %s\n", (char *) node->content);
+	del = getdelemiter2(data, node->content, &expand);
 	fprintf(stderr, "del: %s\n", del);
 	line = readline(">>>> ");
 	while (line && ft_strcmp(del, line))

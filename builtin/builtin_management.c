@@ -12,8 +12,9 @@ int check_builtin(char *cmd)
 
 void execute_builtin(t_data *data, t_cmds *command)
 {
-	int exst;
+	int exst = 0;
 	
+	printf("inside builtins\n");
 	if (!ft_strcmp(command->flags[0], "echo"))
 		exst = ft_echo(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "cd"))

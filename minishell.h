@@ -11,6 +11,7 @@
 # include <errno.h>
 # include <sys/wait.h>
 # include <signal.h>
+# include <limits.h>
 // ERRORS
 #define MALLOC_ERROR "memory allocation faild"
 #define CMD_NOTFOUND "command not found"
@@ -80,7 +81,7 @@ void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
 void	free_data(t_data *data);
 void	reset_data(t_data *data);
 int 	init_cmds(t_data *data);
-int 	init_data(t_data *data, char **penv);
+t_data	*init_data(char **penv);
 
 // UTILES
 void 	errors(t_data *data, char *error, int exitcode);
@@ -110,3 +111,4 @@ int		ft_pwd(int argc, char **argv, t_data *data);
 int		ft_export(int argc, char **argv, t_data *data);
 int		ft_unset(int argc, char **argv, t_data *data);
 int		ft_env(int argc, char **argv, t_data *data);
+int		ft_exit(int argc, char **argv, t_data *data);

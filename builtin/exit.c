@@ -59,7 +59,7 @@ int ft_exit(int argc, char **argv, t_data *data)
 		return (2);
 	}
 	if (value == 9223372036854775808ULL && sign == -1)
-		value = LLONG_MIN;
+		value = (LLONG_MIN);
 	else
 		value = sign * ((long long) value);
 	result = (unsigned char) value;

@@ -5,9 +5,13 @@ void completline(t_data *data)
 	int i = 0;
 	char *completline = NULL;
 	
-	while(data->line[i])
+	while (data->line[i])
 		i++;
-	if (data->line[i - 1] == '|')
+	if (i > 0)
+		i--;
+	while (ft_iswhitespace(data->line[i]))
+		i--;
+	if (data->line[i] == '|')
 	{
 		completline = readline("> ");
 		while (completline[0] == 0 || completline == NULL)
@@ -15,7 +19,7 @@ void completline(t_data *data)
 			free(completline);
 			completline = readline("> ");
 		}
-		data->line = ft_strjoin_fc(data->line, completline, 3);
+		data->line = ft_strjoin_fc(data->line, completline, 3); // should join with and add a space if needed (append space)
 	}
 }
 
@@ -24,9 +28,9 @@ int main(int ac, char **av, char **penv)
 	(void) ac;
 	(void) av;
 	struct sigaction sa;
-	t_data *data = malloc(sizeof(t_data));
+	t_data *data;
 
-	init_data(data, penv);
+	data = init_data(penv);
 	while (1)
 	{
 		signals(&sa, 1);
@@ -34,8 +38,16 @@ int main(int ac, char **av, char **penv)
 		completline(data);
 		parser(data, data->line);
 		grammer(data);
+		if (data->cmds[0]->flags)
+		{
+			printf("pipes nbr: %d, flags: %p, cmd: %s\n", data->pipes_nb, data->cmds[0]->flags, data->cmds[0]->flags[0]);
+			printf("value: %d\n", check_builtin(data->cmds[0]->flags[0]));
+		}
 		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
+		{
+			printf("in builtins for real\n");
 			execute_builtin(data, data->cmds[0]);
+		}
 		else
 			parent(data);
 		add_history(data->line);
