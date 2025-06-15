@@ -10,6 +10,7 @@
 # include <dirent.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <limits.h>
 # include <stdbool.h>
@@ -85,12 +86,13 @@ int 	init_cmds(t_data *data);
 t_data	*init_data(char **penv);
 
 // UTILES
-void 	set_errors(t_data *data, char *error, int exitcode);
-void 	errors(t_data *data, char *error, int exitcode);
+char 	*randomnbr();
+void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
 int		set_index(char *set, char c);
-void	print_cmds(t_data *data);
-char 	*randomnbr();
+void 	errors(t_data *data, char *error, int exitcode);
+void 	set_errors(t_data *data, char *error, int exitcode);
+void	errcln(t_data *data, int exitcode, char *error, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);

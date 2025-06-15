@@ -26,11 +26,7 @@ void files_manager(t_data *data, t_cmds *cmd)
 	}
 }
 
-<<<<<<< HEAD:execution/duplication.c
 void last_in_out(t_cmds *cmd, t_list **infile, t_list **outfile)
-=======
-void last_in_out(t_cmds *cmd, t_dlist **infile, t_dlist **outfile)
->>>>>>> khalid:filesmanagment/duplication.c
 {
     t_list *list = cmd->allred;
     while (list)

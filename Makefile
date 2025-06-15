@@ -24,11 +24,15 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 
 # PIPEX SOURCE FILES
-SHELL_SRC = minishell.c helpers/utils.c helpers/lst_utils.c helpers/structs_utils.c \
-			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
-			parsing/redirection.c grammere/grammer.c grammere/herdocs.c execution/check.c execution/child.c execution/parent.c \
-			execution/duplication.c builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c \
-			builtin/unset.c builtin/env.c helpers/signals.c builtin/builtin_management.c builtin/exit.c
+SHELL_SRC = \
+	minishell.c \
+	helpers/utils.c helpers/lst_utils.c helpers/structs_utils.c helpers/signals.c helpers/cleanup.c \
+	parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c parsing/redirection.c \
+	grammere/grammer.c grammere/herdocs.c \
+	execution/check.c execution/child.c execution/parent.c execution/duplication.c \
+	builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c builtin/unset.c builtin/env.c \
+	builtin/builtin_management.c builtin/exit.c
+
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
 # COMPILER & FLAGS

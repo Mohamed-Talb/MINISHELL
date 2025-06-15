@@ -64,7 +64,7 @@ int parser(t_data *data, char *line)
 		if (ft_iswhitespace(line[i]) == false)
 		{
 			str = ft_strdup("");
-			new = ft_dlstback(&data->cmd_list, str);
+			new = ft_lstback(&data->cmd_list, str);
 			if (str == NULL || new == NULL)
 				errors(data, MALLOC_ERROR, 1);
 			i = handle_arg(data, new, line, i);

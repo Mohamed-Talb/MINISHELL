@@ -36,6 +36,7 @@ typedef struct flags {
 	int		specifier;
 	int		precision;
 	int		width;
+	int		write_dest;
 }	t_flag;
 
 // FT_STRINGS:
@@ -99,8 +100,10 @@ int		ft_iswhitespace(char c);
 char	*ft_getnextline(int fd);
 
 
-//FT_PRINTF
+//PRINTERS
+int		eputf(const char *s, ...);
 int		ft_printf(const char *s, ...);
+int		veputf(const char *s, va_list args);
 //1- init
 void	initflags(t_flag *flag);
 int		initstruct(char **str, t_flag *flag);
@@ -109,7 +112,7 @@ char	*printmemory(void *addr);
 char	*printunsigned(unsigned int n);
 char	*printstring(const char *s);
 char	*printint(int n, t_flag *params);
-int		printchar(int c, int width, bool minus);
+int		printchar(int c, int width, bool minus, int write_dest);
 char	*printhexa(unsigned int n, char *base, t_flag *params);
 //3- check errors
 int		checkorder(char *s);

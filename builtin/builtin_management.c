@@ -19,7 +19,6 @@ void execute_builtin(t_data *data, t_cmds *command)
 	exst = 0;
 	stdin_dup = dup(0);
 	stdout_dup = dup(1);
-	printf("inside builtins\n");
 	duplication(data, data->cmds[0]);
 	if (!ft_strcmp(command->flags[0], "echo"))
 		exst = ft_echo(ft_strlen2(command->flags), command->flags, data);

@@ -12,7 +12,7 @@ void reset_data(t_data *data)
 		while (data->cmds[i])
 		{
 			free(data->cmds[i]->cmd);
-			// ft_dlstclear(&data->cmds[i]->allred);
+			// ft_lstclear(&data->cmds[i]->allred);
 			free(data->cmds[i]);
 			i++;
 		}
@@ -21,7 +21,7 @@ void reset_data(t_data *data)
 	}
 	if (data->cmd_list != NULL)
 	{
-		ft_dlstclear(&data->cmd_list);
+		ft_lstclear(&data->cmd_list);
 		data->cmd_list = NULL;
 	}
 	if (data->line != NULL)

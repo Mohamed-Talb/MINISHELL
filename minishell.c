@@ -31,6 +31,7 @@ void prompter(t_data *data)
 	if (data->last_exit_status != 0)
 		str = "\e[1;96m⟦ minishell ⟧\e[0m \e[1;91m>>\e[0m ";
 	data->line = readline(str);
+	add_history(data->line);
 	completline(data);
 }
 
@@ -43,18 +44,9 @@ void body(t_data *data)
 	parser(data, data->line);
 	if (data->command_count == 0)
 		return;
-	printf("command count: %d\n", data->command_count);
 	grammer(data);
-	if (data->cmds[0]->flags)
-	{
-		printf("pipes nbr: %d, flags: %p, cmd: %s\n", data->pipes_nb, data->cmds[0]->flags, data->cmds[0]->flags[0]);
-		printf("value: %d\n", check_builtin(data->cmds[0]->flags[0]));
-	}
 	if (data->command_count == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
-	{
-		printf("in builtins for real\n");
 		execute_builtin(data, data->cmds[0]);
-	}
 	else
 		parent(data);
 }
@@ -69,7 +61,6 @@ int main(int ac, char **av, char **penv)
 	while (1)
 	{
 		body(data);
-		add_history(data->line);
 		reset_data(data);
 	}
 	ft_putstr_fd("exit\n", 1);

@@ -28,7 +28,7 @@ int	double_q(t_data *data, t_list *token, char *s, int i)
 	if (s[i] == '"')
 		i++;
 	else
-		errors(data, "minishell: syntax error: unclosed quote\n", 1);
+		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
 	return (i);
 }
 

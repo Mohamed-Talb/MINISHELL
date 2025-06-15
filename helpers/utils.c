@@ -1,5 +1,18 @@
 #include "../minishell.h"
 
+// errcln: ERRor CLeaN
+// will print the error to stderr then free data
+void errcln(t_data *data, int exitcode, char *error, ...)
+{
+	va_list	args;
+
+	va_start(args, error);
+	veputf(error, args);
+	va_end(args);
+	free_data(data);
+	exit(exitcode);
+}
+
 void errors(t_data *data, char *error, int exitcode)
 {
 	ft_putstr_fd(error, 2);
@@ -28,6 +41,17 @@ char	*ft_strjoin_fc(char *str, char *buff, int choice)
 }
 
 int in_set(char *set, char c)
+{
+	while (*set)
+	{
+		if (*set == c)
+			return (1);
+		set++;
+	}
+	return (0);
+}
+
+int posin_set(char *set, char c)
 {
 	int i = 0;
 	while (set[i] != '\0')

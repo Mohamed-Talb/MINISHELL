@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-static void	printerrors(t_data *data, bool found, bool permission)
+static void	printerrors(t_data *data, t_cmds *command, bool found, bool permission)
 {
 	if (!found)
-		errors(data, "command not found\n", 127);
+		errcln(data, 127, "%s: command not found\n", command->flags[0]);
 	if (!permission)
-		errors(data, "permission denied\n", 126);
+		errcln(data, 126, "%s: permission denied\n", command->flags[0]);
 }
 
 char 	**helper(t_data *data, t_cmds *command)
@@ -55,6 +55,12 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 	return paths;
 }
 
+int isDirectory(const char *path) {
+	struct stat sb;
+
+	return (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode));
+}
+
 void	check(t_data *data, t_cmds *command)
 {
 	int  i;
@@ -65,6 +71,11 @@ void	check(t_data *data, t_cmds *command)
 	i = 0;
 	found = false;
 	permission = false;
+	if (isDirectory(command->flags[0]))
+	{
+		eputf("minishell: %s: Is a directory\n", command->flags[0]);
+		errors(data, NULL, 126);
+	}
 	paths = getabspaths(data, command);
 	if (!paths || !paths)
 		errors(data, MALLOC_ERROR, 1);
@@ -87,5 +98,5 @@ void	check(t_data *data, t_cmds *command)
 		i++;
 	}
 	if (!found || !permission)
-		printerrors(data, found, permission);
+		printerrors(data, command, found, permission);
 }
