@@ -44,7 +44,7 @@ int handle_arg(t_data *data, t_list *token, char *s, int i)
 		else
 		{
 			token->content = ft_append(token->content, s[i], -1);
-			i++;
+			i++; // ok i will not touch it again, relax!
 		}
 	}
 	return (i);
