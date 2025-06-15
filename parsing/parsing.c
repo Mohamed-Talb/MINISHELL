@@ -1,6 +1,26 @@
 #include "../minishell.h"
 
-int handle_arg(t_data *data, t_dlist *token, char **line)
+int parsing_errors(t_data *data, t_list *list)
+{
+	if (!list)
+	{
+		reset_data(data);
+		return (1);
+	}
+	while (list)
+	{
+		if (list->error)
+		{
+			ft_putstr_fd(list->error, 2);
+			reset_data(data);
+			return (1);
+		}
+		list = list->next;
+	}
+	return 0;
+}
+
+int handle_arg(t_data *data, t_list *token, char **line)
 {
 	char *s;
 
@@ -15,7 +35,7 @@ int handle_arg(t_data *data, t_dlist *token, char **line)
 			token->content = expand(data, token->content, &s);
 		else if (*s == '<' || *s == '>')
 		{
-			redirect(data, token, &s);
+			redirection(data, token, &s);
 			break;
 		}
 		else if (*s == '|')
@@ -38,13 +58,15 @@ int parser(t_data *data, char *line)
 	{
 		if (!ft_iswhitespace(*line))
 		{
-			ft_dlstback(&data->cmd_list, ft_strdup(""));
-			handle_arg(data, ft_dlstlast(data->cmd_list), &line);
-			ft_dlstlast(data->cmd_list);
+			ft_lstback(&data->cmd_list, ft_strdup(""));
+			handle_arg(data, ft_lstlast(data->cmd_list), &line);
+			ft_lstlast(data->cmd_list);
 		}
 		if (*line == '\0')
-			return (0);
+			break ;
 		line++;
 	}
+	if (parsing_errors(data, data->cmd_list) == 1)
+		return (1);
 	return (0);
 }

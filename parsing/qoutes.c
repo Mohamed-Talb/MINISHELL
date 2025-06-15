@@ -13,13 +13,13 @@ char *single_q(t_data *data, char *token, char **line)
 	if (*s == '\'')
 		s++;
 	else
-		errors(data, "minishell: syntax error: unclosed quote\n", 1);
+		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
 	*line = s;
 	return (token);
 }
 
 
-int double_q(t_data *data, t_dlist *token, char **line, int state)
+int double_q(t_data *data, t_list *token, char **line, int state)
 {
 	char *s;
 	
@@ -40,7 +40,7 @@ int double_q(t_data *data, t_dlist *token, char **line, int state)
 	if (*s == '"')
 		s++;
 	else
-		errors(data, "minishell: syntax error: unclosed quote\n", 1);
+		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
 	*line = s;
 	return (0);
 }

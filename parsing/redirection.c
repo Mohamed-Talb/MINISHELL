@@ -12,35 +12,35 @@ void ft_putnstr_fd(char *str, int n, int fd)
 	}
 }
 
-void checkerrors(t_data *data, char c)
+void redirect_errors(t_data *data, char c)
 {
+	char *er = "";
+
+
 	if (c == '\0' || in_set(REDIRECTION_SET , c) == 1)
 	{
-		ft_putstr_fd(UNEXPECTED_TOKEN, 2);
+		er = ft_strjoin(er, UNEXPECTED_TOKEN);
 		if (c == '\0')
-			ft_putstr_fd("newline", 2);
+			er = ft_strjoin(er, "newline");
 		else
-			ft_putchar_fd(c, 2);
-		errors(data, "'\n", 1);
+			er = ft_append(er, c, -1);
+		set_errors(data, ft_strjoin(er, "'\n"), 1);
 	}
 }
 
-void redirect_helper(t_data *data, t_dlist *token, char **line)
+void redirect_helper(t_data *data, t_list *token, char **line)
 {
 	char *s;
-	
-	while (ft_iswhitespace(**line))
-		(*line)++;
+
 	s = *line;
-	checkerrors(data, *s);
-	while (*s != '\0' && in_set(REDIRECTION_SET, *s) != 1 && !ft_iswhitespace(*s))
+	redirect_errors(data, *s);
+	while (*s != '\0' && !in_set(REDIRECTION_SET, *s) && !ft_iswhitespace(*s))
 	{
-		if(*s == '"')
-			if (token->type == RIGHT_RED || token->type == LEFT_RED || token->type == RIGHT_HER)
-				double_q(data, token, &s, 1);
+		if(*s == '"' && token->type != LEFT_HER)
+			double_q(data, token, &s, 1);
 		if (*s == '$' && token->type != LEFT_HER)
 			token->content = expand(data, token->content, &s);
-		else if(*s == '\'')
+		else if(*s == '\''  && token->type != LEFT_HER)
 			token->content = single_q(data, token->content, &s);
 		else
 		{
@@ -49,16 +49,15 @@ void redirect_helper(t_data *data, t_dlist *token, char **line)
 		}
 	}
 	*line = s;
-	printf("delemiter: %s\n", (char *) token->content);
 }
 
-void redirect(t_data *data, t_dlist *token, char **line)
+void redirection(t_data *data, t_list *token, char **line)
 {
 	char *s;
 
 	if(ft_strlen(token->content) != 0)
-		ft_dlstback(&data->cmd_list, ft_strdup(""));
-	token = ft_dlstlast(data->cmd_list);
+		ft_lstback(&data->cmd_list, ft_strdup(""));
+	token = ft_lstlast(data->cmd_list);
 	s = *line;
 	if (*s == '>')
 	{
@@ -80,6 +79,8 @@ void redirect(t_data *data, t_dlist *token, char **line)
 			s++;
 		}
 	}
+	while (ft_iswhitespace(*s))
+		s++;
 	*line = s;
 	redirect_helper(data, token, line);
 }

@@ -5,15 +5,12 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 			libft/ft_fd/ft_putnbr_fd.c libft/ft_fd/ft_putchar_fd.c libft/ft_fd/ft_putstr_fd.c \
 			libft/ft_memory/ft_memcpy.c libft/ft_memory/ft_memmove.c \
 			libft/ft_memory/ft_memcmp.c libft/ft_memory/ft_memset.c libft/ft_memory/ft_memchr.c \
-			libft/ft_linkedlist/ft_lstclear.c libft/ft_linkedlist/ft_lstaddfront.c \
-			libft/ft_linkedlist/ft_lstsize.c libft/ft_linkedlist/ft_lstlast.c libft/ft_linkedlist/ft_lstnew.c \
-			libft/ft_linkedlist/ft_lstaddback.c libft/ft_linkedlist/ft_lstiter.c libft/ft_linkedlist/ft_lstdelone.c \
 			libft/ft_strings/ft_strlcat.c libft/ft_strings/ft_itoa.c libft/ft_strings/ft_strdup2.c \
 			libft/ft_strings/ft_split.c libft/ft_strings/ft_append.c libft/ft_strings/ft_strlen2.c \
 			libft/ft_strings/ft_append2.c libft/ft_strings/ft_substr.c libft/ft_strings/ft_strchr.c \
 			libft/ft_strings/ft_strrchr.c libft/ft_strings/ft_strlen.c libft/ft_strings/ft_strlcpy.c \
 			libft/ft_strings/ft_tolower.c libft/ft_strings/ft_toupper.c libft/ft_strings/ft_calloc.c \
-			libft/ft_strings/ft_bzero.c libft/ft_strings/ft_strdup.c libft/ft_strings/ft_lsttostr2.c \
+			libft/ft_strings/ft_bzero.c libft/ft_strings/ft_strdup.c \
 			libft/ft_strings/ft_striteri.c libft/ft_strings/ft_strmapi.c libft/ft_strings/ft_strnstr.c \
 			libft/ft_strings/ft_strjoin.c libft/ft_strings/ft_strtrim.c libft/ft_strings/ft_freedouble.c \
 			libft/ft_strings/ft_atoi.c libft/ft_strings/ft_strcmp.c libft/ft_strings/ft_strncmp.c libft/ft_strings/ft_remove.c \
@@ -27,10 +24,10 @@ LIBFT_SRC = libft/ft_fd/ft_putendl_fd.c \
 LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 
 # PIPEX SOURCE FILES
-SHELL_SRC = minishell.c helpers/utils.c helpers/cleanup.c helpers/double_lst.c helpers/structutils.c \
+SHELL_SRC = minishell.c helpers/utils.c helpers/lst_utils.c helpers/structs_utils.c \
 			parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c\
 			parsing/redirection.c grammere/grammer.c grammere/herdocs.c execution/check.c execution/child.c execution/parent.c \
-			filesmanagment/duplication.c builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c \
+			execution/duplication.c builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c \
 			builtin/unset.c builtin/env.c helpers/signals.c builtin/builtin_management.c builtin/exit.c
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
@@ -43,7 +40,7 @@ LDFLAGS = -lreadline
 NAME = minishell
 
 # RULES
-all: $(NAME) cleanup
+all: $(NAME)
 
 $(NAME): $(SHELL_OBJ) $(LIBFT_OBJ)
 	@$(CC) $(SHELL_OBJ) $(LIBFT_OBJ) -o $(NAME) $(LDFLAGS)

@@ -168,7 +168,7 @@ char  *herdoc_expand(t_data *data, char *line)
 	return (result);
 }
 
-void heredoc(t_data *data, t_dlist *node)
+void heredoc(t_data *data, t_list *node)
 {
 	char	*line;
     char    *rname;
@@ -203,7 +203,7 @@ void heredoc(t_data *data, t_dlist *node)
 	fprintf(stderr, "really after\n");
 }
 
-void open_herdocs(t_data *data, t_dlist *node)
+void open_herdocs(t_data *data, t_list *node)
 {
 	if (node->type == LEFT_HER)
 	{

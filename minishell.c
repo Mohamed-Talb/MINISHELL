@@ -19,7 +19,7 @@ void completline(t_data *data)
 			free(completline);
 			completline = readline("> ");
 		}
-		data->line = ft_strjoin_fc(data->line, completline, 3); // should join with and add a space if needed (append space)
+		data->line = ft_strjoin_fc(data->line, completline, 3);
 	}
 }
 
@@ -35,14 +35,13 @@ int main(int ac, char **av, char **penv)
 	{
 		signals(&sa, 1);
 		data->line = readline("\e[91m\e[1mminishell:\e[92m~$ \e[0m");
+		if (data->line == NULL)
+			break ;
 		completline(data);
-		parser(data, data->line);
+		if (parser(data, data->line))
+			continue ;
 		grammer(data);
-		if (data->cmds[0]->flags)
-		{
-			printf("pipes nbr: %d, flags: %p, cmd: %s\n", data->pipes_nb, data->cmds[0]->flags, data->cmds[0]->flags[0]);
-			printf("value: %d\n", check_builtin(data->cmds[0]->flags[0]));
-		}
+		print_cmds(data);
 		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
 		{
 			printf("in builtins for real\n");
@@ -57,3 +56,6 @@ int main(int ac, char **av, char **penv)
 	rl_clear_history();
 	return (0);
 }
+
+
+// $

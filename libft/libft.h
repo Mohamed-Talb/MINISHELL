@@ -23,12 +23,6 @@
 #  define BUFFER_SIZE 1
 # endif
 
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-
 //  csuxXdip
 // 012345678
 typedef struct flags {
@@ -49,7 +43,6 @@ char	*ft_itoa(int n);
 char	**ft_strdup2(char **str);
 char	*ft_uitoa(unsigned int n);
 char	*ft_strdup(const char *s);
-char	**ft_lsttostr2(t_list *head);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(char const *s, char c);
@@ -79,17 +72,6 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
-//FT_LINKED LIST
-t_list	*ft_lstlast(t_list *lst);
-t_list	*ft_lstnew(void *content);
-t_list	*ft_lstaddback(t_list **Root, void *content);
-
-void	ft_lstclear(t_list **Head);
-void	ft_lstaddfront(t_list **lst, t_list *new);
-void	ft_lstiter(t_list *lst, void (*f)(void *));
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
-
-int		ft_lstsize(t_list *lst);
 
 // FT_MEMORY MANIPULATION
 void	*ft_memset(void *s, int c, size_t n);
@@ -115,7 +97,7 @@ int		ft_iswhitespace(char c);
 
 // OTHERS
 char	*ft_getnextline(int fd);
-char	*ft_getenv(char **env, char *varname);
+
 
 //FT_PRINTF
 int		ft_printf(const char *s, ...);

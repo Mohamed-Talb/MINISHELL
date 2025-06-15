@@ -1,13 +1,12 @@
-#include "minishell.h"
+#include "../minishell.h"
 
-
-t_dlist *ft_dlstfront(t_dlist **head, void *content)
+t_list *ft_lstfront(t_list **head, void *content)
 {
-	t_dlist *new_node;
+	t_list *new_node;
 	
-	new_node = malloc(sizeof(t_dlist));
+	new_node = malloc(sizeof(t_list));
 	new_node->content = content;
-	new_node->prev = NULL;
+	new_node->error = NULL;
 	new_node->next = NULL;
 	if(*head == NULL)
 	{
@@ -15,24 +14,23 @@ t_dlist *ft_dlstfront(t_dlist **head, void *content)
 		return (*head);
 	}
 	new_node->next = *head;
-	(*head)->prev = new_node;
 	*head = new_node;
 	return (*head);
 }
 
-t_dlist *ft_dlstback(t_dlist **head, void *content)
+t_list *ft_lstback(t_list **head, void *content)
 {
-	t_dlist *new_node;
-	t_dlist *curr;
+	t_list *new_node;
+	t_list *curr;
 
-	new_node = malloc (sizeof(t_dlist)); 
+	new_node = malloc (sizeof(t_list)); 
 	if (! new_node)
 	{
 		return NULL;
 	}
-	new_node->prev = NULL;
 	new_node->content = content;
 	new_node->next = NULL;
+	new_node->error = NULL;
 	if((*head) == NULL) 
 	{
 		*head = new_node;
@@ -43,15 +41,14 @@ t_dlist *ft_dlstback(t_dlist **head, void *content)
 	{
 		curr = curr->next;
 	}
-	curr->next = new_node;
-	new_node->prev = curr; 
+	curr->next = new_node; 
 	return (*head);
 }
 
-void	ft_dlstclear(t_dlist **Head)
+void	ft_lstclear(t_list **Head)
 {
-	t_dlist	*curr;
-	t_dlist	*temp;
+	t_list	*curr;
+	t_list	*temp;
 
 	curr = *Head;
 	if (*Head == NULL)
@@ -66,9 +63,9 @@ void	ft_dlstclear(t_dlist **Head)
 	*Head = NULL;
 }
 
-t_dlist	*ft_dlstlast(t_dlist *lst)
+t_list	*ft_lstlast(t_list *lst)
 {
-	t_dlist	*curr;
+	t_list	*curr;
 
 	if (!lst)
 		return (NULL);
@@ -80,9 +77,9 @@ t_dlist	*ft_dlstlast(t_dlist *lst)
 	return (curr);
 }
 
-int	ft_dlstsize(t_dlist *lst)
+int	ft_lstsize(t_list *lst)
 {
-	t_dlist	*curr;
+	t_list	*curr;
 	int		i;
 
 	curr = lst;
@@ -105,11 +102,11 @@ void f(void *content)
 	printf("str is: %s\n", str);
 }
 
-void	ft_dlstiter(t_dlist *lst, void (*f)(void *))
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
 	if (!lst)
 		return ;
-	t_dlist *curr = lst;
+	t_list *curr = lst;
 	while (curr != NULL)
 	{
 		f(curr->content);

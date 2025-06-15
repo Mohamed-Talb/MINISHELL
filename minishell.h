@@ -12,6 +12,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <limits.h>
+
 // ERRORS
 #define MALLOC_ERROR "memory allocation faild"
 #define CMD_NOTFOUND "command not found"
@@ -27,14 +28,13 @@
 #define LEFT_HER 5
 #define RIGHT_HER 6
 
-typedef struct s_dlist
+typedef struct s_list
 {
 	int				type;
 	void			*content;
-	int 			expandher;
-	struct s_dlist	*prev;
-	struct s_dlist	*next;
-}	t_dlist;
+	char 			*error;
+	struct s_list	*next;
+}	t_list;
 
 typedef struct s_cmds
 {
@@ -42,7 +42,7 @@ typedef struct s_cmds
 	char **flags;
 	int pipein;
 	int pipeout;
-	t_dlist *allred;
+	t_list *allred;
 } t_cmds;
 
 typedef struct s_data
@@ -52,15 +52,14 @@ typedef struct s_data
 	int		last_exit_status;
 	int 	pipes_nb;
 	char	**exported;
-	// int 	index; this is not used, why keep it??!?!
-	t_dlist	*cmd_list;
+	t_list	*cmd_list;
 	t_cmds	**cmds;
 } t_data;
 
 void	grammer(t_data *data);
 void	printdoule(char **str);
 
-void 	open_herdocs(t_data *data, t_dlist *node);
+void 	open_herdocs(t_data *data, t_list *node);
 void 	signals(struct sigaction *sa, int option);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
 void	check(t_data *data, t_cmds *command);
@@ -69,13 +68,13 @@ int		child(t_data *data, t_cmds *command);
 
 // 2D LIST UTILS 
 void	f(void *content);
-int		ft_dlstsize(t_dlist *lst);
-t_dlist	*ft_dlstlast(t_dlist *lst);
-void	ft_dlstclear(t_dlist **Head);
+int		ft_lstsize(t_list *lst);
+t_list	*ft_lstlast(t_list *lst);
+void	ft_lstclear(t_list **Head);
 int		duplication(t_data *data, t_cmds *cmd);
-t_dlist	*ft_dlstback(t_dlist **head, void *content);
-t_dlist	*ft_dlstfront(t_dlist **head, void *content);
-void	ft_dlstiter(t_dlist *lst, void (*f)(void *));
+t_list	*ft_lstback(t_list **head, void *content);
+t_list	*ft_lstfront(t_list **head, void *content);
+void	ft_lstiter(t_list *lst, void (*f)(void *));
 
 // MANAGE DATA
 void	free_data(t_data *data);
@@ -84,6 +83,7 @@ int 	init_cmds(t_data *data);
 t_data	*init_data(char **penv);
 
 // UTILES
+void 	set_errors(t_data *data, char *error, int exitcode);
 void 	errors(t_data *data, char *error, int exitcode);
 int 	in_set(char *set, char c);
 int		set_index(char *set, char c);
@@ -93,11 +93,11 @@ char 	*randomnbr();
 // PARSING 
 int		parser(t_data *data, char *line);
 char	*expand(t_data *data, char *token, char **line);
-int		hpipe(t_data *data, t_dlist *token, char **line);
+int		hpipe(t_data *data, t_list *token, char **line);
 char	*single_q(t_data *data, char *token, char **line);
-void	redirect(t_data *data, t_dlist *token, char **line);
-int		handle_arg(t_data *data, t_dlist *token, char **line);
-int		double_q(t_data *data, t_dlist *token, char **line, int state);
+void	redirection(t_data *data, t_list *token, char **line);
+int		handle_arg(t_data *data, t_list *token, char **line);
+int		double_q(t_data *data, t_list *token, char **line, int state);
 
 //SIGNALS 
 void 	signals(struct sigaction *sa, int option);

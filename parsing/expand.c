@@ -36,8 +36,8 @@ char *expand(t_data *data, char *token, char **line)
 			return (token);
 		}
 		result = getenv(env_var);
-		if (result != NULL)
-			token = ft_strjoin_fc(token, result, 1);
+		// if (result != NULL) // dont check result bec i need to init the content by null fo remove it later
+		token = ft_strjoin_fc(token, result, 1);
 		free(env_var);
 	}
 	*line = s;

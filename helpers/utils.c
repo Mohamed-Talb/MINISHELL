@@ -7,6 +7,12 @@ void errors(t_data *data, char *error, int exitcode)
 	exit(exitcode);
 }
 
+void set_errors(t_data *data, char *error, int exitcode)// change the prototype .... (mtaleb)
+{
+	ft_lstlast(data->cmd_list)->error = error;
+	data->last_exit_status = exitcode;
+}
+
 char	*ft_strjoin_fc(char *str, char *buff, int choice)
 {
 	char	*new;

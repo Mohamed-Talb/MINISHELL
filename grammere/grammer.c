@@ -1,17 +1,17 @@
 #include "../minishell.h"
 
-int getredirections(t_data *data, t_dlist *list, int i)
+int getredirections(t_data *data, t_list *list, int i)
 {
 	if (list->type == LEFT_HER)
 	{
 		open_herdocs(data, list);
 	}
-	ft_dlstback(&(data->cmds[i]->allred), list->content);
-	ft_dlstlast(data->cmds[i]->allred)->type = list->type;
+	ft_lstback(&(data->cmds[i]->allred), list->content);
+	ft_lstlast(data->cmds[i]->allred)->type = list->type;
 	return 0;
 }
 
-int getcommand(t_cmds *command, t_dlist *list)
+int getcommand(t_cmds *command, t_list *list)
 {
 	char **tmp = NULL;
 	int len;
@@ -34,13 +34,20 @@ int getcommand(t_cmds *command, t_dlist *list)
 
 void grammer(t_data *data)
 {
-	int i = 0;
+	int i;
 	int type;
+
+	i = 0;
 	init_cmds(data);
-	t_dlist *list = (data->cmd_list);
+	t_list *list = (data->cmd_list);
 	while(list)
 	{
 		type = list->type;
+		if (list->content == NULL)
+		{
+			list = list->next;
+			continue ;
+		}
 		if(type == PIPE)
 			i++;
 		else if(type == LEFT_HER || type == LEFT_RED || type == RIGHT_HER || type == RIGHT_RED)
@@ -49,11 +56,4 @@ void grammer(t_data *data)
 			getcommand(data->cmds[i], list);
 		list = list->next;
 	}
-	printf("end of grammer\n");
-	// i = 0;
-	// while (i < data->pipes_nb);
-	// {
-	// 	open_herdocs(data, data->cmds[i]);
-	// 	i++;
-	// }
 }
