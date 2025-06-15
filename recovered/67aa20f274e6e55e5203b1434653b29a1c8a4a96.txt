@@ -12,23 +12,20 @@ void ft_putnstr_fd(char *str, int n, int fd)
 	}
 }
 
-void redirect_errors(t_data *data, char c)
+void checkerrors(t_data *data, char c)
 {
-	char *er = "";
-
-
 	if (c == '\0' || in_set(REDIRECTION_SET , c) == 1)
 	{
-		er = ft_strjoin(er, UNEXPECTED_TOKEN);
+		ft_putstr_fd(UNEXPECTED_TOKEN, 2);
 		if (c == '\0')
-			er = ft_strjoin(er, "newline");
+			ft_putstr_fd("newline", 2);
 		else
-			er = ft_append(er, c, -1);
-		set_errors(data, ft_strjoin(er, "'\n"), 1);
+			ft_putchar_fd(c, 2);
+		errors(data, "'\n", 1);
 	}
 }
 
-int redirect_helper(t_data *data, t_list *token, char *s, int i)
+int redirect_helper(t_data *data, t_dlist *token, char *s, int i)
 {
 	while (ft_iswhitespace(s[i]))
 		i++;
@@ -48,10 +45,11 @@ int redirect_helper(t_data *data, t_list *token, char *s, int i)
 			i++;
 		}
 	}
+	printf("delemiter: %s\n", (char *) token->content);
 	return (i);
 }
 
-int redirect(t_data *data, t_list *token, char *s, int i)
+int redirect(t_data *data, t_dlist *token, char *s, int i)
 {
 	// if(ft_strlen(token->content) != 0)
 	// 	ft_dlstback(&data->cmd_list, ft_strdup(""));
