@@ -45,8 +45,10 @@ int handle_arg(t_data *data, t_list *token, char **line)
 			break;
 		}
 		else
+		{
 			token->content = ft_append(token->content, *s, -1);
-		s++;
+			s++; // dont touch it again ---!!!!!!!!!!!!!!!!!!!!!
+		}
 	}
 	*line = s;
 	return (0);

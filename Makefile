@@ -32,7 +32,7 @@ SHELL_SRC = minishell.c helpers/utils.c helpers/lst_utils.c helpers/structs_util
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
 # COMPILER & FLAGS
-CC = cc
+CC = cc -g3
 FLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lreadline
 

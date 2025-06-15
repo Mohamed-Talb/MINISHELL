@@ -18,7 +18,7 @@ t_data *init_data(char **penv)
 
 int init_cmds(t_data *data)
 {
-	data->cmds = calloc((data->pipes_nb + 1), sizeof(t_cmds *));
+	data->cmds = malloc((data->pipes_nb + 1) * sizeof(t_cmds *));
 	if (data->cmds == NULL)
 	{
 		errors(data, MALLOC_ERROR, 1);
@@ -27,7 +27,7 @@ int init_cmds(t_data *data)
 	int i = 0;
 	while (i < data->pipes_nb)
 	{
-		data->cmds[i] = calloc (1, sizeof(t_cmds));
+		data->cmds[i] = malloc(sizeof(t_cmds));
 		if (data->cmds[i] == NULL)
 		{
 			errors(data, MALLOC_ERROR, 1);

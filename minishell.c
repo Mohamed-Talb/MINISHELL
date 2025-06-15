@@ -40,6 +40,7 @@ int main(int ac, char **av, char **penv)
 		completline(data);
 		if (parser(data, data->line))
 			continue ;
+		ft_lstiter(data->cmd_list, f);
 		grammer(data);
 		print_cmds(data);
 		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
