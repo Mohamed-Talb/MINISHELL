@@ -4,7 +4,6 @@ int handle_arg(t_data *data, t_dlist *token, char *s, int i)
 {
 	while (s[i] != '\0' && ft_iswhitespace(s[i]) == false)
 	{
-		printf("char: '%c'\n", s[i]);
 		if (s[i] == '\'')
 			i = single_q(data, token, s, i);
 		else if (s[i] == '"')
@@ -45,14 +44,10 @@ int parser(t_data *data, char *line)
 		if (ft_iswhitespace(line[i]) == false)
 		{
 			str = ft_strdup("");
-			printf("1\n");
 			new = ft_dlstback(&data->cmd_list, str);
 			if (str == NULL || new == NULL)
 				errors(data, MALLOC_ERROR, 1);
-			printf("2\n");
-			i = handle_arg(data, ft_dlstlast(data->cmd_list), line, i);
-			printf("3\n");
-			printf("type: %d\n", new->type);
+			i = handle_arg(data, new, line, i);
 			if (new->type != PIPE && new_pipe == 1)
 			{
 				data->command_count++;

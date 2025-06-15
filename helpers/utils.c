@@ -45,7 +45,6 @@ void printdoule(char **str)
 	}
 }
 
-
 char *randomnbr()
 {
     int fd;

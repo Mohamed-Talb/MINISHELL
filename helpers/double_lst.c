@@ -35,8 +35,7 @@ t_dlist *ft_dlstback(t_dlist **head, void *content)
 	if((*head) == NULL) 
 	{
 		*head = new_node;
-		printf("%p and %p\n", new_node, ft_dlstlast(*head));
-		return (ft_dlstlast(*head));
+		return (new_node);
 	}
 	curr = *head;
 	while(curr->next != NULL) 
@@ -44,9 +43,8 @@ t_dlist *ft_dlstback(t_dlist **head, void *content)
 		curr = curr->next;
 	}
 	curr->next = new_node;
-	new_node->prev = curr; 
-	printf("%p and %p\n", new_node, ft_dlstlast(*head));
-	return (ft_dlstlast(*head));
+	new_node->prev = curr;
+	return (new_node);
 }
 
 void	ft_dlstclear(t_dlist **Head)
