@@ -20,59 +20,56 @@ int parsing_errors(t_data *data, t_list *list)
 	return 0;
 }
 
-int handle_arg(t_data *data, t_list *token, char *s, int i)
+int handle_arg(t_data *data, t_list *token, char **line)
 {
-	while (s[i] != '\0' && ft_iswhitespace(s[i]) == false)
+	char *s;
+
+	s = *line;
+	while (*s != '\0' && !ft_iswhitespace(*s))
 	{
-		if (s[i] == '\'')
-			i = single_q(data, token, s, i);
-		else if (s[i] == '"')
-			i = double_q(data, token, s, i);
-		else if(s[i] == '$')
-			i = expand(data, token, s, i);
-		else if (s[i] == '<' || s[i] == '>')
+		if (*s == '\'')
+			single_q(data, token, &s);
+		else if (*s == '"')
+			double_q(data, token, &s, 1);
+		else if(*s == '$')
+			expand(data, token, &s);
+		else if (*s == '<' || *s == '>')
 		{
-			i = redirect(data, token, s, i);
-			break;
+			redirection(data, token, &s);
+			continue ;
 		}
-		else if (s[i] == '|')
+		else if (*s == '|')
 		{
-			i = hpipe(data, token, s, i);
+			hpipe(data, token, &s);
 			data->pipes_nb++;
-			break;
+			break ;
 		}
 		else
 		{
-<<<<<<< HEAD
 			token->content = ft_append(token->content, *s, -1);
-			s++; // dont touch it again ---!!!!!!!!!!!!!!!!!!!!!
-=======
-			token->content = ft_append(token->content, s[i], -1);
-			i++; // ok i will not touch it again, relax!
->>>>>>> b0633133559378294563d7743bf1fa823f67a0eb
+			s++;
 		}
 	}
-	return (i);
+	*line = s;
+	return (0);
 }
 
 int parser(t_data *data, char *line)
 {
-	int new_pipe;
-	t_list *new;
-	char *str;
-	int i;
+	t_list	*new;
+	char 	*str;
+	int		new_pipe;
 
-	i = 0;
 	new_pipe = 1;
-	while (line[i] != '\0')
+	while (*line != '\0')
 	{
-		if (ft_iswhitespace(line[i]) == false)
+		if (ft_iswhitespace(*line) == false)
 		{
 			str = ft_strdup("");
 			new = ft_lstback(&data->cmd_list, str);
 			if (str == NULL || new == NULL)
 				errors(data, MALLOC_ERROR, 1);
-			i = handle_arg(data, new, line, i);
+			handle_arg(data, new, &line);
 			if (new->type != PIPE && new_pipe == 1)
 			{
 				data->command_count++;
@@ -81,8 +78,9 @@ int parser(t_data *data, char *line)
 			else
 				new_pipe = 1;
 		}
-		else
-			i++;
+		if (*line == '\0')
+			break ;
+		line++;
 	}
 	if (parsing_errors(data, data->cmd_list) == 1)
 		return (1);

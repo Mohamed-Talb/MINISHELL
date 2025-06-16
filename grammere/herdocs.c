@@ -10,23 +10,6 @@ char *getname()
     return randomname;
 }
 
-char *getdelimiter(char *str, int *expand)
-{
-	int i = 0;
-	char *ret = NULL;
-	while(str[i])
-	{
-		if (str[i] == '"' || str[i] == '\'')
-		{
-			i++;
-			*expand = 1;
-			continue ;
-		}
-		ret = ft_append(ret, str[i], -1);
-		i++;
-	}
-	return ret;
-}
 
 char *single_qh(t_data *data, char *token, char **line)
 {
@@ -73,7 +56,7 @@ char *double_qh(t_data *data, char *token, char **line, int state)
 	return (token);
 }
 
-char *getdelemiter2(t_data *data, char *s, int *expand)
+char *getdelemiter(t_data *data, char *s, int *expand)
 {
 	char *ret;
 
@@ -159,8 +142,7 @@ char  *herdoc_expand(t_data *data, char *line)
 			return (result);
 		}
 		varvalue = getenv(var);
-		if (varvalue != NULL)
-			result = ft_strjoin_fc(result, varvalue, 1);
+		result = ft_strjoin_fc(result, varvalue, 1);
 		free(var);
 	}
 	free(line);
@@ -180,13 +162,10 @@ void heredoc(t_data *data, t_list *node)
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
 	if (!fd)
 		errors(data, strerror(errno), 1);
-	fprintf(stderr, "del before: %s\n", (char *) node->content);
-	del = getdelemiter2(data, node->content, &expand);
-	fprintf(stderr, "del: %s\n", del);
+	del = getdelemiter(data, node->content, &expand);
 	line = readline(">>>> ");
 	while (line && ft_strcmp(del, line))
 	{
-		fprintf(stderr, "test\n");
 		if (expand == 0)
 		line = herdoc_expand(data, line);
 		ft_putstr_fd(line, fd);
@@ -194,19 +173,15 @@ void heredoc(t_data *data, t_list *node)
 		free(line);
 		line = readline(">>>> ");
 	}
-	fprintf(stderr, "after\n");
 	close(fd);
 	free(del);
 	free(line);
     free(node->content);
     node->content = rname;
-	fprintf(stderr, "really after\n");
 }
 
 void open_herdocs(t_data *data, t_list *node)
 {
 	if (node->type == LEFT_HER)
-	{
 		heredoc(data, node);
-	}
 }

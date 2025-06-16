@@ -1,42 +1,62 @@
 #include "../minishell.h"
 
-int	expand(t_data *data, t_list *token, char *s, int i)
+bool check_cases(t_data *data, t_list *token, char **s)
 {
-	char *env_var;
-	char *result;
-
-	env_var = NULL;
-	if (s[i] == '$')
-		i++;
-	if (s[i] == '\0' || ft_iswhitespace(s[i]) == true)
+	if (**s == '\0' || ft_iswhitespace(**s))
 	{
 		token->content = ft_append(token->content, '$', -1);
-		return (i);
+		return true;
 	}
-	else if (s[i] == '?')
+	else if (**s == '?')
 	{
-		token->content = ft_strjoin_fc(token->content, ft_itoa(data->last_exit_status), 3);
-		i++;
+		char *status = ft_itoa(data->last_exit_status);
+		token->content = ft_strjoin_fc(token->content, status, 3);
+		(*s)++;
+		return true;
 	}
-	else if (s[i] == '$') // echo $H$$$ is weird
+	else if (**s == '$')
 	{
 		token->content = ft_strjoin_fc(token->content, "$$", 1);
-		return (i + 1);
+		(*s)++;
+		return true;
 	}
-	else if (s[i] == '\'' || s[i] == '"')
-		return (i);
-	else
+	else if (**s == '\'' || **s == '"')
 	{
-		env_var = ft_strdup(""); // temp solution to many expantion errors, starting with NULL is a pain
-		while (ft_isalnum(s[i]) || s[i] == '_')
-		{
-			env_var = ft_append(env_var, s[i], -1);
-			i++;
-		}
-		result = getenv(env_var);
-		// if (result != NULL) // dont check result bec i need to init the content by null fo remove it later
-		token->content = ft_strjoin_fc(token->content, result, 1);
-		free(env_var);
+		return true;
 	}
-	return (i);
+	return false;
 }
+
+void expand(t_data *data, t_list *token, char **line)
+{
+	char *env_var = NULL;
+	char *result = NULL;
+	char *s = *line + 1; 
+
+	if (check_cases(data, token, &s))
+	{
+		*line = s;
+		return;
+	}
+	env_var = ft_strdup("");
+	while (ft_isalnum(*s) || *s == '_')
+	{
+		env_var = ft_append(env_var, *s, -1);
+		s++;
+	}
+	if (env_var[0] == 0)
+	{
+		token->content = ft_append(token->content, '$', -1);
+		*line = s;
+		return ;
+	}
+	result = getenv(env_var);
+	if (!result && ft_strlen(token->content) != 0)
+		token->content = token->content;
+	else
+		token->content = ft_strjoin_fc(token->content, result, 1);
+	free(env_var);
+	*line = s;
+}
+
+

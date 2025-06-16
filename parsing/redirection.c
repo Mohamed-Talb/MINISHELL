@@ -1,83 +1,74 @@
 #include "../minishell.h"
 
-void ft_putnstr_fd(char *str, int n, int fd)
-{
-	int i;
-
-	i = 0;
-	while (i < n)
-	{
-		write(fd, &str[i], 1);
-		i++;
-	}
-}
-
-void redirect_errors(t_data *data, char *s)
+void redirect_errors(t_data *data, char c)
 {
 	char *er = "";
 
-	if (s[0] == '\0' || in_set(REDIRECTION_SET , s[0]) == 1)
+
+	if (c == '\0' || in_set(REDIRECTION_SET , c) == 1)
 	{
 		er = ft_strjoin(er, UNEXPECTED_TOKEN);
-		if (s[0] == '\0')
+		if (c == '\0')
 			er = ft_strjoin(er, "newline");
-		else if (ft_strncmp(">>", s, 2) == 0)
-			er = ft_strjoin(er, ">>");
-		else if (ft_strncmp("<<", s, 2) == 0)
-			er = ft_strjoin(er, "<<");
 		else
-			er = ft_append(er, s[0], -1);
-		set_errors(data, ft_strjoin(er, "'\n"), 2);
+			er = ft_append(er, c, -1);
+		set_errors(data, ft_strjoin(er, "'\n"), 1);
 	}
 }
 
-int redirect_helper(t_data *data, t_list *token, char *s, int i)
+void redirect_helper(t_data *data, t_list *token, char **line)
 {
-	while (ft_iswhitespace(s[i]))
-		i++;
-	redirect_errors(data, &s[i]);
-	while (s[i] != '\0' && in_set(REDIRECTION_SET, s[i]) != 1 && !ft_iswhitespace(s[i]))
+	char *s;
+
+	s = *line;
+	redirect_errors(data, *s);
+	while (*s != '\0' && !in_set(REDIRECTION_SET, *s) && !ft_iswhitespace(*s))
 	{
-		if(s[i] == '"' && (token->type == RIGHT_RED
-			|| token->type == LEFT_RED || token->type == RIGHT_HER))
-				i = double_q(data, token, s, i);
-		if (s[i] == '$' && token->type != LEFT_HER)
-			i = expand(data, token->content, s, i);
-		else if(s[i] == '\'')
-			i = single_q(data, token->content, s, i);
+		if(*s == '"' && token->type != LEFT_HER)
+			double_q(data, token, &s, 1);
+		if (*s == '$' && token->type != LEFT_HER)
+			expand(data, token, &s);
+		else if(*s == '\''  && token->type != LEFT_HER)
+			single_q(data, token, &s);
 		else
 		{
-			token->content = ft_append(token->content, s[i], -1);
-			i++;
+			token->content = ft_append(token->content, *s, -1);
+			s++;
 		}
 	}
-	return (i);
+	*line = s;
 }
 
-int redirect(t_data *data, t_list *token, char *s, int i)
+void redirection(t_data *data, t_list *token, char **line)
 {
-	// if(ft_strlen(token->content) != 0)
-	// 	ft_lstback(&data->cmd_list, ft_strdup(""));
-	// token = ft_lstlast(data->cmd_list); // why is this necessary, you're not even setting the type?
-	if (s[i] == '>')
+	char *s;
+
+	if(ft_strlen(token->content) != 0)
+		ft_lstback(&data->cmd_list, ft_strdup(""));
+	token = ft_lstlast(data->cmd_list);
+	s = *line;
+	if (*s == '>')
 	{
 		token->type = RIGHT_RED;
-		i++;
-		if (s[i] == '>')
+		s++;
+		if (*s == '>')
 		{
 			token->type = RIGHT_HER;
-			i++;
+			s++;
 		}
 	}
-	else if (s[i] == '<')
+	else if (*s == '<')
 	{
 		token->type = LEFT_RED;
-		i++;
-		if (s[i] == '<')
+		s++;
+		if (*s == '<')
 		{
 			token->type = LEFT_HER;
-			i++;
+			s++;
 		}
 	}
-	return (redirect_helper(data, token, s, i));
+	while (ft_iswhitespace(*s))
+		s++;
+	*line = s;
+	redirect_helper(data, token, line);
 }

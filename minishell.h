@@ -54,7 +54,6 @@ typedef struct s_data
 	int 	pipes_nb;
 	char	**exported;
 	int		command_count;
-	// int 	index; this is not used, why keep it??!?!
 	t_list	*cmd_list;
 	t_cmds	**cmds;
 } t_data;
@@ -69,10 +68,11 @@ void	check(t_data *data, t_cmds *command);
 int		parent(t_data *data);
 int		child(t_data *data, t_cmds *command);
 
-// 2D LIST UTILS 
+//  LIST UTILS 
 void	f(void *content);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
+t_list	*ft_lstprevlast(t_list *lst);
 void	ft_lstclear(t_list **Head);
 int		duplication(t_data *data, t_cmds *cmd);
 t_list	*ft_lstback(t_list **head, void *content);
@@ -89,20 +89,18 @@ t_data	*init_data(char **penv);
 char 	*randomnbr();
 void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
-int		set_index(char *set, char c);
 void 	errors(t_data *data, char *error, int exitcode);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(t_data *data, int exitcode, char *error, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);
-int		expand(t_data *data, t_list *token, char *s, int i);
-int		hpipe(t_data *data, t_list *token, char *s, int i);
-int		single_q(t_data *data, t_list *token, char *s, int i);
-int		double_q(t_data *data, t_list *token, char *s, int i);
-int 	double_qex(t_data *data, t_list *token, char *s, int i);
-int 	redirect(t_data *data, t_list *token, char *s, int i);
-int 	handle_arg(t_data *data, t_list *token, char *s, int i);
+void 	expand(t_data *data, t_list *token, char **line);
+int		hpipe(t_data *data, t_list *token, char **line);
+void	single_q(t_data *data, t_list *token, char **line);
+void	redirection(t_data *data, t_list *token, char **line);
+int		handle_arg(t_data *data, t_list *token, char **line);
+void	double_q(t_data *data, t_list *token, char **line, int state);
 
 //SIGNALS 
 void 	signals(struct sigaction *sa, int option);

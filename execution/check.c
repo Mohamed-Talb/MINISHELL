@@ -55,9 +55,9 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 	return paths;
 }
 
-int isDirectory(const char *path) {
+int isDirectory(const char *path) 
+{
 	struct stat sb;
-
 	return (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode));
 }
 
@@ -76,6 +76,8 @@ void	check(t_data *data, t_cmds *command)
 		eputf("minishell: %s: Is a directory\n", command->flags[0]);
 		errors(data, NULL, 126);
 	}
+	if (command->cmd[0] == 0)
+		printerrors(data, command, false, false);
 	paths = getabspaths(data, command);
 	if (!paths || !paths)
 		errors(data, MALLOC_ERROR, 1);

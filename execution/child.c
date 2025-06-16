@@ -33,9 +33,6 @@ int	child(t_data *data, t_cmds *command)
 				run_builtin(data, command);
 			else
 			{
-				if (ft_strcmp(command->flags[0], ":") == 0
-					|| ft_strcmp(command->flags[0], "!") == 0)
-					exit(0);
 				check(data, command);
 				execve(command->cmd, command->flags, data->env);
 				errors(data, "execve failed\n", 126);
