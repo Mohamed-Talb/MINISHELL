@@ -21,23 +21,28 @@ int	child(t_data *data, t_cmds *command)
 {
 	int	pid;
 
-	fprintf(stderr, "in parent\n");
 	pid = fork();
 	if (pid == 0)
 	{
 		struct sigaction sa;
 		signals(&sa, 2);
         duplication(data, command);
-        if (check_builtin(command->flags[0]))
+		if (command->flags)
 		{
-			run_builtin(data, command);
+			if (check_builtin(command->flags[0]))
+				run_builtin(data, command);
+			else
+			{
+				if (ft_strcmp(command->flags[0], ":") == 0
+					|| ft_strcmp(command->flags[0], "!") == 0)
+					exit(0);
+				check(data, command);
+				execve(command->cmd, command->flags, data->env);
+				errors(data, "execve failed\n", 126);
+			}
 		}
 		else
-		{
-			check(data, command);
-			execve(command->cmd, command->flags, data->env);
-			errors(data, "execve failed\n", 126);
-		}
+			exit(0);
 	}
 	else if (pid > 0)
 	{

@@ -1,46 +1,56 @@
 #include "../minishell.h"
 
-char *single_q(t_data *data, char *token, char **line)
+int	single_q(t_data *data, t_list *token, char *s, int i)
 {
-	char *s;
-
-	s = *line + 1;
-	while (*s != '\0' && *s != '\'')
+	if (s[i] == '\'')
+		i++;
+	while (s[i] != 0 && s[i] != '\'')
 	{
-		token = ft_append(token, *s, -1);
-		s++;
+		token->content = ft_append(token->content, s[i], -1);
+		i++;
 	}
-	if (*s == '\'')
-		s++;
+	if (s[i] == '\'')
+		i++;
 	else
 		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
-	*line = s;
-	return (token);
+	return (i);
 }
 
-
-int double_q(t_data *data, t_list *token, char **line, int state)
+int	double_q(t_data *data, t_list *token, char *s, int i)
 {
-	char *s;
-	
-	s = *line;
-	s++;
-	while(*s != '"' && *s != 0)
+	if (s[i] == '"')
+		i++;
+	while (s[i] != 0 && s[i] != '"')
 	{
-		if(*s == '$' && state == 1 && *(s + 1) != '"')
+		token->content = ft_append(token->content, s[i], -1);
+		i++;
+	}
+	if (s[i] == '"')
+		i++;
+	else
+		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
+	return (i);
+}
+
+int double_qex(t_data *data, t_list *token, char *s, int i)
+{
+	if (s[i] == '"')
+		i++;
+	while(s[i] != '"' && s[i] != 0)
+	{
+		if(s[i] == '$')
 		{
-			token->content = expand(data, token->content, &s);
+			i = expand(data, token->content, s, i);
 		}
 		else
 		{
-			token->content = ft_append(token->content, *s, -1);
-			s++;
+			token->content = ft_append(token->content, s[i], -1);
+			i++;
 		}
 	}
-	if (*s == '"')
-		s++;
+	if (s[i] == '"')
+		i++;
 	else
 		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
-	*line = s;
-	return (0);
+	return (i);
 }

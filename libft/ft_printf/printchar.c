@@ -12,7 +12,7 @@
 
 #include "../libft.h"
 
-int	printchar(int c, int width, bool minus)
+int		printchar(int c, int width, bool minus, int write_dest)
 {
 	int	count;
 
@@ -21,18 +21,18 @@ int	printchar(int c, int width, bool minus)
 	{
 		while (width > 1)
 		{
-			ft_putchar(' ');
+			ft_putchar_fd(' ', write_dest);
 			width--;
 			count++;
 		}
-		ft_putchar(c);
+		ft_putchar_fd(c, write_dest);
 	}
 	else
 	{
-		ft_putchar(c);
+		ft_putchar_fd(c, write_dest);
 		while (width > 1)
 		{
-			ft_putchar(' ');
+			ft_putchar_fd(' ', write_dest);
 			width--;
 			count++;
 		}

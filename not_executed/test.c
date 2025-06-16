@@ -1,4 +1,3 @@
-#include "../minishell.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -7,11 +6,6 @@
 #include <limits.h>
 #include <errno.h>
 #include <linux/limits.h>
-
-extern ssize_t readlink (const char *__restrict __path,
-			 char *__restrict __buf, size_t __len)
-     __THROW __nonnull ((1, 2)) __wur
-     __fortified_attr_access (__write_only__, 2, 3);
 
 void print_open_file_descriptors(void) {
     DIR *dir = opendir("/proc/self/fd");
@@ -41,4 +35,9 @@ void print_open_file_descriptors(void) {
     }
 
     closedir(dir);
+}
+
+int main() {
+    print_open_file_descriptors();
+    return 0;
 }

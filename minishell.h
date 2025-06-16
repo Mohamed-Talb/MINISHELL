@@ -10,9 +10,10 @@
 # include <dirent.h>
 # include <errno.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <signal.h>
 # include <limits.h>
-
+# include <stdbool.h>
 // ERRORS
 #define MALLOC_ERROR "memory allocation faild"
 #define CMD_NOTFOUND "command not found"
@@ -52,6 +53,8 @@ typedef struct s_data
 	int		last_exit_status;
 	int 	pipes_nb;
 	char	**exported;
+	int		command_count;
+	// int 	index; this is not used, why keep it??!?!
 	t_list	*cmd_list;
 	t_cmds	**cmds;
 } t_data;
@@ -83,21 +86,23 @@ int 	init_cmds(t_data *data);
 t_data	*init_data(char **penv);
 
 // UTILES
-void 	set_errors(t_data *data, char *error, int exitcode);
-void 	errors(t_data *data, char *error, int exitcode);
+char 	*randomnbr();
+void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
 int		set_index(char *set, char c);
-void	print_cmds(t_data *data);
-char 	*randomnbr();
+void 	errors(t_data *data, char *error, int exitcode);
+void 	set_errors(t_data *data, char *error, int exitcode);
+void	errcln(t_data *data, int exitcode, char *error, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);
-char	*expand(t_data *data, char *token, char **line);
-int		hpipe(t_data *data, t_list *token, char **line);
-char	*single_q(t_data *data, char *token, char **line);
-void	redirection(t_data *data, t_list *token, char **line);
-int		handle_arg(t_data *data, t_list *token, char **line);
-int		double_q(t_data *data, t_list *token, char **line, int state);
+int		expand(t_data *data, t_list *token, char *s, int i);
+int		hpipe(t_data *data, t_list *token, char *s, int i);
+int		single_q(t_data *data, t_list *token, char *s, int i);
+int		double_q(t_data *data, t_list *token, char *s, int i);
+int 	double_qex(t_data *data, t_list *token, char *s, int i);
+int 	redirect(t_data *data, t_list *token, char *s, int i);
+int 	handle_arg(t_data *data, t_list *token, char *s, int i);
 
 //SIGNALS 
 void 	signals(struct sigaction *sa, int option);

@@ -46,7 +46,8 @@ static int	parseformat(const char **s, va_list args, t_flag *params)
 	initstruct((char **)s, params);
 	if (**s == 'c')
 	{
-		res = printchar(va_arg(args, int), params->width, params->minus);
+		res = printchar(va_arg(args, int), params->width,
+			params->minus, params->write_dest);
 		return (res);
 	}
 	temp = getformat(*s, args, params);
@@ -61,6 +62,7 @@ int	ft_printf(const char *s, ...)
 	t_flag	params;
 	int		result;
 
+	params.write_dest = 1;
 	if (!s || !checkoverflow((char *)s))
 		return (-1);
 	result = 0;
@@ -72,12 +74,50 @@ int	ft_printf(const char *s, ...)
 			if (checkorder((char *)++s) && (*s && *s != '%'))
 				result += parseformat(&s, args, &params);
 			else
-				ft_putchar((result++, '%'));
+				ft_putchar_fd((result++, '%'), params.write_dest);
 		}
 		else
-			ft_putchar((result++, *s));
+			ft_putchar_fd((result++, *s), params.write_dest);
 		s++;
 	}
+	va_end(args);
+	return (result);
+}
+
+int veputf(const char *s, va_list args)
+{
+	t_flag	params;
+	int		result;
+
+	params.write_dest = 2;
+	if (!s || !checkoverflow((char *)s))
+		return (-1);
+	result = 0;
+	while (*s)
+	{
+		if (*s == '%')
+		{
+			if (checkorder((char *)++s) && (*s && *s != '%'))
+				result += parseformat(&s, args, &params);
+			else
+				ft_putchar_fd((result++, '%'), params.write_dest);
+		}
+		else
+			ft_putchar_fd((result++, *s), params.write_dest);
+		s++;
+	}
+	return (result);
+}
+
+// eputf: Error PUT Formatted
+// same as printf but prints to stderr
+int eputf(const char *s, ...)
+{
+	va_list	args;
+	int result;
+
+	va_start(args, s);
+	result = veputf(s, args);
 	va_end(args);
 	return (result);
 }

@@ -57,7 +57,7 @@ char *double_qh(t_data *data, char *token, char **line, int state)
 	{
 		if(*s == '$' && state == 1 && *(s + 1) != '"')
 		{
-			token = expand(data, token, &s);
+			// token = expand(data, token, &s);
 		}
 		else
 		{

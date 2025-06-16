@@ -23,7 +23,7 @@ t_list *ft_lstback(t_list **head, void *content)
 	t_list *new_node;
 	t_list *curr;
 
-	new_node = malloc (sizeof(t_list)); 
+	new_node = ft_calloc(1, sizeof(t_list));
 	if (! new_node)
 	{
 		return NULL;
@@ -34,15 +34,15 @@ t_list *ft_lstback(t_list **head, void *content)
 	if((*head) == NULL) 
 	{
 		*head = new_node;
-		return (*head);
+		return (new_node);
 	}
 	curr = *head;
 	while(curr->next != NULL) 
 	{
 		curr = curr->next;
 	}
-	curr->next = new_node; 
-	return (*head);
+	curr->next = new_node;
+	return (new_node);
 }
 
 void	ft_lstclear(t_list **Head)

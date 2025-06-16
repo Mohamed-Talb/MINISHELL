@@ -1,45 +1,42 @@
 #include "../minishell.h"
 
-char *expand(t_data *data, char *token, char **line)
+int	expand(t_data *data, t_list *token, char *s, int i)
 {
-	char *env_var = NULL;
+	char *env_var;
 	char *result;
-	char *s = *line + 1;
 
-	if (*s == '?')
+	env_var = NULL;
+	if (s[i] == '$')
+		i++;
+	if (s[i] == '\0' || ft_iswhitespace(s[i]) == true)
 	{
-		token = ft_strjoin_fc(token, ft_itoa(data->last_exit_status), 3);
-		s++;
+		token->content = ft_append(token->content, '$', -1);
+		return (i);
 	}
-	else if (ft_isdigit(*s) || *s == '\0' || ft_iswhitespace(*s))
+	else if (s[i] == '?')
 	{
-		token = ft_append(token, '$', -1);
-		*line = s;
-		return (token);
+		token->content = ft_strjoin_fc(token->content, ft_itoa(data->last_exit_status), 3);
+		i++;
 	}
-	else if (*s == '\'' || *s == '\"')
+	else if (s[i] == '$') // echo $H$$$ is weird
 	{
-		*line = s;
-		return (token);
+		token->content = ft_strjoin_fc(token->content, "$$", 1);
+		return (i + 1);
 	}
+	else if (s[i] == '\'' || s[i] == '"')
+		return (i);
 	else
 	{
-		while (ft_isalnum(*s) || *s == '_')
+		env_var = ft_strdup(""); // temp solution to many expantion errors, starting with NULL is a pain
+		while (ft_isalnum(s[i]) || s[i] == '_')
 		{
-			env_var = ft_append(env_var, *s, -1);
-			s++;
-		}
-		if (env_var == NULL)
-		{
-			token = ft_append(token, '$', -1);
-			*line = s;
-			return (token);
+			env_var = ft_append(env_var, s[i], -1);
+			i++;
 		}
 		result = getenv(env_var);
 		// if (result != NULL) // dont check result bec i need to init the content by null fo remove it later
-		token = ft_strjoin_fc(token, result, 1);
+		token->content = ft_strjoin_fc(token->content, result, 1);
 		free(env_var);
 	}
-	*line = s;
-	return (token);
+	return (i);
 }

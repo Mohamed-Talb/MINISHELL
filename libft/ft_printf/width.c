@@ -21,23 +21,23 @@ static int	shiftright(char *ptr, t_flag *params, char c, int len)
 	count = 0;
 	if ((ptr[0] == '+' || ptr[0] == '-' || ptr[0] == ' ') && c == '0')
 	{
-		ft_putchar(ptr[0]);
+		ft_putchar_fd(ptr[0], params->write_dest);
 		count++;
 		ptr++;
 	}
 	if ((ptr[0] == '0' && ptr[1] == 'x') && c == '0')
 	{
-		ft_putstr("0x");
+		ft_putstr_fd("0x", params->write_dest);
 		ptr += 2;
 		count += 2;
 	}
 	while (params->width-- > len)
 	{
-		ft_putchar(c);
+		ft_putchar_fd(c, params->write_dest);
 		count++;
 	}
 	while (ptr[i])
-		ft_putchar((count++, ptr[i++]));
+		ft_putchar_fd((count++, ptr[i++]), params->write_dest);
 	return (count);
 }
 
@@ -50,13 +50,13 @@ static int	shiftleft(char *ptr, t_flag *params, char c)
 	count = 0;
 	while (ptr[i])
 	{
-		ft_putchar(ptr[i++]);
+		ft_putchar_fd(ptr[i++], params->write_dest);
 		count++;
 		params->width--;
 	}
 	while (params->width > 0)
 	{
-		ft_putchar(c);
+		ft_putchar_fd(c, params->write_dest);
 		params->width--;
 		count++;
 	}
@@ -83,7 +83,7 @@ int	width(char *ptr, t_flag *params)
 	}
 	else
 	{
-		ft_putstr(ptr);
+		ft_putstr_fd(ptr, params->write_dest);
 	}
 	free(ptr);
 	return (len);
