@@ -1,33 +1,46 @@
 #include "../minishell.h"
 
-void handler_parent(int sig)
+void handler_parent(int signum)
 {
-	if (sig == SIGINT)
+	if (signum == SIGINT)
 	{
-		printf("\n");
-		rl_on_new_line();
 		rl_replace_line("", 0);
+		write(1, "\n", 1);
+		rl_on_new_line();
 		rl_redisplay();
 	}
 }
-void handler_child(int sig)
+
+void handler_child(int signum)
 {
-	if (sig == SIGINT)
+	if (signum == SIGINT)
 	{
-		exit(1);
+		write(1, "\n", 1);
+		exit(130);
+	}
+	else if (signum == SIGQUIT)
+	{
+		write(1, "Quit (core dumped)\n", 20);
+		exit(131); 
 	}
 }
 
-void signals(struct sigaction *sa, int option)
+void signals(int mode)
 {
-	sigemptyset (&sa->sa_mask);
-	if (option == 1)
-		sa->sa_handler = handler_parent;
-	else if (option == 2)
+	struct sigaction sa;
+
+	sigemptyset(&sa.sa_mask);
+
+	if (mode == 1)
 	{
-		sa->sa_handler = handler_child;
+		sa.sa_handler = handler_parent;
+		sigaction(SIGINT, &sa, NULL);     
+		signal(SIGQUIT, SIG_IGN);
 	}
-	sa->sa_flags = 0;
-	sigaction(SIGINT, sa, NULL);
-	signal(SIGQUIT, handler_parent);
+	else if (mode == 2)
+	{
+		sa.sa_handler = handler_child;
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+	}
 }

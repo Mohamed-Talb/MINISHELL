@@ -46,18 +46,16 @@ void prompter(t_data *data)
 
 	str = "\e[1;96m⟦ minishell ⟧\e[0m \e[1;92m>>\e[0m ";
 	if (data->last_exit_status != 0)
-		str = ft_strjoin_fc("\e[1;96m⟦ minishell ⟧\e[0m\e[38;5;246m ", ft_strjoin_fc(ft_itoa(data->last_exit_status), "\e[0m\e[1;91m >>\e[0m ", 1), 2); // this is just for debuging, it also causes problems, for example executing "k", then pasting something in minishell, there is a glitch
-		// str = "\e[1;96m⟦ minishell ⟧\e[0m\e[1;91m 0 >>\e[0m ";
+		str = ft_strjoin_fc("\e[1;96m⟦ minishell ⟧\e[0m\e[38;5;246m ", ft_strjoin_fc(ft_itoa(data->last_exit_status), "\e[0m\e[1;91m >>\e[0m ", 1), 2);
 	data->line = readline(str); // this is printed in stderr!!
 	add_history(data->line);
 }
 
 void minishell(t_data *data)
 {
-	struct sigaction sa;
 	while(1)
 	{
-		signals(&sa, 1);
+		signals(1);
 		prompter(data);
 		if (data->line == NULL)
 			break;
@@ -68,8 +66,11 @@ void minishell(t_data *data)
 		if (data->command_count == 0)
 			continue ;
 		grammer(data);
-		if (data->command_count == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
+		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
+		{
+			printf("in bultin\n");	
 			execute_builtin(data, data->cmds[0]);
+		}
 		else
 			parent(data);
 		reset_data(data);
@@ -84,7 +85,7 @@ int main(int ac, char **av, char **penv)
 
 	data = init_data(penv);
 	minishell(data);
-	ft_putstr_fd("exit\n", 1); // this is not printed neither in stdout nor stderr!!
+	ft_putstr_fd("exit\n", 1);
 	rl_clear_history();
 	return (0);
 }

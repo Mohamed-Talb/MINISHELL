@@ -24,8 +24,7 @@ int	child(t_data *data, t_cmds *command)
 	pid = fork();
 	if (pid == 0)
 	{
-		struct sigaction sa;
-		signals(&sa, 2);
+		signals(2);
         duplication(data, command);
 		if (command->flags)
 		{

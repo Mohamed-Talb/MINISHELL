@@ -1,92 +1,109 @@
 #include "../minishell.h"
 
-char *ascii_order(char **arr)
+char *ft_normalize_spaces(char *str)
 {
+    char *new;
     int i;
-    char *prev;
+    int inword;
 
+    new = NULL;
     i = 0;
-    prev = arr[0];
-    while (arr[i] != NULL)
-    {
-        if (ft_strcmp(prev, arr[i]) < 0)
-            prev = arr[i];
+    inword = 1;
+    if (!str)
+        return NULL;
+    if(ft_iswhitespace(str[i]))
         i++;
-    }
-    return (prev);
-}
-
-void print_variable(char *var)
-{
-    while (*var)
+    while(str[i])
     {
-        ft_putchar(*var);
-        if (*var == '=')
+        if(ft_iswhitespace(str[i]) && inword)
         {
-            ft_printf("\"%s\"\n", var + 1);
-            return ;
+            new = ft_append(str, str[i], -1);
+            i++;
+            while(ft_iswhitespace(str[i]))
+                i++;
         }
-        var++;
-    }
-    ft_putchar('\n');
-}
-
-void print_exported(char **exported)
-{
-    char *prev;
-    char *curr;
-    int i;
-    int j;
-
-    j = ft_strlen2(exported);
-    prev = NULL;
-    while (j > 0)
-    {
-        i = 0;
-        curr = ascii_order(exported);
-        while (exported[i])
+        else
         {
-            if (ft_strcmp(curr, exported[i]) > 0 && (prev == NULL || ft_strcmp(prev, exported[i]) < 0))
-                curr = exported[i];
+            new = ft_append(new, str[i], -1);
+            inword = 1;
             i++;
         }
-        prev = curr;
-        print_variable(prev);
-        j--;
+    }
+    if (new[ft_strlen(new) - 1] == ' ')
+        new[ft_strlen(new) - 1] = 0;
+    free(str);
+    return new;
+}
+
+int export_errors(t_data *data, char *arg, char c)
+{
+    if (ft_isalnum(c) || c == '_' || c == '=')
+        return 0;
+    else
+    {
+        data->last_exit_status = 1;
+        eputf("minishell: export: `%s': not a valid identifier\n", arg);
+        return 1;
     }
 }
 
-int issame_var(char *str1, char *str2)
-{
-    int pos1;
-    int pos2;
-
-    pos1 = posin_set(str1, '=');
-    pos2 = posin_set(str2, '=');
-    if (pos1 < pos2)
-        return (!ft_strncmp(str1, str2, pos1));
-    return (!ft_strncmp(str1, str2, pos2));
-}
-
-int no_dups(t_data *data, char *target)
+char *getcurrent(t_data *data, char *arg)
 {
     int i;
-    
-    for (i = 0; data->exported[i]; i++)
+    char *curr = NULL;
+    int invarname = 1;
+
+    i = 0;
+    while (arg[i])
     {
-        if (issame_var(data->exported[i], target))
-            return (i);
+        if (arg[i] == '=')
+            invarname = 0;
+        if (invarname)
+        {
+            if (export_errors(data, arg, arg[i]))
+            {
+                free(curr);
+                curr = NULL;
+                break ;
+            }
+        }
+        curr = ft_append(curr, arg[i], -1);
+        i++;
     }
-    return (-1);
+    curr = ft_normalize_spaces(curr);
+    return curr;
+}
+
+void addnewvar(t_data *data, char *newvar)
+{
+    int dup;
+
+    dup = checkdups(data->exported, newvar);
+    if (dup != -1)
+    {
+        free(data->exported[dup]);
+        data->exported[dup] = ft_strdup(newvar); 
+    }
+    else 
+        data->exported = ft_append2(data->exported, newvar, ft_strlen2(data->exported));
+    if (ft_strchr(newvar, '='))
+    {
+        dup = checkdups(data->env, newvar);
+        if (dup != -1)
+        {
+            free(data->env[dup]);
+            data->env[dup] = ft_strdup(newvar); 
+        }
+        else 
+            data->env = ft_append2(data->env, newvar, ft_strlen2(data->env));
+    }
 }
 
 int ft_export(int argc, char **argv, t_data *data)
-{ // handle malloc fail and stuff like that
-    char *curr;
+{
+    char *curr = NULL;
     int i;
-    int j;
 
-    //(void) argc; (void) argv; (void) data;
     if (data->exported == NULL)
         data->exported = ft_strdup2(data->env);
     if (argc == 1)
@@ -96,37 +113,20 @@ int ft_export(int argc, char **argv, t_data *data)
         i = 1;
         while (argv[i])
         {
-            j = 0;
+            if (ft_isalpha(argv[i][0]) == 0 && argv[i][0] != '_')
+            {
+                eputf("minishell: export: `%s': not a valid identifier\n", argv[i]);
+                data->last_exit_status = 199;
+                i++;
+                continue ;
+            }
+            curr = getcurrent(data, argv[i]);
+            if (curr)
+                addnewvar(data, curr);
+            free(curr);
             curr = NULL;
-            while (argv[i][j])
-            {
-                if (ft_isalnum(argv[i][j]) || argv[i][j] == '_' || argv[i][j] == '=')
-                    curr = ft_append(curr, argv[i][j], -1);
-                else 
-                {
-                    eputf("minishell: export: `%s': not a valid identifier\n", argv[i]); // actually print to stderr
-                    free(curr);
-                    curr = NULL;
-                    break;
-                }
-                j++;
-            }
-            j = no_dups(data, argv[i]);
-            if (j != -1 && curr != NULL)
-            {
-                free(data->exported[j]);
-                data->exported[j] = ft_strdup(curr);
-            }
-            else if (curr != NULL)
-                data->exported = ft_append2(data->exported, curr, ft_strlen2(data->exported));
-            else
-            {
-                printf("curr is NULL\n");
-            }
             i++;
         }
     }
-    ft_freedouble(&data->env);
-    data->env = ft_strdup2(data->exported); //dont add the ones without '='
     return (0);
 }

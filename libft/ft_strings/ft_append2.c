@@ -11,22 +11,14 @@
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include "stdio.h"
 
 char	**ft_append2(char **src, char *str, int pos)
 {
 	char	**ptr;
 
 	int (i), (j);
-	if (!str)
+	if (!src || !str)
 		return (NULL);
-	if (!src || !src[0])
-	{
-		ptr = malloc(sizeof(char *) * 2);
-		ptr[0] = ft_strdup(str);
-		ptr[1] = NULL;
-		return (ptr);
-	}
 	ptr = malloc(sizeof(char *) * (ft_strlen2(src) + 2));
 	if (!ptr)
 		return (NULL);

@@ -50,7 +50,7 @@ void expand(t_data *data, t_list *token, char **line, int mode)
 		*line = s;
 		return ;
 	}
-	result = getenv(env_var);
+	result = ft_getenv(data->env, env_var);
 	if (result == NULL || ft_strlen(token->content) == 0)
 	{
 		if (ft_strlen(token->content) != 0 || mode == 3)
@@ -58,6 +58,8 @@ void expand(t_data *data, t_list *token, char **line, int mode)
 		else
 			token->content = ft_strjoin_fc(token->content, result, 1);
 	}
+	else
+		token->content = ft_strjoin_fc(token->content, result, 1);
 	free(env_var);
 	*line = s;
 }

@@ -6,7 +6,7 @@ SHELL_SRC = \
 	grammere/grammer.c grammere/herdocs.c \
 	execution/check.c execution/child.c execution/parent.c execution/duplication.c \
 	builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c builtin/unset.c builtin/env.c \
-	builtin/builtin_management.c builtin/exit.c
+	builtin/builtin_management.c builtin/exit.c builtin/exportutiles.c
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
@@ -24,7 +24,7 @@ LIBFT = $(LIBFT_DIR)/libft.a # should this be named NAME1 or something..?
 # RULES
 all: $(NAME)
 
-$(NAME): cleanup $(SHELL_OBJ) $(LIBFT)
+$(NAME): $(SHELL_OBJ) $(LIBFT)
 	@$(CC) $(SHELL_OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LDFLAGS)
 
 $(LIBFT): $(LIBFT_SRC)
