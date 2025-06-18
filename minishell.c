@@ -40,15 +40,15 @@ int completline(t_data *data)
 	return 0;
 }
 
-
 void prompter(t_data *data)
 {
 	char *str;
 
 	str = "\e[1;96m⟦ minishell ⟧\e[0m \e[1;92m>>\e[0m ";
 	if (data->last_exit_status != 0)
-		str = "\e[1;96m⟦ minishell ⟧\e[0m \e[1;91m>>\e[0m ";
-	data->line = readline(str);
+		str = ft_strjoin_fc("\e[1;96m⟦ minishell ⟧\e[0m\e[38;5;246m ", ft_strjoin_fc(ft_itoa(data->last_exit_status), "\e[0m\e[1;91m >>\e[0m ", 1), 2); // this is just for debuging, it also causes problems, for example executing "k", then pasting something in minishell, there is a glitch
+		// str = "\e[1;96m⟦ minishell ⟧\e[0m\e[1;91m 0 >>\e[0m ";
+	data->line = readline(str); // this is printed in stderr!!
 	add_history(data->line);
 }
 
@@ -84,7 +84,7 @@ int main(int ac, char **av, char **penv)
 
 	data = init_data(penv);
 	minishell(data);
-	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("exit\n", 1); // this is not printed neither in stdout nor stderr!!
 	rl_clear_history();
 	return (0);
 }

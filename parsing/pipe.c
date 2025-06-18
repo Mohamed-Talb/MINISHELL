@@ -12,7 +12,7 @@ void pipe_errors(t_data *data, char c)
 		strerror = ft_strjoin(UNEXPECTED_TOKEN, "|'\n");
 	else 
 		return ;
-	set_errors(data, strerror, 1);
+	set_errors(data, strerror, 2);
 }
 int hpipe(t_data *data, t_list *token, char **line)
 {
