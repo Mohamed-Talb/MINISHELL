@@ -33,9 +33,6 @@ $(LIBFT): $(LIBFT_SRC)
 cleanup:
 	@rm -f $(SHELL_OBJ)
 
-# COMPILE OBJECTS
-# libft/%.o: libft/%.c
-# 	@$(CC) $(FLAGS) -c $< -o $@
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
 
