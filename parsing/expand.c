@@ -27,11 +27,11 @@ bool check_cases(t_data *data, t_list *token, char **s)
 	return false;
 }
 
-void expand(t_data *data, t_list *token, char **line)
+void expand(t_data *data, t_list *token, char **line, int mode)
 {
 	char *env_var = NULL;
 	char *result = NULL;
-	char *s = *line + 1; 
+	char *s = *line + 1;
 
 	if (check_cases(data, token, &s))
 	{
@@ -51,12 +51,13 @@ void expand(t_data *data, t_list *token, char **line)
 		return ;
 	}
 	result = getenv(env_var);
-	if (!result && ft_strlen(token->content) != 0)
-		token->content = token->content;
-	else
-		token->content = ft_strjoin_fc(token->content, result, 1);
+	if (result == NULL || ft_strlen(token->content) == 0)
+	{
+		if (ft_strlen(token->content) != 0 || mode == 3)
+			token->content = ft_strjoin_fc(token->content, "", 1);
+		else
+			token->content = ft_strjoin_fc(token->content, result, 1);
+	}
 	free(env_var);
 	*line = s;
 }
-
-

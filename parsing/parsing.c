@@ -32,7 +32,7 @@ int handle_arg(t_data *data, t_list *token, char **line)
 		else if (*s == '"')
 			double_q(data, token, &s, 1);
 		else if(*s == '$')
-			expand(data, token, &s);
+			expand(data, token, &s, 0);
 		else if (*s == '<' || *s == '>')
 		{
 			redirection(data, token, &s);
@@ -70,7 +70,7 @@ int parser(t_data *data, char *line)
 			if (str == NULL || new == NULL)
 				errors(data, MALLOC_ERROR, 1);
 			handle_arg(data, new, &line);
-			if (new->type != PIPE && new_pipe == 1)
+			if (new->content != NULL && new->type != PIPE && new_pipe == 1)
 			{
 				data->command_count++;
 				new_pipe = 0;

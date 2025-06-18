@@ -89,13 +89,14 @@ t_data	*init_data(char **penv);
 char 	*randomnbr();
 void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
+int		posin_set(char *set, char c);
 void 	errors(t_data *data, char *error, int exitcode);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(t_data *data, int exitcode, char *error, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);
-void 	expand(t_data *data, t_list *token, char **line);
+void expand(t_data *data, t_list *token, char **line, int mode);
 int		hpipe(t_data *data, t_list *token, char **line);
 void	single_q(t_data *data, t_list *token, char **line);
 void	redirection(t_data *data, t_list *token, char **line);

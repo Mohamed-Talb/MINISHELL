@@ -12,7 +12,7 @@ void redirect_errors(t_data *data, char c)
 			er = ft_strjoin(er, "newline");
 		else
 			er = ft_append(er, c, -1);
-		set_errors(data, ft_strjoin(er, "'\n"), 1);
+		set_errors(data, ft_strjoin(er, "'\n"), 2);
 	}
 }
 
@@ -27,7 +27,7 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 		if(*s == '"' && token->type != LEFT_HER)
 			double_q(data, token, &s, 1);
 		if (*s == '$' && token->type != LEFT_HER)
-			expand(data, token, &s);
+			expand(data, token, &s, 0);
 		else if(*s == '\''  && token->type != LEFT_HER)
 			single_q(data, token, &s);
 		else
