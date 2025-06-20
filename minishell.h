@@ -31,10 +31,10 @@
 
 typedef struct s_list
 {
-	int				type;
 	void			*content;
-	char 			*error;
 	struct s_list	*next;
+	int				type;
+	char 			*error;
 }	t_list;
 
 typedef struct s_cmds
@@ -96,11 +96,10 @@ void	errcln(t_data *data, int exitcode, char *error, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);
-void 	expand(t_data *data, t_list *token, char **line);
+char	*expand(t_data *data, char **line);
 int		hpipe(t_data *data, t_list *token, char **line);
 void	single_q(t_data *data, t_list *token, char **line);
 void	redirection(t_data *data, t_list *token, char **line);
-int		handle_arg(t_data *data, t_list *token, char **line);
 void	double_q(t_data *data, t_list *token, char **line, int state);
 
 //SIGNALS 

@@ -27,7 +27,7 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 		if(*s == '"' && token->type != LEFT_HER)
 			double_q(data, token, &s, 1);
 		if (*s == '$' && token->type != LEFT_HER)
-			expand(data, token, &s, 0);
+			expand(data, &s);
 		else if(*s == '\''  && token->type != LEFT_HER)
 			single_q(data, token, &s);
 		else

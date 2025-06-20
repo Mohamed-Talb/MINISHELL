@@ -20,44 +20,60 @@ int parsing_errors(t_data *data, t_list *list)
 	return 0;
 }
 
-int handle_arg(t_data *data, t_list *token, char **line)
+t_list *creat_node(t_data *data)
+{
+	char *str;
+	t_list* new;
+
+	str = ft_strdup("");
+	new = ft_lstback(&data->cmd_list, str);
+	if (str == NULL || new == NULL)
+		errors(data, MALLOC_ERROR, 1);
+	return (new);
+}
+
+t_list *handle_arg(t_data *data, t_list *token, char **line)
 {
 	char *s;
 
 	s = *line;
 	while (*s != '\0' && !ft_iswhitespace(*s))
 	{
-		if (*s == '\'')
-			single_q(data, token, &s);
-		else if (*s == '"')
-			double_q(data, token, &s, 1);
-		else if(*s == '$')
-			expand(data, token, &s, 0);
-		else if (*s == '<' || *s == '>')
-		{
-			redirection(data, token, &s);
-			continue ;
-		}
-		else if (*s == '|')
-		{
-			hpipe(data, token, &s);
-			data->pipes_nb++;
-			break ;
-		}
+		if (*s == '$')
+			s = expand(data, &s);
 		else
 		{
-			token->content = ft_append(token->content, *s, -1);
-			s++;
+			if (token == NULL)
+				token = creat_node(data);
+			if (*s == '\'')
+				single_q(data, token, &s);
+			else if (*s == '"')
+				double_q(data, token, &s, 1);
+			else if (*s == '<' || *s == '>')
+			{
+				redirection(data, token, &s);
+				continue ;
+			}
+			else if (*s == '|')
+			{
+				hpipe(data, token, &s);
+				data->pipes_nb++;
+				break ;
+			}
+			else
+			{
+				token->content = ft_append(token->content, *s, -1);
+				s++;
+			}
 		}
 	}
 	*line = s;
-	return (0);
+	return (token);
 }
 
 int parser(t_data *data, char *line)
 {
 	t_list	*new;
-	char 	*str;
 	int		new_pipe;
 
 	new_pipe = 1;
@@ -65,18 +81,17 @@ int parser(t_data *data, char *line)
 	{
 		if (ft_iswhitespace(*line) == false)
 		{
-			str = ft_strdup("");
-			new = ft_lstback(&data->cmd_list, str);
-			if (str == NULL || new == NULL)
-				errors(data, MALLOC_ERROR, 1);
-			handle_arg(data, new, &line);
-			if (new->content != NULL && new->type != PIPE && new_pipe == 1)
+			new = handle_arg(data, NULL, &line);
+			if (new != NULL)
 			{
-				data->command_count++;
-				new_pipe = 0;
+				if (new->content != NULL && new->type != PIPE && new_pipe == 1)
+				{
+					data->command_count++;
+					new_pipe = 0;
+				}
+				else
+					new_pipe = 1;
 			}
-			else
-				new_pipe = 1;
 		}
 		if (*line == '\0')
 			break ;

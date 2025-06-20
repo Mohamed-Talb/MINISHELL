@@ -27,7 +27,7 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 	{
 		if(*s == '$' && state == 1 && *(s + 1) != '"')
 		{
-			expand(data, token, &s, 3);
+			expand(data, &s);
 		}
 		else
 		{
