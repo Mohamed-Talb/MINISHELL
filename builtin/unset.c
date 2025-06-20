@@ -49,6 +49,22 @@ int get_path(char **envp, char *target)
 	return (-1);
 }
 
+int isvalid_var(char *var)
+{
+    int i;
+
+    if (ft_isalpha(var[0]) == 0 && var[0] != '_')
+        return (0);
+    i = 1;
+    while (var[i] && var[i] != '=')
+    {
+        if (ft_isalnum(var[i]) == false && var[i] != '_')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 int ft_unset(int argc, char **argv, t_data *data)
 {
     int i;
@@ -64,6 +80,5 @@ int ft_unset(int argc, char **argv, t_data *data)
     }
     ft_freedouble(&data->env);
     data->env = ft_strdup2(data->exported);
-    printdoule(data->exported);
     return (0);
 }

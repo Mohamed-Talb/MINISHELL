@@ -63,6 +63,7 @@ void	printdoule(char **str);
 char **upvar(char **env, char *newvar);
 void 	open_herdocs(t_data *data, t_list *node);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
+char	*ft_strjoin_es(char *str, char *buff, int choice);
 void	check(t_data *data, t_cmds *command);
 int		parent(t_data *data);
 int		child(t_data *data, t_cmds *command);
@@ -95,7 +96,7 @@ void	errcln(t_data *data, int exitcode, char *error, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);
-void 	expand(t_data *data, t_list *token, char **line, int mode);
+void 	expand(t_data *data, t_list *token, char **line);
 int		hpipe(t_data *data, t_list *token, char **line);
 void	single_q(t_data *data, t_list *token, char **line);
 void	redirection(t_data *data, t_list *token, char **line);
@@ -112,6 +113,7 @@ int 	ft_echo(int argc, char **argv, t_data *data);
 int		ft_cd(int argc, char **argv, t_data *data);
 int		ft_pwd(int argc, char **argv, t_data *data);
 int		ft_export(int argc, char **argv, t_data *data);
+char	*getownenv(char **env, char *var);
 int		ft_unset(int argc, char **argv, t_data *data);
 int		ft_env(int argc, char **argv, t_data *data);
 int		ft_exit(int argc, char **argv, t_data *data);

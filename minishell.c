@@ -47,8 +47,12 @@ void prompter(t_data *data)
 	str = "\e[1;96m⟦ minishell ⟧\e[0m \e[1;92m>>\e[0m ";
 	if (data->last_exit_status != 0)
 		str = ft_strjoin_fc("\e[1;96m⟦ minishell ⟧\e[0m\e[38;5;246m ", ft_strjoin_fc(ft_itoa(data->last_exit_status), "\e[0m\e[1;91m >>\e[0m ", 1), 2);
+	rl_replace_line("", 0);    // optional: clears current input
+	rl_on_new_line();          // required: signals readline             // i have no idea what i am doing with these 3 lines, but we will need them eventually
+	// rl_redisplay();            // redraws the prompt + line
 	data->line = readline(str); // this is printed in stderr!!
 	add_history(data->line);
+	
 }
 
 void minishell(t_data *data)
@@ -67,10 +71,7 @@ void minishell(t_data *data)
 			continue ;
 		grammer(data);
 		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
-		{
-			printf("in bultin\n");	
 			execute_builtin(data, data->cmds[0]);
-		}
 		else
 			parent(data);
 		reset_data(data);

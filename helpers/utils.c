@@ -40,6 +40,25 @@ char	*ft_strjoin_fc(char *str, char *buff, int choice)
 	return (new);
 }
 
+char	*ft_strjoin_es(char *str, char *buff, int choice)
+{
+	char	*new;
+
+	if (!str && !buff)
+		new = ft_strjoin("", "");
+	else if (!str)
+		new = ft_strjoin("", buff);
+	else if (!buff)
+		new = ft_strjoin(str, "");
+	else
+		new = ft_strjoin(str, buff);
+	if (choice == 1 || choice == 3)
+		free(str);
+	if (choice == 2 || choice == 3)
+		free(buff);
+	return (new);
+}
+
 int in_set(char *set, char c)
 {
 	while (*set)

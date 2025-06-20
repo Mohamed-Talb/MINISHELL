@@ -34,14 +34,20 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 {
 	int i;
 	char **paths;
+	char *env_path;
 
 	if (ft_strchr(command->cmd, '/'))
 	{
 		paths = helper(data, command);
-		return paths;
+		return (paths);
 	}
 	i = 0;
-	paths = ft_split(getenv("PATH"), ':');
+	env_path = getownenv(data->env, "PATH");
+	if (env_path == NULL)
+		return (NULL);
+	paths = ft_split(env_path, ':');
+	if (paths == NULL)
+		errors(data, MALLOC_ERROR, 1);
 	while (paths[i])
 	{
 		paths[i] = ft_strjoin_fc(paths[i], "/", 1);
@@ -52,7 +58,7 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 			errors(data, MALLOC_ERROR, 1);
 		i++;
 	}
-	return paths;
+	return (paths);
 }
 
 int isDirectory(const char *path) 
@@ -79,8 +85,8 @@ void	check(t_data *data, t_cmds *command)
 	if (command->cmd[0] == 0)
 		printerrors(data, command, false, false);
 	paths = getabspaths(data, command);
-	if (!paths || !paths)
-		errors(data, MALLOC_ERROR, 1);
+	if (paths == NULL)
+		return ;
 	while (paths[i])
 	{
 		if (access(paths[i], F_OK) == 0)

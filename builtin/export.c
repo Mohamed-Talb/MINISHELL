@@ -1,4 +1,5 @@
 #include "../minishell.h"
+#define INVALID_IDERR "minishell: export: `%s': not a valid identifier\n"
 
 char *ft_normalize_spaces(char *str)
 {
@@ -10,14 +11,14 @@ char *ft_normalize_spaces(char *str)
     i = 0;
     inword = 1;
     if (!str)
-        return NULL;
-    if(ft_iswhitespace(str[i]))
+        return (NULL);
+    if (ft_iswhitespace(str[i]))
         i++;
     while(str[i])
     {
-        if(ft_iswhitespace(str[i]) && inword)
+        if (ft_iswhitespace(str[i]) && inword)
         {
-            new = ft_append(str, str[i], -1);
+            new = append(str, str[i]);
             i++;
             while(ft_iswhitespace(str[i]))
                 i++;
@@ -28,50 +29,12 @@ char *ft_normalize_spaces(char *str)
             inword = 1;
             i++;
         }
+        eputf("new is: %s\n", new);
     }
     if (new[ft_strlen(new) - 1] == ' ')
         new[ft_strlen(new) - 1] = 0;
     free(str);
-    return new;
-}
-
-int export_errors(t_data *data, char *arg, char c)
-{
-    if (ft_isalnum(c) || c == '_' || c == '=')
-        return 0;
-    else
-    {
-        data->last_exit_status = 1;
-        eputf("minishell: export: `%s': not a valid identifier\n", arg);
-        return 1;
-    }
-}
-
-char *getcurrent(t_data *data, char *arg)
-{
-    int i;
-    char *curr = NULL;
-    int invarname = 1;
-
-    i = 0;
-    while (arg[i])
-    {
-        if (arg[i] == '=')
-            invarname = 0;
-        if (invarname)
-        {
-            if (export_errors(data, arg, arg[i]))
-            {
-                free(curr);
-                curr = NULL;
-                break ;
-            }
-        }
-        curr = ft_append(curr, arg[i], -1);
-        i++;
-    }
-    curr = ft_normalize_spaces(curr);
-    return curr;
+    return (new);
 }
 
 void addnewvar(t_data *data, char *newvar)
@@ -99,13 +62,44 @@ void addnewvar(t_data *data, char *newvar)
     }
 }
 
+char *getcurrent(t_data *data, char *arg)
+{
+    int i;
+    char *curr = NULL;
+    int invarname = 1;
+
+    i = 0;
+    while (arg[i])
+    {
+        if (arg[i] == '=')
+            invarname = 0;
+        if (invarname)
+        {
+            if (!(ft_isalnum(arg[i]) || arg[i] == '_' || arg[i] == '='))
+            {
+                data->last_exit_status = 1;
+                eputf(INVALID_IDERR, arg);
+                free(curr);
+                curr = NULL;
+                break ;
+            }
+        }
+        curr = ft_append(curr, arg[i], -1);
+        i++;
+    }
+    // curr = ft_normalize_spaces(curr);
+    if (curr != NULL)
+        eputf("modified: %s\n", curr);
+    return (curr);
+}
+
 int ft_export(int argc, char **argv, t_data *data)
 {
-    char *curr = NULL;
+    char *curr;
     int i;
 
     if (data->exported == NULL)
-        data->exported = ft_strdup2(data->env);
+        data->exported = ft_strdup2(data->env); //might be removable
     if (argc == 1)
         print_exported(data->exported);
     else
@@ -115,8 +109,8 @@ int ft_export(int argc, char **argv, t_data *data)
         {
             if (ft_isalpha(argv[i][0]) == 0 && argv[i][0] != '_')
             {
-                eputf("minishell: export: `%s': not a valid identifier\n", argv[i]);
-                data->last_exit_status = 199;
+                eputf(INVALID_IDERR, argv[i]);
+                data->last_exit_status = 1; // shouldnt set exit status of builtins this way
                 i++;
                 continue ;
             }
@@ -128,5 +122,5 @@ int ft_export(int argc, char **argv, t_data *data)
             i++;
         }
     }
-    return (0);
+    return (data->last_exit_status);
 }

@@ -27,7 +27,7 @@ bool check_cases(t_data *data, t_list *token, char **s)
 	return false;
 }
 
-void expand(t_data *data, t_list *token, char **line, int mode)
+void expand(t_data *data, t_list *token, char **line)
 {
 	char *env_var = NULL;
 	char *result = NULL;
@@ -51,15 +51,37 @@ void expand(t_data *data, t_list *token, char **line, int mode)
 		return ;
 	}
 	result = ft_getenv(data->env, env_var);
-	if (result == NULL || ft_strlen(token->content) == 0)
-	{
-		if (ft_strlen(token->content) != 0 || mode == 3)
-			token->content = ft_strjoin_fc(token->content, "", 1);
-		else
-			token->content = ft_strjoin_fc(token->content, result, 1);
-	}
-	else
-		token->content = ft_strjoin_fc(token->content, result, 1);
+	// if (result == NULL && mode == 3)
+	// 	token->content = ft_strjoin_fc(token->content, "", 1);
+	// else
+	// 	token->content = ft_strjoin_fc(token->content, result, 1);
+	token->content = ft_strjoin_es(token->content, result, 1);
 	free(env_var);
 	*line = s;
 }
+
+// void expand(t_data *data, t_list *token, char **line)
+// {
+//     t_list	*new;
+// 	char 	*str;
+//     char *old_s;
+
+//     (void) token;
+//     old_s = *line;
+// 	str = ft_strdup("");
+// 	new = ft_lstback(&data->cmd_list, str);
+// 	if (str == NULL || new == NULL)
+// 		errors(data, MALLOC_ERROR, 1);
+//     expand_tonode(data, new, line);
+// 	eputf("content: %s\n", new->content);
+// 	eputf("value: %d\n", old_s - data->line);
+//     str = ft_substr(data->line, 0, old_s - data->line);
+// 	eputf("str: %s\n", str);
+// 	str = ft_strjoin_fc(str, new->content, 3);
+// 	eputf("str: %s\n", str);
+// 	str = ft_strjoin_fc(str, *line, 1);
+// 	eputf("str: %s\n", str);
+// 	free(data->line);
+// 	data->line = str;
+// 	eputf("line: %s\n", data->line);
+// }

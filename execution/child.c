@@ -34,7 +34,12 @@ int	child(t_data *data, t_cmds *command)
 			{
 				check(data, command);
 				execve(command->cmd, command->flags, data->env);
-				errors(data, "execve failed\n", 126);
+				if (errno == ENOENT)
+					errcln(data, 127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+				else if (errno == EACCES)
+					errcln(data, 126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+				else
+					errcln(data, 1, "minishell: %s: %s\n", command->flags[0], strerror(errno));
 			}
 		}
 		else

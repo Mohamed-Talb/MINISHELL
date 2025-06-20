@@ -47,15 +47,20 @@ char	*ft_strdup(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(char const *s, char c);
-char 	**ft_remove2(char **str, int index);
 char 	*ft_remove(char *str, int pos);
-char	*ft_append(char *org, char c, int position);
+char 	**ft_remove2(char **str, int index);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
-char	**ft_append2(char **src, char *str, int pos);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strnstr(const char *big, const char *little, size_t len);
+
+// APPEND
+char	*append(char *org, char c);
+char	*fappend(char *org, char c);
+char	*pappend(char *org, char c, int position);
+char	*ft_append(char *org, char c, int position);
+char	**ft_append2(char **src, char *str, int pos);
 
 int		ft_tolower(int c);
 int		ft_toupper(int c);
