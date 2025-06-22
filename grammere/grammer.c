@@ -19,8 +19,8 @@ int getcommand(t_cmds *command, t_list *list)
 	if (!command->cmd)
 	{
 		command->flags = malloc(2 * sizeof(char *));
-		command->flags[0] = ft_strdup(list->content);
-		command->flags[1] = NULL;
+																command->flags[0] = ft_strdup(list->content);
+																command->flags[1] = NULL;
 		command->cmd = ft_strdup(list->content); 
 	}
 	else

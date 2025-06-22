@@ -123,3 +123,7 @@ int checkdups(char **variables, char *target);
 int issame_var(char *str1, char *str2);
 void print_exported(char **exported);
 void print_variable(char *var);
+
+
+
+int upenv(t_data *data, char *newvar);

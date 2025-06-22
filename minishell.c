@@ -71,9 +71,14 @@ void minishell(t_data *data)
 			continue ;
 		grammer(data);
 		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
+		{
 			execute_builtin(data, data->cmds[0]);
+		}
 		else
+		{
+			printf("in parent\n");
 			parent(data);
+		}
 		reset_data(data);
 	}
 }

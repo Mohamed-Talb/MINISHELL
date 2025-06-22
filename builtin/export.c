@@ -87,7 +87,6 @@ char *getcurrent(t_data *data, char *arg)
         curr = ft_append(curr, arg[i], -1);
         i++;
     }
-    // curr = ft_normalize_spaces(curr);
     if (curr != NULL)
         eputf("modified: %s\n", curr);
     return (curr);

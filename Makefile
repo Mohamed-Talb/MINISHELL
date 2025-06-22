@@ -6,7 +6,7 @@ SHELL_SRC = \
 	grammere/grammer.c grammere/herdocs.c \
 	execution/check.c execution/child.c execution/parent.c execution/duplication.c \
 	builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c builtin/unset.c builtin/env.c \
-	builtin/builtin_management.c builtin/exit.c builtin/exportutiles.c
+	builtin/builtin_management.c builtin/exit.c builtin/exportutiles.c helpers/envutils.c
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 

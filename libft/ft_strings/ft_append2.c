@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../libft.h"
+#include <stdio.h>
 
 char	**ft_append2(char **src, char *str, int pos)
 {

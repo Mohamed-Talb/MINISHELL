@@ -1,4 +1,10 @@
-#include <stdio.h>
-int main(int argc, char **argv) {
-    printf("%d\n", argc);
-}
+// #include "minishell.h"
+
+// int main()
+// {
+//     char *buff;
+//     char *ret;
+
+//     ret = getcwd(buff, );
+//     printf("ret: %s\n buff: %s\n", ret, buff);
+// }
