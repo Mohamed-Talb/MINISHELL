@@ -38,6 +38,8 @@ int	child(t_data *data, t_cmds *command)
 					errcln(data, 127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
 				else if (errno == EACCES)
 					errcln(data, 126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+				else if(errno == ENOEXEC) // caused by test 445
+					errcln(data, 126, "minishell: %s: %s\n", command->flags[0], "Permission denied");
 				else
 					errcln(data, 1, "minishell: %s: %s\n", command->flags[0], strerror(errno));
 			}

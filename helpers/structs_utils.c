@@ -1,5 +1,48 @@
 #include "../minishell.h"
 
+void update_lvl(t_data *data)
+{
+	char *str;
+	int pos;
+	long value;
+
+	pos = getenvpos(data->env, "SHLVL");
+	if (pos == -1)
+	{
+		data->env = ft_append2(data->env, "SHLVL=1", 0);
+	}
+	else
+	{
+		str = getownenv(data->env, "SHLVL");
+		value = ft_atoy(str);
+		if (value > INT_MAX)
+			value = 1;
+		else
+			value++;
+		if (value >= 1000)
+		{
+			eputf("minishell: warning: shell level (1000) too high, resetting to 1\n");
+			value = 1;
+		}
+		data->env[pos] = ft_strjoin_fc("SHLVL=", ft_itoa(value), 2);
+	}
+}
+
+void other_env(t_data *data)
+{
+	char buff[GETCWD_BUFF_SIZE];
+	char *newpwdvalue;
+
+	if (getcwd(buff, GETCWD_BUFF_SIZE) == NULL)
+		eputf("shell-init: %s: %s\n", GETCWD_ERR, strerror(errno));
+	else
+	{
+		newpwdvalue = ft_strjoin("PWD=", buff);
+		(ftup_env(data, &data->exported, newpwdvalue), free(newpwdvalue));
+	}
+	ftup_env(data, &data->exported, "OLDPWD");
+}
+
 t_data	*init_data(char **penv)
 {
 	t_data *data;
@@ -11,7 +54,9 @@ t_data	*init_data(char **penv)
 		return (NULL);
 	}
 	data->env = ft_strdup2(penv);
-	data->exported = ft_strdup2(penv);
+	update_lvl(data);
+	data->exported = ft_strdup2(data->env);
+	other_env(data);
 	data->pipes_nb = 1;
 	return (data);
 }

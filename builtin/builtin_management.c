@@ -57,9 +57,10 @@ void execute_builtin(t_data *data, t_cmds *command)
 	else if (!ft_strcmp(cmdname, "exit"))
 	{
         exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
-		ft_putstr("exit\n");
-		free_data(data);
-		exit(exst);
+		if (exst == -1)
+			exst = 1;
+		else
+			(free_data(data), exit(exst));
 	}
 	data->last_exit_status = exst;
 	dup2(stdin_dup, 0);

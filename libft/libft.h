@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdbool.h>
+# include <limits.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
@@ -66,6 +67,7 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_strlen2(char **ptr);
 int		ft_atoi(const char *nptr);
+long	ft_atoy(const char *nptr);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 

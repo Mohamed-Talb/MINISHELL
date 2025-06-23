@@ -17,7 +17,7 @@ static void	printerrors(t_data *data, t_cmds *command, bool found, bool permissi
 	if (!found)
 		errcln(data, 127, "%s: command not found\n", command->flags[0]);
 	if (!permission)
-		errcln(data, 126, "%s: permission denied\n", command->flags[0]);
+		errcln(data, 126, "minishell: %s: Permission denied\n", command->flags[0]);
 }
 
 char 	**helper(t_data *data, t_cmds *command)

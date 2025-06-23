@@ -54,6 +54,7 @@ char *append(char *org, char c)
 	{
 		size = ft_strlen(org);
 		result = ft_calloc((size + 2), sizeof(char));
+		strappend(result, org);
 		charappend(result, c);
 	}
 	return (result);
@@ -73,6 +74,7 @@ char *fappend(char *org, char c)
 	{
 		size = ft_strlen(org);
 		result = ft_calloc((size + 2), sizeof(char));
+		strappend(result, org);
 		charappend(result, c);
 		free(org);
 	}

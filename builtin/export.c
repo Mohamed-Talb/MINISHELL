@@ -1,41 +1,41 @@
 #include "../minishell.h"
 #define INVALID_IDERR "minishell: export: `%s': not a valid identifier\n"
 
-char *ft_normalize_spaces(char *str)
-{
-    char *new;
-    int i;
-    int inword;
+// char *ft_normalize_spaces(char *str)
+// {
+//     char *new;
+//     int i;
+//     int inword;
 
-    new = NULL;
-    i = 0;
-    inword = 1;
-    if (!str)
-        return (NULL);
-    if (ft_iswhitespace(str[i]))
-        i++;
-    while(str[i])
-    {
-        if (ft_iswhitespace(str[i]) && inword)
-        {
-            new = append(str, str[i]);
-            i++;
-            while(ft_iswhitespace(str[i]))
-                i++;
-        }
-        else
-        {
-            new = ft_append(new, str[i], -1);
-            inword = 1;
-            i++;
-        }
-        eputf("new is: %s\n", new);
-    }
-    if (new[ft_strlen(new) - 1] == ' ')
-        new[ft_strlen(new) - 1] = 0;
-    free(str);
-    return (new);
-}
+//     new = NULL;
+//     i = 0;
+//     inword = 1;
+//     if (!str)
+//         return (NULL);
+//     if (ft_iswhitespace(str[i]))
+//         i++;
+//     while(str[i])
+//     {
+//         if (ft_iswhitespace(str[i]) && inword)
+//         {
+//             new = append(str, str[i]);
+//             i++;
+//             while(ft_iswhitespace(str[i]))
+//                 i++;
+//         }
+//         else
+//         {
+//             new = ft_append(new, str[i], -1);
+//             inword = 1;
+//             i++;
+//         }
+//         eputf("new is: %s\n", new);
+//     }
+//     if (new[ft_strlen(new) - 1] == ' ')
+//         new[ft_strlen(new) - 1] = 0;
+//     free(str);
+//     return (new);
+// }
 
 void addnewvar(t_data *data, char *newvar)
 {
@@ -87,8 +87,6 @@ char *getcurrent(t_data *data, char *arg)
         curr = ft_append(curr, arg[i], -1);
         i++;
     }
-    if (curr != NULL)
-        eputf("modified: %s\n", curr);
     return (curr);
 }
 

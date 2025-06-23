@@ -46,16 +46,20 @@ int ft_exit(int argc, char **argv, t_data *data)
 	int sign;
 	unsigned long long value;
 
+	ft_putstr("exit\n");
 	if (argc == 1)
 		return (data->last_exit_status);
-	if (argc > 2)
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 	sign = get_sign(argv[1]);
+	if (sign == 0)
+	{
+		eputf("minishell: exit: %s: numeric argument required\n", argv[1]);
+		return (2);
+	}
 	value = ft_atoi_l(argv[1]);
-	if (sign == 0 || (value == 9223372036854775808ULL && sign == 1)
+	if ((value == 9223372036854775808ULL && sign == 1)
 		|| value > 9223372036854775808ULL)
 	{
-		printf("bash: exit: %s: numeric argument required\n", argv[1]); // print instead to stderr
+		eputf("minishell: exit: %s: numeric argument required\n", argv[1]);
 		return (2);
 	}
 	if (value == 9223372036854775808ULL && sign == -1)
@@ -63,5 +67,10 @@ int ft_exit(int argc, char **argv, t_data *data)
 	else
 		value = sign * ((long long) value);
 	result = (unsigned char) value;
+	if (argc > 2)
+	{
+		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		return (-1);
+	}
 	return (result);
 }

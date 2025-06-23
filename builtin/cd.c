@@ -1,24 +1,29 @@
 #include "../minishell.h"
 
-static int updating_env(t_data *data, int option)
+/*
+	1 - sometimes we update in env and sometimes in exported, but we need consistency, both should be updated in all builtin and outside
+	2 - should add caching bash doesnt only rely on pwd in env, in case pwd fails like in mkdir example, we use cached version
+*/
+
+static int updating_env(t_data *data, char *path)
 {
-	char *buff = NULL;
+	char buff[GETCWD_BUFF_SIZE];
 	char *newpwdvalue;
 
-	if (option == 1)
+	newpwdvalue = getownenv(data->env, "PWD");
+	newpwdvalue = ft_strjoin("OLDPWD=", newpwdvalue);
+	(ftup_env(data, &data->env, newpwdvalue), free(newpwdvalue));
+	if (getcwd(buff, GETCWD_BUFF_SIZE) == NULL)
 	{
-		newpwdvalue = getcwd(buff, 999999);
-		newpwdvalue = ft_strjoin_fc("PWD=", newpwdvalue, 2);
+		eputf("cd: %s: %s\n", GETCWD_ERR, strerror(errno));
+		newpwdvalue = getownenv(data->env, "PWD");
+		newpwdvalue = append(newpwdvalue - 4, '/');
+		newpwdvalue = ft_strjoin_fc(newpwdvalue, path, 1);
 	}
 	else
-	{
-		newpwdvalue = ft_getenv(data->env, "PWD");
-		newpwdvalue = ft_strjoin_fc("OLDPWD=", newpwdvalue, 2);
-	}
-	upenv(data, newpwdvalue);
-	free(newpwdvalue);
-	free(buff);
-	return 0;
+		newpwdvalue = ft_strjoin("PWD=", buff);
+	(ftup_env(data, &data->env, newpwdvalue), free(newpwdvalue));
+	return (0);
 }
 
 int changedir(t_data *data, char *path)
@@ -28,17 +33,19 @@ int changedir(t_data *data, char *path)
 	char *homepath;
 
 	if (path != NULL)
+	{
 		chdirreturn = chdir(path);
+	}
 	else
 	{
-		homepath = ft_getenv(data->env,"HOME");
+		homepath = getownenv(data->env,"HOME");
 		if (homepath == NULL)
 		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 			return (1);
 		}
 		else if (homepath[0] == 0)
-			return 0;
+			return (0);
 		chdirreturn = chdir(homepath);
 	}
 	if (chdirreturn != 0)
@@ -46,9 +53,27 @@ int changedir(t_data *data, char *path)
 		error = ft_strjoin("minishell: cd: ", path);
 		perror(error);
 		free(error);
-		return 1;
+		return (1);
 	}
-	return 0;
+	return (0);
+}
+
+char *get_cdpath(t_data *data, char *path)
+{
+	char **cdpaths;
+	char *cdpath;
+	int i;
+
+	cdpath = getownenv(data->env, "CDPATH");
+	if (cdpath == NULL)
+		return (path);
+	cdpaths = ft_split(cdpath, ':');
+	i = 0;
+	while (cdpaths[i])
+	{
+		i++;
+	}
+	return (path);
 }
 
 int ft_cd(int argc, char **argv, t_data *data)
@@ -60,7 +85,6 @@ int ft_cd(int argc, char **argv, t_data *data)
 	}
 	if (changedir(data, argv[1]))
 		return (1);
-	updating_env(data, 0);
-	updating_env(data, 1);
+	updating_env(data, argv[1]);
 	return (0);
 }

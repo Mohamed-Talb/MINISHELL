@@ -75,10 +75,7 @@ void minishell(t_data *data)
 			execute_builtin(data, data->cmds[0]);
 		}
 		else
-		{
-			printf("in parent\n");
 			parent(data);
-		}
 		reset_data(data);
 	}
 }

@@ -20,6 +20,7 @@
 #define PER_ERROR "Permission denied"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `"
 #define REDIRECTION_SET "<|>"
+#define GETCWD_ERR "error retrieving current directory: getcwd: cannot access parent directories"
 
 // types macros
 #define CMD 1
@@ -28,6 +29,9 @@
 #define RIGHT_RED 4
 #define LEFT_HER 5
 #define RIGHT_HER 6
+
+// general macros
+#define GETCWD_BUFF_SIZE 999999
 
 typedef struct s_list
 {
@@ -127,3 +131,5 @@ void print_variable(char *var);
 
 
 int upenv(t_data *data, char *newvar);
+int ftup_env(t_data *data, char ***env, char *newvar);
+int getenvpos(char **env, char *var);

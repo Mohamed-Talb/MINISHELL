@@ -56,3 +56,29 @@ int upenv(t_data *data, char *newvar)
 	data->env = newenv;
 	return 0;
 }
+
+int ftup_env(t_data *data, char ***env, char *newvar)
+{
+	int i;
+    int j;
+
+    i = 0;
+	(void) data;
+    while ((*env)[i])
+    {
+        j = 0;
+        while ((*env)[i][j])
+        {
+            if ((*env)[i][j] == '=' && ft_strncmp((*env)[i], newvar, j) == 0)
+			{
+				free((*env)[i]);
+				(*env)[i] = ft_strdup(newvar);
+				return (0);
+			}
+            j++;
+        }
+        i++;
+    }
+	(*env) = ft_append2((*env), newvar, ft_strlen2((*env)));
+    return (0);
+}
