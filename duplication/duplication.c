@@ -7,7 +7,7 @@ void files_manager(t_data *data, t_cmds *cmd)
 	curr = cmd->allred;
 	while (curr)
 	{
-		open_red(data, curr);
+		openredfiles(data, curr);
 		curr = curr->next;
 	}
 }

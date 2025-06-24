@@ -3,12 +3,11 @@ SHELL_SRC = \
 	minishell.c \
 	helpers/utils.c helpers/lst_utils.c helpers/structs_utils.c helpers/signals.c helpers/cleanup.c \
 	parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c parsing/redirection.c \
-	grammere/grammer.c grammere/herdocs.c grammere/herdocexpand.c \
-	execution/check.c execution/child.c execution/parent.c \
+	grammere/grammer.c execution/check.c execution/child.c execution/parent.c \
 	builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c builtin/unset.c builtin/env.c \
 	builtin/builtin_management.c builtin/exit.c builtin/exportutiles.c helpers/envutils.c \
 	duplication/dupeexpand.c duplication/openredfiles.c herdoce/herdocdelimiter.c herdoce/herdocexpand.c\
-	herdoce/herdocs duplication/duplication.c
+	herdoce/herdocs.c duplication/duplication.c \
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 

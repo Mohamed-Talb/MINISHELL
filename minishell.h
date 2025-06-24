@@ -132,3 +132,4 @@ int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
 char *herexpand(t_data *data, char **line);
 void openredfiles(t_data *data, t_list *node);
+char *getdelemiter(t_data *data, char *s, int *expand);

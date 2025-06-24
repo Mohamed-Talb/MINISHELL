@@ -22,7 +22,7 @@ static char *check_cases(t_data *data, char **line)
     return exvalue;
 }
 
-char *herexpand(t_data *data, char **line, char *delimiter)
+char *delexpand(t_data *data, char **line, char *delimiter)
 {
     char *s = *line;
     char *exvalue = check_cases(data, &s);
@@ -78,7 +78,7 @@ char *double_qh(t_data *data, char **line, char *delimiter)
     {
         if (*s == '$')
         {
-            delimiter = herexpand(data, &s, delimiter);
+            delimiter = delexpand(data, &s, delimiter);
         }
         else
         {
@@ -113,7 +113,7 @@ char *getdelemiter(t_data *data, char *s, int *expand)
         else if (*s == '$')
         {
             *expand = 1;
-            ret = herexpand(data, &s, ret);
+            ret = delexpand(data, &s, ret);
         }
         else
         {
