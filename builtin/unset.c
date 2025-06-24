@@ -78,7 +78,7 @@ int ft_unset(int argc, char **argv, t_data *data)
             data->exported = remove2_plus(data->exported, temp);
         i++;
     }
-    ft_freedouble(&data->env);
+    ft_freedouble(data->env);
     data->env = ft_strdup2(data->exported);
     return (0);
 }

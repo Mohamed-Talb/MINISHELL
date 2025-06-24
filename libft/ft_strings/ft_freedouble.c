@@ -11,20 +11,19 @@
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include <stdio.h>
 
-void	ft_freedouble(char ***ptr)
+void	ft_freedouble(char **ptr)
 {
 	int	i;
 
 	i = 0;
 	if (!ptr || !*ptr)
 		return ;
-	while ((*ptr)[i])
+	while (ptr[i])
 	{
-		free((*ptr)[i]);
+		free(ptr[i]);
 		i++;
 	}
-	free(*ptr);
-	*ptr = NULL;
+	free(ptr);
+	ptr = NULL;
 }

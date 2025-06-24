@@ -30,7 +30,7 @@ char	**ft_strdup2(char **str)
 	{
 		ptr[i] = ft_strdup(str[i]);
 		if (!ptr[i])
-			return (ft_freedouble(&ptr), NULL);
+			return (ft_freedouble(ptr), NULL);
 		i++;
 	}
 	ptr[i] = NULL;

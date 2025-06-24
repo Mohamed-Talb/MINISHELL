@@ -25,13 +25,13 @@ char **ft_remove2(char **str, int index)
         new[j] = ft_strdup(str[i]);
         if (!new[j])
         {
-            ft_freedouble(&new);
+            ft_freedouble(new);
             return (NULL);
         }
         i++;
         j++;
     }
     new[j] = NULL;
-    ft_freedouble(&str);
+    ft_freedouble(str);
     return (new);
 }

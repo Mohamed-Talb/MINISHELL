@@ -19,8 +19,8 @@ int getcommand(t_cmds *command, t_list *list)
 	if (!command->cmd)
 	{
 		command->flags = malloc(2 * sizeof(char *));
-																command->flags[0] = ft_strdup(list->content);
-																command->flags[1] = NULL;
+		command->flags[0] = ft_strdup(list->content);
+		command->flags[1] = NULL;
 		command->cmd = ft_strdup(list->content); 
 	}
 	else
@@ -30,7 +30,7 @@ int getcommand(t_cmds *command, t_list *list)
 		command->flags = ft_append2(command->flags, list->content, len);
 	}
 	if (tmp)
-		ft_freedouble(&tmp);
+		ft_freedouble(tmp);
 	return 0;
 }
 

@@ -5,26 +5,41 @@
 	2 - should add caching bash doesnt only rely on pwd in env, in case pwd fails like in mkdir example, we use cached version
 */
 
-static int updating_env(t_data *data, char *path)
+static int upoldpwd(t_data *data)
 {
-	char buff[GETCWD_BUFF_SIZE];
-	char *newpwdvalue;
+	char *new;
 
-	newpwdvalue = getownenv(data->env, "PWD");
-	newpwdvalue = ft_strjoin("OLDPWD=", newpwdvalue);
-	(ftup_env(data, &data->env, newpwdvalue), free(newpwdvalue));
-	if (getcwd(buff, GETCWD_BUFF_SIZE) == NULL)
-	{
-		eputf("cd: %s: %s\n", GETCWD_ERR, strerror(errno));
-		newpwdvalue = getownenv(data->env, "PWD");
-		newpwdvalue = append(newpwdvalue - 4, '/');
-		newpwdvalue = ft_strjoin_fc(newpwdvalue, path, 1);
-	}
-	else
-		newpwdvalue = ft_strjoin("PWD=", buff);
-	(ftup_env(data, &data->env, newpwdvalue), free(newpwdvalue));
+	new = ft_getenv(data->env, "PWD");
+	new = ft_strjoin("OLDPWD=", new);
+	data->env = envup(data->env, new);
+	free(new);
+	if (!data->env)
+		return (1);
 	return (0);
 }
+
+static int uppwd(t_data *data, char *path)
+{
+	char buff[999999];
+	char *new;
+
+	if (!getcwd(buff, 999999))
+	{
+		eputf("cd: %s: %s\n", GETCWD_ERR, strerror(errno));
+		new = ft_getenv(data->env, "PWD");
+		new = append(new - 4, '/');
+		new = ft_strjoin_fc(new, path, 1);
+	}
+	else
+		new = ft_strjoin("PWD=", buff);
+	if (!new)
+		return(eputf(MALLOC_ERROR), 1);
+	data->env = envup(data->env, new);
+	if (!data->env)
+		return (1);
+	return 0;
+}
+
 
 int changedir(t_data *data, char *path)
 {
@@ -33,12 +48,10 @@ int changedir(t_data *data, char *path)
 	char *homepath;
 
 	if (path != NULL)
-	{
 		chdirreturn = chdir(path);
-	}
 	else
 	{
-		homepath = getownenv(data->env,"HOME");
+		homepath = ft_getenv(data->env,"HOME");
 		if (homepath == NULL)
 		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
@@ -64,15 +77,15 @@ char *get_cdpath(t_data *data, char *path)
 	char *cdpath;
 	int i;
 
-	cdpath = getownenv(data->env, "CDPATH");
+	cdpath = ft_getenv(data->env, "CDPATH");
 	if (cdpath == NULL)
 		return (path);
 	cdpaths = ft_split(cdpath, ':');
+	if (!cdpath)
+		return(eputf(MALLOC_ERROR), NULL);
 	i = 0;
 	while (cdpaths[i])
-	{
 		i++;
-	}
 	return (path);
 }
 
@@ -85,6 +98,9 @@ int ft_cd(int argc, char **argv, t_data *data)
 	}
 	if (changedir(data, argv[1]))
 		return (1);
-	updating_env(data, argv[1]);
+	if (upoldpwd(data))
+		return 1;
+	if (uppwd(data, argv[1]))
+		return 1;
 	return (0);
 }

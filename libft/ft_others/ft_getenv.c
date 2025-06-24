@@ -1,19 +1,25 @@
 #include "../libft.h"
 
-char *ft_getenv(char **env, const char *varname)
+char *ft_getenv(char **env, const char *var)
 {
-    size_t len;
-    int i = 0;
-
-    if (!env || !varname)
+    
+    int i;
+    int j;
+    
+    if (!env || !var)
         return NULL;
 
-    len = ft_strlen(varname);
+    i = 0;
     while (env[i])
     {
-        if (ft_strncmp(env[i], varname, len) == 0 && env[i][len] == '=')
-            return ft_strdup(env[i] + len + 1); 
+        j = 0;
+        while (env[i][j])
+        {
+            if (env[i][j] == '=' && ft_strncmp(env[i], var, j) == 0)
+                return (&env[i][j + 1]);
+            j++;
+        }
         i++;
     }
-    return NULL;
+    return (NULL);
 }

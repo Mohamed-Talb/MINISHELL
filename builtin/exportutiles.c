@@ -78,25 +78,25 @@ int checkdups(char **variables, char *target)
     return (-1);
 }
 
-char *getownenv(char **env, char *var)
-{
-    int i;
-    int j;
+// char *getownenv(char **env, char *var)
+// {
+//     int i;
+//     int j;
 
-    i = 0;
-    while (env[i])
-    {
-        j = 0;
-        while (env[i][j])
-        {
-            if (env[i][j] == '=' && ft_strncmp(env[i], var, j) == 0)
-                return (&env[i][j + 1]);
-            j++;
-        }
-        i++;
-    }
-    return (NULL);
-}
+//     i = 0;
+//     while (env[i])
+//     {
+//         j = 0;
+//         while (env[i][j])
+//         {
+//             if (env[i][j] == '=' && ft_strncmp(env[i], var, j) == 0)
+//                 return (&env[i][j + 1]);
+//             j++;
+//         }
+//         i++;
+//     }
+//     return (NULL);
+// }
 
 int getenvpos(char **env, char *var)
 {

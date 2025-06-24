@@ -30,8 +30,7 @@
 #define LEFT_HER 5
 #define RIGHT_HER 6
 
-// general macros
-#define GETCWD_BUFF_SIZE 999999
+
 
 typedef struct s_list
 {
@@ -64,7 +63,7 @@ typedef struct s_data
 
 void	grammer(t_data *data);
 void	printdoule(char **str);
-char **upvar(char **env, char *newvar);
+char 	**envup(char **env, char *newvar);
 void 	open_herdocs(t_data *data, t_list *node);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
 char	*ft_strjoin_es(char *str, char *buff, int choice);
@@ -129,7 +128,6 @@ void print_exported(char **exported);
 void print_variable(char *var);
 
 
-
-int upenv(t_data *data, char *newvar);
 int ftup_env(t_data *data, char ***env, char *newvar);
 int getenvpos(char **env, char *var);
+char *dupexpand(t_data *data, char **line);

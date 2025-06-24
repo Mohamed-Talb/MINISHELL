@@ -13,7 +13,7 @@ void update_lvl(t_data *data)
 	}
 	else
 	{
-		str = getownenv(data->env, "SHLVL");
+		str = ft_getenv(data->env, "SHLVL");
 		value = ft_atoy(str);
 		if (value > INT_MAX)
 			value = 1;
@@ -30,10 +30,10 @@ void update_lvl(t_data *data)
 
 void other_env(t_data *data)
 {
-	char buff[GETCWD_BUFF_SIZE];
+	char buff[99999];
 	char *newpwdvalue;
 
-	if (getcwd(buff, GETCWD_BUFF_SIZE) == NULL)
+	if (getcwd(buff, 99999) == NULL)
 		eputf("shell-init: %s: %s\n", GETCWD_ERR, strerror(errno));
 	else
 	{

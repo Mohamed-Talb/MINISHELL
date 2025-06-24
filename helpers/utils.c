@@ -4,11 +4,13 @@
 // will print the error to stderr then free data
 void errcln(t_data *data, int exitcode, char *error, ...)
 {
-	va_list	args;
-
-	va_start(args, error);
-	veputf(error, args);
-	va_end(args);
+	if (error)
+	{
+		va_list	args;
+		va_start(args, error);
+		veputf(error, args);
+		va_end(args);
+	}
 	free_data(data);
 	exit(exitcode);
 }

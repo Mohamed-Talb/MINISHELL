@@ -1,61 +1,72 @@
 #include "../minishell.h"
 
-// char **addvar(char **env, char *var)
-// {
-// 	char **newenv;
-// 	newenv = ft_append2(env, var, ft_strlen2(env));
-// 	return newenv;
-// }
+char **envadd(char **env, char *newvar)
+{
+	char **newenv;
 
-// char **rmvar(char **env, char *var)
-// {
-// 	char **newenv ;
-// 	int i;
-	
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		if (!ft_strncmp(env[i], var, ft_strlen(var)))
-// 		{
-// 			ft_remove2(&env, i);
-// 			break ;
-// 		}
-// 		i++;
-// 	}
-// 	newenv = ft_strdup2(env);
-// 	ft_freedouble(&env);
-// 	return (newenv);
-// }
+	newenv = NULL;
+	newenv = ft_append2(newenv, newvar, ft_strlen2(env));
+	if (!newenv)
+		 return(eputf(MALLOC_ERROR), NULL);
+	ft_freedouble(env);
+	return newenv;
+}
 
-int upenv(t_data *data, char *newvar)
+int envrm(t_data *data, char *var)
 {
 	int i;
-	int namelen;
+	int len;
+	
+	i = 0;
+	len = ft_strlen(var);
+	while (data->env[i])
+	{
+		if (data->env[i][len] == '=' && ft_strncmp(data->env[i], var, len) == 0)
+        {
+			data->env = ft_remove2(data->env, i);
+			if (!data->env)
+		 		return(eputf(MALLOC_ERROR), 1);
+			break ;
+		}
+		i++;
+	}
+	return 0;
+}
+
+char **envup(char **env, char *newvar)
+{
+	int i;
+	int len;
 	char **newenv;
 
 	i = 0;
-	while(newvar[i] != '=')
+	if (!newvar || !env)
+		return NULL;
+	while(newvar[i] && newvar[i] != '=')
 		i++;
-	namelen = i;
-	while(data->env[i])
+	len = i;
+	while(env[i])
 	{
-		if (ft_strncmp(data->env[i], newvar, namelen) == 0 && data->env[i][namelen] == '=')
+		if (env[i][len] == '=' && ft_strncmp(env[i], newvar, len) == 0)
         {
-			free(data->env[i]);
-			data->env[i] = ft_strdup(newvar);
-			if (data->env[i] == NULL)
-				return (ft_putstr_fd(MALLOC_ERROR, 2), 1);
-			return 0;
-		} 
+			free(env[i]);
+			env[i] = ft_strdup(newvar);
+			if(!env[i])
+				return(eputf(MALLOC_ERROR), NULL);
+			newenv = ft_strdup2(env);
+			if (!newenv)
+				return(eputf(MALLOC_ERROR), NULL);
+			ft_freedouble(env);
+			return newenv;
+		}
 		i++;
 	}
-	newenv = ft_append2(data->env, newvar, ft_strlen2(data->env));
-	if (newenv == NULL)
-		return (ft_putstr_fd(MALLOC_ERROR, 2), 1);
-	ft_freedouble(&data->env);
-	data->env = newenv;
-	return 0;
+	newenv = envadd(env, newvar);
+	return newenv;
 }
+
+
+
 
 int ftup_env(t_data *data, char ***env, char *newvar)
 {

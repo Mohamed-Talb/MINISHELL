@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../libft.h"
-#include <stdio.h>
 
 char	**ft_append2(char **src, char *str, int pos)
 {
@@ -34,7 +33,7 @@ char	**ft_append2(char **src, char *str, int pos)
 		}
 		ptr[i] = ft_strdup(src[j]);
 		if (!ptr[i])
-			return (ft_freedouble(&ptr), NULL);
+			return (ft_freedouble(ptr), NULL);
 		i++;
 		j++;
 	}

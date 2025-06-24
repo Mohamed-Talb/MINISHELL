@@ -42,7 +42,7 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 		return (paths);
 	}
 	i = 0;
-	env_path = getownenv(data->env, "PATH");
+	env_path = ft_getenv(data->env, "PATH");
 	if (env_path == NULL)
 		return (NULL);
 	paths = ft_split(env_path, ':');
