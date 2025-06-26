@@ -2,19 +2,28 @@
 
 void run_builtin(t_data *data, t_cmds *command)
 {
-	duplication(data, command);
+	int exst;
+
+	exst = 0;
 	if (!ft_strcmp(command->flags[0], "echo"))
-		exit(ft_echo(ft_strlen2(command->flags), command->flags, data));
+		exst = ft_echo(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "cd"))
-		exit(ft_cd(ft_strlen2(command->flags), command->flags, data));
+		exst = ft_cd(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "pwd"))
-        exit(ft_pwd(ft_strlen2(command->flags), command->flags, data));
+        exst = ft_pwd(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "export"))
-        exit(ft_export(ft_strlen2(command->flags), command->flags, data));
+        exst = ft_export(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "unset"))
-        exit(ft_unset(ft_strlen2(command->flags), command->flags, data));
+        exst = ft_unset(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "env"))
-        exit(ft_env(ft_strlen2(command->flags), command->flags, data));
+        exst = ft_env(ft_strlen2(command->flags), command->flags, data);
+	else if (!ft_strcmp(command->flags[0], "exit"))
+	{
+        exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
+		if (exst == -1)
+			exst = 1;
+	}
+	exit(exst);
 }
 
 int	child(t_data *data, t_cmds *command)

@@ -35,7 +35,7 @@ void execute_builtin(t_data *data, t_cmds *command)
 	int exst;
 	int stdin_dup;
 	int stdout_dup;
-	
+
 	exst = 0;
 	char *cmdname;
 	stdin_dup = dup(0);

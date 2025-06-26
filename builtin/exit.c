@@ -28,6 +28,8 @@ unsigned long long ft_atoi_l(char *nptr)
 {
 	unsigned long long result;
 
+	if (get_sign(nptr) == 0)
+		return (L_OVERFLOW + 1ULL);
 	result = 0;
 	while (!ft_isdigit(*nptr))
 		nptr++;
@@ -39,37 +41,38 @@ unsigned long long ft_atoi_l(char *nptr)
 	return (result);
 }
 
-int ft_exit(int argc, char **argv, t_data *data)
+int checker(unsigned long long value, int sign, char *arg)
 {
-	(void) data;
-	unsigned char result;
-	int sign;
-	unsigned long long value;
-
-	ft_putstr("exit\n");
-	if (argc == 1)
-		return (data->last_exit_status);
-	sign = get_sign(argv[1]);
 	if (sign == 0)
 	{
-		eputf("minishell: exit: %s: numeric argument required\n", argv[1]);
-		return (2);
+		eputf(NUMREQ_ERR, arg);
+		return (NUMREQ_CODE);
 	}
-	value = ft_atoi_l(argv[1]);
-	if ((value == 9223372036854775808ULL && sign == 1)
-		|| value > 9223372036854775808ULL)
+	if ((value == L_OVERFLOW && sign == 1) || value > L_OVERFLOW)
 	{
-		eputf("minishell: exit: %s: numeric argument required\n", argv[1]);
-		return (2);
+		eputf(NUMREQ_ERR, arg);
+		return (NUMREQ_CODE);
 	}
-	if (value == 9223372036854775808ULL && sign == -1)
+	if (value == L_OVERFLOW && sign == -1)
 		value = (LLONG_MIN);
 	else
 		value = sign * ((long long) value);
-	result = (unsigned char) value;
+	return ((unsigned char) value);
+}
+
+int ft_exit(int argc, char **argv, t_data *data)
+{
+	int result;
+
+	((void) data, ft_putstr("exit\n"));
+	if (argc == 1)
+		return (data->last_exit_status);
+	result = checker(ft_atoi_l(argv[1]), get_sign(argv[1]), argv[1]);
+	if (result == NUMREQ_CODE)
+		return (2);
 	if (argc > 2)
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", 2);
+		eputf(EXCESS_ARGS_ERR);
 		return (-1);
 	}
 	return (result);

@@ -5,46 +5,9 @@
 	2 - should add caching bash doesnt only rely on pwd in env, in case pwd fails like in mkdir example, we use cached version
 */
 
-static int upoldpwd(t_data *data)
-{
-	char *new;
-
-	new = ft_getenv(data->env, "PWD");
-	new = ft_strjoin("OLDPWD=", new);
-	data->env = envup(data->env, new);
-	free(new);
-	if (!data->env)
-		return (1);
-	return (0);
-}
-
-static int uppwd(t_data *data, char *path)
-{
-	char buff[999999];
-	char *new;
-
-	if (!getcwd(buff, 999999))
-	{
-		eputf("cd: %s: %s\n", GETCWD_ERR, strerror(errno));
-		new = ft_getenv(data->env, "PWD");
-		new = append(new - 4, '/');
-		new = ft_strjoin_fc(new, path, 1);
-	}
-	else
-		new = ft_strjoin("PWD=", buff);
-	if (!new)
-		return(eputf(MALLOC_ERROR), 1);
-	data->env = envup(data->env, new);
-	if (!data->env)
-		return (1);
-	return 0;
-}
-
-
 int changedir(t_data *data, char *path)
 {
-	int chdirreturn = 0;
-	char *error;
+	int chdirreturn;
 	char *homepath;
 
 	if (path != NULL)
@@ -63,9 +26,9 @@ int changedir(t_data *data, char *path)
 	}
 	if (chdirreturn != 0)
 	{
-		error = ft_strjoin("minishell: cd: ", path);
-		perror(error);
-		free(error);
+		if (path == NULL)
+			path = homepath;
+		eputf("minishell: cd: %s: %s\n", path, strerror(errno));
 		return (1);
 	}
 	return (0);
@@ -99,8 +62,8 @@ int ft_cd(int argc, char **argv, t_data *data)
 	if (changedir(data, argv[1]))
 		return (1);
 	if (upoldpwd(data))
-		return 1;
+		return (1);
 	if (uppwd(data, argv[1]))
-		return 1;
+		return (1);
 	return (0);
 }

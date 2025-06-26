@@ -30,7 +30,14 @@
 #define LEFT_HER 5
 #define RIGHT_HER 6
 
-
+// BUILTIN-DEFINES:
+// exit:
+#define L_OVERFLOW 9223372036854775808ULL
+#define NUMREQ_ERR "minishell: exit: %s: numeric argument required\n"
+#define EXCESS_ARGS_ERR "minishell: exit: too many arguments\n"
+#define NUMREQ_CODE 256
+// export:
+#define INVALID_IDERR "minishell: export: `%s': not a valid identifier\n"
 
 typedef struct s_list
 {
@@ -63,7 +70,6 @@ typedef struct s_data
 
 void	grammer(t_data *data);
 void	printdoule(char **str);
-char 	**envup(char **env, char *newvar);
 void 	open_herdocs(t_data *data, t_list *node);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
 char	*ft_strjoin_es(char *str, char *buff, int choice);
@@ -93,6 +99,7 @@ char 	*randomnbr();
 void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
 int		posin_set(char *set, char c);
+int		respects_set(char *str, char *set);
 void 	errors(t_data *data, char *error, int exitcode);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(t_data *data, int exitcode, char *error, ...);
@@ -121,15 +128,19 @@ int		ft_exit(int argc, char **argv, t_data *data);
 
 
 // EXPORT UTILES
-int checkdups(char **variables, char *target);
 int issame_var(char *str1, char *str2);
 void print_exported(char **exported);
 void print_variable(char *var);
 
 
-int ftup_env(t_data *data, char ***env, char *newvar);
+int isvalid_var(char *var);
 int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
 char *herexpand(t_data *data, char **line);
 void openredfiles(t_data *data, t_list *node);
 char *getdelemiter(t_data *data, char *s, int *expand);
+int varname_size(char *var);
+char **envup(char **env, char *var);
+char **envrm(char **env, char *var);
+int uppwd(t_data *data, char *path);
+int upoldpwd(t_data *data);

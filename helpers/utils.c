@@ -72,6 +72,22 @@ int in_set(char *set, char c)
 	return (0);
 }
 
+int respects_set(char *str, char *set)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (in_set(set, str[i]) == 0)
+			return (0);
+		i++;
+	}
+	if (ft_strcmp(str, set) != 0)
+		return (0);
+	return (1);
+}
+
 int posin_set(char *set, char c)
 {
 	int i = 0;

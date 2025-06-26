@@ -38,9 +38,10 @@ void other_env(t_data *data)
 	else
 	{
 		newpwdvalue = ft_strjoin("PWD=", buff);
-		(ftup_env(data, &data->exported, newpwdvalue), free(newpwdvalue));
+		data->exported = envup(data->exported, newpwdvalue);
+		free(newpwdvalue);
 	}
-	ftup_env(data, &data->exported, "OLDPWD");
+	data->exported = envup(data->exported, "OLDPWD");
 }
 
 t_data	*init_data(char **penv)

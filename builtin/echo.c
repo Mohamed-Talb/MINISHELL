@@ -4,17 +4,13 @@ int ft_echo(int argc, char **argv, t_data *data)
 {
 	int rm_newline;
 	int i;
-	int j;
 
 	i = 1;
 	(void) data;
 	rm_newline = 0;
-	while (i < argc && !ft_strncmp("-n", argv[i], 2))
+	while (i < argc)
 	{
-		j = 2;
-		while (argv[i][j] == 'n')
-			j++;
-		if (argv[i][j] != 'n' && argv[i][j] != 0)
+		if (argv[i][0] != '-' || !respects_set(&argv[i][1], "n"))
 			break;
 		rm_newline = 1;
 		i++;
