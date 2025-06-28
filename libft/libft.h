@@ -23,6 +23,7 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1
 # endif
+#define L_OVERFLOW 9223372036854775808ULL
 
 //  csuxXdip
 // 012345678
@@ -45,7 +46,9 @@ char	*ft_itoa(int n);
 char	**ft_strdup2(char **str);
 char	*ft_uitoa(unsigned int n);
 char	*ft_strdup(const char *s);
+int		atoi_sign(char *nptr);
 char	*ft_strchr(const char *s, int c);
+unsigned long long	ft_atoi_l(char *nptr);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(char const *s, char c);
 char 	*ft_remove(char *str, int pos);

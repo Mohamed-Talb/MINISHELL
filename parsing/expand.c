@@ -47,7 +47,7 @@ int hexpand(t_data *data, char **token, char *s)
 		*token = ft_append(*token, '$', -1);
 		return (i);
 	}
-	result = ft_getenv(data->env, env_var);
+	result = ft_getenv(data->exported, env_var);
 	*token = ft_strjoin_es(*token, result, 1);
 	free(env_var);
 	return (i);

@@ -4,16 +4,16 @@ int upoldpwd(t_data *data)
 {
 	char *new;
 
-	new = ft_getenv(data->env, "PWD");
+	new = ft_getenv(data->exported, "PWD");
 	if (new == NULL)
-		data->env = envup(data->env, "OLDPWD"); // this is needed when PWD is unset before a cd
+		data->exported = envup(data->exported, "OLDPWD"); // this is needed when PWD is unset before a cd
 	else
 	{
 		new = ft_strjoin("OLDPWD=", new);
-		data->env = envup(data->env, new);
+		data->exported = envup(data->exported, new);
 		free(new);
 	}
-	if (!data->env)
+	if (!data->exported)
 		return (1);
 	return (0);
 }
@@ -26,7 +26,7 @@ int uppwd(t_data *data, char *path)
 	if (getcwd(buff, sizeof(buff)) == NULL)
 	{
 		eputf("cd: %s: %s\n", GETCWD_ERR, strerror(errno));
-		new = ft_getenv(data->env, "PWD");
+		new = ft_getenv(data->exported, "PWD");
 		new = append(new - 4, '/');
 		new = ft_strjoin_fc(new, path, 1);
 	}
@@ -34,8 +34,8 @@ int uppwd(t_data *data, char *path)
 		new = ft_strjoin("PWD=", buff);
 	if (new == NULL)
 		return(eputf(MALLOC_ERROR), 1);
-	data->env = envup(data->env, new);
-	if (!data->env)
+	data->exported = envup(data->exported, new);
+	if (!data->exported)
 		return (1);
 	return (0);
 }

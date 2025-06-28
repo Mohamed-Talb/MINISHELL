@@ -23,7 +23,6 @@ int ft_export(int argc, char **argv, t_data *data)
             i++;
         }
     }
-    ft_freedouble(data->env);
-    data->env = ft_strdup2(data->exported);
+    sync_envs(data);
     return (data->last_exit_status);
 }

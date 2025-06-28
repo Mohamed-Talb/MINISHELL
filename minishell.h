@@ -32,7 +32,6 @@
 
 // BUILTIN-DEFINES:
 // exit:
-#define L_OVERFLOW 9223372036854775808ULL
 #define NUMREQ_ERR "minishell: exit: %s: numeric argument required\n"
 #define EXCESS_ARGS_ERR "minishell: exit: too many arguments\n"
 #define NUMREQ_CODE 256
@@ -144,3 +143,5 @@ char **envup(char **env, char *var);
 char **envrm(char **env, char *var);
 int uppwd(t_data *data, char *path);
 int upoldpwd(t_data *data);
+char **adjust_shell_level(char **env, int change);
+void sync_envs(t_data *data);

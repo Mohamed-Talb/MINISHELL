@@ -69,3 +69,46 @@ long	ft_atoy(const char *nptr)
 		return (INT_MAX + 2L);
 	return (r * sign);
 }
+
+int atoi_sign(char *nptr)
+{
+	int sign;
+
+	sign = 1;
+	while (ft_iswhitespace(*nptr))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			sign = -1;
+		nptr++;
+		if (!nptr[0])
+			return (0);
+	}
+	else if (!ft_isdigit(*nptr))
+		return (0);
+	while (ft_isdigit(*nptr))
+		nptr++;
+	while (ft_iswhitespace(*nptr))
+		nptr++;
+	if (*nptr != '\0')
+		return (0);
+	return (sign);
+}
+
+unsigned long long ft_atoi_l(char *nptr)
+{
+	unsigned long long result;
+
+	if (atoi_sign(nptr) == 0)
+		return (L_OVERFLOW + 1ULL);
+	result = 0;
+	while (!ft_isdigit(*nptr))
+		nptr++;
+	while (ft_isdigit(*nptr))
+	{
+		result = result * 10 + *nptr - 48;
+		nptr++;
+	}
+	return (result);
+}

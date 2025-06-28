@@ -25,5 +25,4 @@ void	ft_freedouble(char **ptr)
 		i++;
 	}
 	free(ptr);
-	ptr = NULL;
 }

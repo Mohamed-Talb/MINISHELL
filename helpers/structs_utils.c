@@ -1,31 +1,24 @@
 #include "../minishell.h"
 
-void update_lvl(t_data *data)
+void sync_envs(t_data *data)
 {
-	char *str;
-	int pos;
-	long value;
+    int i;
+    int name_len;
 
-	pos = getenvpos(data->env, "SHLVL");
-	if (pos == -1)
-	{
-		data->env = ft_append2(data->env, "SHLVL=1", 0);
-	}
-	else
-	{
-		str = ft_getenv(data->env, "SHLVL");
-		value = ft_atoy(str);
-		if (value > INT_MAX)
-			value = 1;
-		else
-			value++;
-		if (value >= 1000)
+	i = 0;
+    if (data->env != NULL)
+		ft_freedouble(data->env);
+	data->env = ft_strdup2(data->exported);
+    while (data->env[i])
+    {
+        name_len = varname_size(data->env[i]);
+        if (data->env[i][name_len] != '=')
 		{
-			eputf("minishell: warning: shell level (1000) too high, resetting to 1\n");
-			value = 1;
+            data->env = envrm(data->env, data->env[i]);
+			continue; // we shouldnt increase i here because we just deleted an element, so the count is unstable
 		}
-		data->env[pos] = ft_strjoin_fc("SHLVL=", ft_itoa(value), 2);
-	}
+        i++;
+    }
 }
 
 void other_env(t_data *data)
@@ -54,10 +47,9 @@ t_data	*init_data(char **penv)
 		errors(data, MALLOC_ERROR, 1);
 		return (NULL);
 	}
-	data->env = ft_strdup2(penv);
-	update_lvl(data);
-	data->exported = ft_strdup2(data->env);
+	data->exported = adjust_shell_level(ft_strdup2(penv), 1);
 	other_env(data);
+	sync_envs(data);
 	data->pipes_nb = 1;
 	return (data);
 }

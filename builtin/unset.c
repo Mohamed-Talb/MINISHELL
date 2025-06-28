@@ -15,7 +15,6 @@ int ft_unset(int argc, char **argv, t_data *data)
         data->exported = envrm(data->exported, argv[i]);
         i++;
     }
-    ft_freedouble(data->env);
-    data->env = ft_strdup2(data->exported);
+    sync_envs(data);
     return (0);
 }

@@ -1,10 +1,8 @@
 // #include "minishell.h"
+#include <stdio.h>
 
-// int main()
-// {
-//     char *buff;
-//     char *ret;
-
-//     ret = getcwd(buff, );
-//     printf("ret: %s\n buff: %s\n", ret, buff);
-// }
+int main()
+{
+    int x = (int) (99999999999999999999999999999999L);
+    printf("value: %i\n", x);
+}

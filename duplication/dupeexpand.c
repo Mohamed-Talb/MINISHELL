@@ -51,7 +51,7 @@ char *dupexpand(t_data *data, char **line)
         exvalue = ft_append(exvalue, '$', -1);
 		return exvalue;
 	}
-	result = ft_getenv(data->env, env_var);
+	result = ft_getenv(data->exported, env_var);
 	exvalue = ft_strjoin_es(exvalue, result, 1);
     *line = s;
 	free(env_var);

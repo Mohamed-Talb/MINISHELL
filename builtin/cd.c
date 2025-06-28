@@ -14,13 +14,13 @@ int changedir(t_data *data, char *path)
 		chdirreturn = chdir(path);
 	else
 	{
-		homepath = ft_getenv(data->env,"HOME");
+		homepath = ft_getenv(data->exported,"HOME");
 		if (homepath == NULL)
 		{
 			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 			return (1);
 		}
-		else if (homepath[0] == 0)
+		else if (homepath[0] == 0) // env
 			return (0);
 		chdirreturn = chdir(homepath);
 	}
@@ -40,7 +40,7 @@ char *get_cdpath(t_data *data, char *path)
 	char *cdpath;
 	int i;
 
-	cdpath = ft_getenv(data->env, "CDPATH");
+	cdpath = ft_getenv(data->exported, "CDPATH");
 	if (cdpath == NULL)
 		return (path);
 	cdpaths = ft_split(cdpath, ':');
@@ -65,5 +65,6 @@ int ft_cd(int argc, char **argv, t_data *data)
 		return (1);
 	if (uppwd(data, argv[1]))
 		return (1);
+	sync_envs(data);
 	return (0);
 }
