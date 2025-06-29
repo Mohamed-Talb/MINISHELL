@@ -1,7 +1,7 @@
 #include "../minishell.h"
 
 /*
-	1 - sometimes we update in env and sometimes in exported, but we need consistency, both should be updated in all builtin and outside
+	1 - sometimes we update in env and sometimes in exported, but we need consistency, both should be updated in all builtin and outside --> done
 	2 - should add caching bash doesnt only rely on pwd in env, in case pwd fails like in mkdir example, we use cached version
 */
 

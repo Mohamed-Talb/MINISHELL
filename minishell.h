@@ -63,6 +63,7 @@ typedef struct s_data
 	int 	pipes_nb;
 	char	**exported;
 	int		command_count;
+	int 	expand_rage;
 	t_list	*cmd_list;
 	t_cmds	**cmds;
 } t_data;
@@ -104,8 +105,9 @@ void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(t_data *data, int exitcode, char *error, ...);
 
 // PARSING 
+t_list	*creat_node(t_data *data);
 int		parser(t_data *data, char *line);
-char	*expand(t_data *data, char **line);
+int		expand(t_data *data, char **line);
 int		hpipe(t_data *data, t_list *token, char **line);
 void	single_q(t_data *data, t_list *token, char **line);
 void	redirection(t_data *data, t_list *token, char **line);

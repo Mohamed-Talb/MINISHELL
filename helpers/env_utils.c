@@ -110,7 +110,7 @@ char *ft_getenv(char **env, const char *var)
     return (NULL);
 }
 
-char **adjust_shell_level(char **env, int change)
+char **adjust_shell_level(char **env, int change) // this function is a 90% copy of bash, might this be called cheating?
 {
     char *new_level;
     char *old_SHLVL;

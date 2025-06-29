@@ -53,16 +53,21 @@ int hexpand(t_data *data, char **token, char *s)
 	return (i);
 }
 
-char *expand(t_data *data, char **line)
+int expand(t_data *data, char **line)
 {
+	int expand_size;
+	int old_size;
 	char *str;
 	int pos;
 	int i;
 
 	pos = *line - data->line;
 	str = ft_substr(data->line, 0, pos);
+	old_size = ft_strlen(str);
 	i = hexpand(data, &str, *line);
+	expand_size = ft_strlen(str) - old_size;
 	data->line = ft_strjoin_fc(str, *line + i, 1);
 	*line = data->line + pos;
-	return (*line);
+	data->expand_rage = expand_size;
+	return (expand_size);
 }

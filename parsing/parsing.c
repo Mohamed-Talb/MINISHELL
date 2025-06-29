@@ -32,37 +32,61 @@ t_list *creat_node(t_data *data)
 	return (new);
 }
 
+int regular_parse(t_data *data, t_list *token, char **line)
+{
+	char *s;
+
+	s = *line;
+	if (*s == '\'')
+		single_q(data, token, &s);
+	else if (*s == '"')
+		double_q(data, token, &s, 1);
+	else if (*s == '<' || *s == '>')
+	{
+		redirection(data, token, &s);
+		return (1);
+	}
+	else if (*s == '|')
+	{
+		hpipe(data, token, &s);
+		data->pipes_nb++;
+		return (2);
+	}
+	else
+	{
+		token->content = ft_append(token->content, *s, -1);
+		s++;
+	}
+	*line = s;
+	return (0);
+}
+
 t_list *handle_arg(t_data *data, t_list *token, char **line)
 {
 	char *s;
+	int result;
 
 	s = *line;
 	while (*s != '\0' && !ft_iswhitespace(*s))
 	{
 		if (*s == '$')
-			s = expand(data, &s);
+			expand(data, &s);
 		else
 		{
 			if (token == NULL)
 				token = creat_node(data);
-			if (*s == '\'')
-				single_q(data, token, &s);
-			else if (*s == '"')
-				double_q(data, token, &s, 1);
-			else if (*s == '<' || *s == '>')
+			if (data->expand_rage == 0)
 			{
-				redirection(data, token, &s);
-				continue ;
-			}
-			else if (*s == '|')
-			{
-				hpipe(data, token, &s);
-				data->pipes_nb++;
-				break ;
+				result = regular_parse(data, token, &s);
+				if (result == 1)
+					continue;
+				if (result == 2)
+					break;
 			}
 			else
 			{
 				token->content = ft_append(token->content, *s, -1);
+				data->expand_rage--;
 				s++;
 			}
 		}
