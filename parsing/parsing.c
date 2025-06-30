@@ -32,67 +32,44 @@ t_list *creat_node(t_data *data)
 	return (new);
 }
 
-int regular_parse(t_data *data, t_list *token, char **line)
+/* funtion to handle the other forms of parsing which require token to be unitialized unlike hpipe and expand */
+t_list	*regular_parse(t_data *data, t_list *token, char **line)
 {
 	char *s;
 
 	s = *line;
-	if (*s == '\'')
-		single_q(data, token, &s);
-	else if (*s == '"')
-		double_q(data, token, &s, 1);
-	else if (*s == '<' || *s == '>')
+	if (token == NULL)
+		token = creat_node(data);
+	if (s >= data->expand_rage)
 	{
-		redirection(data, token, &s);
-		*line = s;
-		return (1);
-	}
-	else if (*s == '|')
-	{
-		hpipe(data, token, &s);
-		data->pipes_nb++;
-		*line = s;
-		return (2);
+		if (*s == '\'')
+			single_q(data, token, &s);
+		else if (*s == '"')
+			double_q(data, token, &s, 1);
+		else if (*s == '<' || *s == '>')
+			redirection(data, token, &s);
+		else
+			token->content = ft_append(token->content, *s++, -1);
 	}
 	else
-	{
-		token->content = ft_append(token->content, *s, -1);
-		s++;
-	}
+		token->content = ft_append(token->content, *s++, -1);
 	*line = s;
-	return (0);
+	return (token);
 }
 
 t_list *handle_arg(t_data *data, t_list *token, char **line)
 {
 	char *s;
-	int result;
 
 	s = *line;
-	while (*s != '\0' && !ft_iswhitespace(*s))
+	while (*s != '\0' && ft_iswhitespace(*s) == false)
 	{
-		if (*s == '$' && data->expand_rage == 0)
+		if (*s == '$' && s >= data->expand_rage)
 			expand(data, &s);
+		else if (*s == '|' && s >= data->expand_rage)
+			token = hpipe(data, token, &s);
 		else
-		{
-			if (token == NULL)
-				token = creat_node(data);
-			if (data->expand_rage == 0)
-			{
-				result = regular_parse(data, token, &s);
-				if (result == 1)
-					continue;
-				if (result == 2)
-					break;
-			}
-			else // as far as i know this is the part that is ok with expand_rage
-			{
-				eputf("%c", *s);
-				token->content = ft_append(token->content, *s, -1);
-				data->expand_rage--;
-				s++;
-			}
-		}
+			token = regular_parse(data, token, &s);
 	}
 	*line = s;
 	return (token);
@@ -120,9 +97,8 @@ int parser(t_data *data, char *line)
 					new_pipe = 1;
 			}
 		}
-		if (*line == '\0')
-			break ;
-		line++;
+		else
+			line++;
 	}
 	if (parsing_errors(data, data->cmd_list) == 1)
 		return (1);

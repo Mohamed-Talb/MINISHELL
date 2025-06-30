@@ -29,6 +29,7 @@ void reset_data(t_data *data)
 		free(data->line);
 		data->line = NULL;
 	}
+	data->expand_rage = NULL; // necessary to reset
 	data->pipes_nb = 1;
 	data->command_count = 0;
 }
