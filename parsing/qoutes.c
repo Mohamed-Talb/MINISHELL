@@ -25,7 +25,7 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 	s++;
 	while(*s != '"' && *s != 0)
 	{
-		if(*s == '$' && state == 1 && *(s + 1) != '"')
+		if(*s == '$' && state == 1 && *(s + 1) != '"' && data->expand_rage == 0)
 		{
 			expand(data, &s);
 		}
@@ -40,6 +40,6 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 		s++;
 	else
 		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
-	data->expand_rage = 0;	
+	data->expand_rage = 0;	// remember to also desable expand in this function as long as there is expand_rage
 	*line = s;
 }

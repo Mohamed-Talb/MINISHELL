@@ -44,12 +44,14 @@ int regular_parse(t_data *data, t_list *token, char **line)
 	else if (*s == '<' || *s == '>')
 	{
 		redirection(data, token, &s);
+		*line = s;
 		return (1);
 	}
 	else if (*s == '|')
 	{
 		hpipe(data, token, &s);
 		data->pipes_nb++;
+		*line = s;
 		return (2);
 	}
 	else
@@ -69,7 +71,7 @@ t_list *handle_arg(t_data *data, t_list *token, char **line)
 	s = *line;
 	while (*s != '\0' && !ft_iswhitespace(*s))
 	{
-		if (*s == '$')
+		if (*s == '$' && data->expand_rage == 0)
 			expand(data, &s);
 		else
 		{
@@ -83,8 +85,9 @@ t_list *handle_arg(t_data *data, t_list *token, char **line)
 				if (result == 2)
 					break;
 			}
-			else
+			else // as far as i know this is the part that is ok with expand_rage
 			{
+				eputf("%c", *s);
 				token->content = ft_append(token->content, *s, -1);
 				data->expand_rage--;
 				s++;
