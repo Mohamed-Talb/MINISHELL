@@ -30,7 +30,6 @@ int duplication(t_data *data, t_cmds *cmd)
     t_list *infile = NULL;
     t_list *outfile = NULL;
     int fd;
-
     files_manager(data, cmd);
     last_in_out(cmd, &infile, &outfile);
     if (infile != NULL)

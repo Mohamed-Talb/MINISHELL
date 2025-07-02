@@ -39,7 +39,7 @@ void execute_builtin(t_data *data, t_cmds *command)
 	exst = 0;
 	char *cmdname;
 	stdin_dup = dup(0);
-	stdout_dup = dup(1);  //  why that two dup; ??????????????????????????????
+	stdout_dup = dup(1);
 	duplication(data, data->cmds[0]);
 	cmdname = getcmdname(command->flags[0]);
 	if (!ft_strcmp(cmdname, "echo"))

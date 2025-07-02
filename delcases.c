@@ -12,7 +12,7 @@ Delimiter Syntax              | Actual Delimiter
 << $"HOME"                   | HOME
 << $""HOME                   | HOME
 << "$"HOME"                  | $HOME
-<< "$"kk$"ff"""              | $kk$ff
+<< "$"kk$"ff"""              | $kkff
 << "$"kk$ff""'               | $kk$ff
 << "$"kk$ff'"''              | $kk$ff
 << '"$"kk$ff""'              | "$"kk$ff""

@@ -10,7 +10,7 @@ char *getname()
     return randomname;
 }
 
-char *getexline(t_data *data, char *line)
+char *getexline(t_data *data, char *line) // move this is function to herdocexpand.c
 {
     char *newline;
     char *exvalue;

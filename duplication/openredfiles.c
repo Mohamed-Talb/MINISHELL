@@ -1,11 +1,23 @@
 #include "../minishell.h"
 
+int is_ambiguous_redirect(t_data *data, char *expanded, char *original)
+{
+    (void)data;
+    if (!expanded || expanded[0] == '\0' || ft_strchr(expanded, ' '))
+    {
+        eputf("minishell: %s: ambiguous redirect\n", original);
+        free(original);
+        exit(1);
+    }
+    return (0);
+}
+
+
 void ambiguous_redirect(t_data *data, t_list *node)
 {
     char *content;
     char *tmp;
     char *exvalue;
-
     if (ft_strchr(node->content, '$'))
     {
         content = ft_strdup(node->content);
@@ -25,8 +37,8 @@ void ambiguous_redirect(t_data *data, t_list *node)
                 content++;
             }
         }
-        free(tmp);
     }
+    is_ambiguous_redirect(data, node->content, tmp);
 }
 
 void openredfiles(t_data *data, t_list *node)
