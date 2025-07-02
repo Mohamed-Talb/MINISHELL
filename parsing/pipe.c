@@ -14,17 +14,18 @@ void pipe_errors(t_data *data, char c)
 		return ;
 	set_errors(data, strerror, 2);
 }
-int hpipe(t_data *data, t_list *token, char **line)
+
+t_list	*hpipe(t_data *data, t_list *token, char **line)
 {
 	char *s;
 
 	s = *line;
-	if(ft_strlen(token->content) != 0)
-		ft_lstback(&data->cmd_list, ft_strdup(""));
+	token = creat_node(data);
 	pipe_errors(data, *(s + 1));
-	token = ft_lstlast(data->cmd_list);
-	token->content = ft_append(token->content, *s, -1);
+	token->content = ft_append(token->content, *s++, -1);
 	token->type = PIPE;
+	token = NULL;
+	data->pipes_nb++;
 	*line = s;
-	return 0;
+	return (token);
 }

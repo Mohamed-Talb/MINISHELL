@@ -68,6 +68,6 @@ int expand(t_data *data, char **line)
 	expand_size = ft_strlen(str) - old_size;
 	data->line = ft_strjoin_fc(str, *line + i, 1);
 	*line = data->line + pos;
-	data->expand_rage = expand_size;
+	data->expand_rage = *line + expand_size;
 	return (expand_size);
 }
