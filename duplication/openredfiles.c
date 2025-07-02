@@ -12,7 +12,6 @@ int is_ambiguous_redirect(t_data *data, char *expanded, char *original)
     return (0);
 }
 
-
 void ambiguous_redirect(t_data *data, t_list *node)
 {
     char *content;
