@@ -1,24 +1,25 @@
 // #include <stdio.h>
 // #include <string.h>
 
-// void my_printf(const char* fmt, char** strings, int* ints) {
-//     int int_i = 0, str_i = 0;
-//     for (int i = 0; fmt[i]; ++i) {
-//         if (fmt[i] == '%' && fmt[i + 1]) {
-//             if (fmt[i + 1] == 'd') {
-//                 printf("%d", ints[int_i++]);
-//                 i++; // skip the format specifier
-//             } else if (fmt[i + 1] == 's') {
-//                 printf("%s", strings[str_i++]);
-//                 i++;
-//             } else {
-//                 putchar(fmt[i]);
-//             }
-//         } else {
-//             putchar(fmt[i]);
-//         }
-//     }
-// }
+void my_printf(const char* fmt, char** strings, int* ints) 
+{
+    int int_i = 0, str_i = 0;
+    for (int i = 0; fmt[i]; ++i) {
+        if (fmt[i] == '%' && fmt[i + 1]) {
+            if (fmt[i + 1] == 'd') {
+                printf("%d", ints[int_i++]);
+                i++; // skip the format specifier
+            } else if (fmt[i + 1] == 's') {
+                printf("%s", strings[str_i++]);
+                i++;
+            } else {
+                putchar(fmt[i]);
+            }
+        } else {
+            putchar(fmt[i]);
+        }
+    }
+}
 
 // // int main() {
 // //     my_printf("%d, %s, %d, %s\n", (char*[]){"first", "second"}, (int[]){9, 2});

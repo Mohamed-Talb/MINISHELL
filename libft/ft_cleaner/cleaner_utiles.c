@@ -1,69 +1,49 @@
-#include "../libft.h"
+#include "cleaner.h"
 
-typedef struct s_list
+static t_list **get_head(void)
 {
-    struct s_lst *next;
-    void *adress;
-} t_list;
-
-
-void *gethead()
-{
-    static t_list *a_adresses;
-    
+    static t_list *head = NULL;
+    return &head;
 }
 
-t_list *ft_lstfront(t_list **head, void *address)
+static t_list *ft_lstback(t_list **head, void *address)
 {
-	t_list *new_node;
-	
-	new_node = ft_malloc(sizeof(t_list));
-	new_node->address = address;
-	if(*head == NULL)
-	{
-		*head = new_node;
-		return (*head);
-	}
-	new_node->next = *head;
-	*head = new_node;
-	return (*head);
+    t_list *new_node = malloc(sizeof(t_list)); 
+    new_node->address = address;
+    new_node->next = NULL;
+    if (*head == NULL)
+    {
+        *head = new_node;
+    }
+    else
+    {
+        t_list *curr = *head;
+        while (curr->next)
+            curr = curr->next;
+        curr->next = new_node;
+    }
+    return new_node;
 }
 
-t_list *ft_lstback(t_list **head, void *address)
+void ft_add_address(void *ptr)
 {
-	t_list *new_node;
-	t_list *curr;
-
-	new_node = ft_malloc(sizeof(t_list));
-	new_node->address = address;
-	if((*head) == NULL) 
-	{
-		*head = new_node;
-		return (new_node);
-	}
-	curr = *head;
-	while(curr->next != NULL) 
-	{
-		curr = curr->next;
-	}
-	curr->next = new_node;
-	return (new_node);
+    t_list **head = get_head();
+    ft_lstback(head, ptr);
 }
 
-void	ft_lstclear(t_list **Head)
+void free_all_addresses()
 {
-	t_list	*curr;
-	t_list	*temp;
+    t_list **head = get_head();
+    t_list *curr = *head;
+    t_list *temp;
 
-	curr = *Head;
-	if (*Head == NULL)
-		return ;
-	while (curr != NULL)
-	{
-		temp = curr;
-		curr = curr->next;
-		free(temp->address);
-		free(temp);
-	}
-	*Head = NULL;
+    while (curr)
+    {
+        temp = curr;
+        curr = curr->next;
+        free(temp->address); 
+        free(temp);      
+    }
+    *head = NULL;
 }
+
