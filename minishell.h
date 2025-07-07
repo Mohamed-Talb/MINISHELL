@@ -124,7 +124,7 @@ int isvalid_var(char *var);
 int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
 char *herexpand(t_data *data, char **line);
-void openredfiles(t_data *data, t_list *node);
+int openredfiles(t_data *data, t_list *node);
 char *getdelemiter(t_data *data, char *s);
 int varname_size(char *var);
 char **envup(char **env, char *var);
