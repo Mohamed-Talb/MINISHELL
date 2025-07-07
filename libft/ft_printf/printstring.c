@@ -18,7 +18,7 @@ char	*printstring(const char *s)
 	char	*dest;
 
 	i = 0;
-	dest = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	dest = (char *)ft_malloc((ft_strlen(s) + 1) * sizeof(char));
 	if (!dest)
 		return (NULL);
 	while (s[i])

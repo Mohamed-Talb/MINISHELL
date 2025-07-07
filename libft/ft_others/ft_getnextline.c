@@ -22,7 +22,7 @@ static char	*ft_strjoinget(char *s1, char *s2)
 		return (NULL);
 	i = 0;
 	len1 = ft_strlen(s1);
-	returned = malloc(sizeof(char) * (len1 + ft_strlen(s2) + 1));
+	returned = ft_malloc(sizeof(char) * (len1 + ft_strlen(s2) + 1));
 	if (!returned)
 		return (free(s1), free(s2), NULL);
 	while (s1[i])
@@ -49,7 +49,7 @@ void	allocation(char **stored, char **allocated)
 		if (!*stored)
 			*stored = NULL;
 	}
-	*allocated = malloc((size_t)BUFFER_SIZE + 1);
+	*allocated = ft_malloc((size_t)BUFFER_SIZE + 1);
 	if (!*allocated)
 	{
 		if (*stored)

@@ -19,7 +19,7 @@ char	**ft_append2(char **src, char *str, int pos)
 	int (i), (j);
 	if (!src || !str)
 		return (NULL);
-	ptr = malloc(sizeof(char *) * (ft_strlen2(src) + 2));
+	ptr = ft_malloc(sizeof(char *) * (ft_strlen2(src) + 2));
 	if (!ptr)
 		return (NULL);
 	(1) && (i = 0, j = 0);

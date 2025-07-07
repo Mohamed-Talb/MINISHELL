@@ -1,3 +1,6 @@
+#ifndef MINISHELL_H
+#define MINISHELL_H
+
 #define _POSIX_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,29 +17,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <stdbool.h>
-// ERRORS
-#define MALLOC_ERROR "memory allocation faild"
-#define CMD_NOTFOUND "command not found"
-#define PER_ERROR "Permission denied"
-#define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `"
-#define REDIRECTION_SET "<|>"
-#define GETCWD_ERR "error retrieving current directory: getcwd: cannot access parent directories"
-
-// types macros
-#define CMD 1
-#define PIPE 2
-#define LEFT_RED 3
-#define RIGHT_RED 4
-#define LEFT_HER 5
-#define RIGHT_HER 6
-
-// BUILTIN-DEFINES:
-// exit:
-#define NUMREQ_ERR "minishell: exit: %s: numeric argument required\n"
-#define EXCESS_ARGS_ERR "minishell: exit: too many arguments\n"
-#define NUMREQ_CODE 256
-// export:
-#define INVALID_IDERR "minishell: export: `%s': not a valid identifier\n"
+#include "errors.h"
 
 typedef struct s_list
 {
@@ -52,6 +33,8 @@ typedef struct s_cmds
 	char **flags;
 	int pipein;
 	int pipeout;
+	int infd;
+	int outfd;
 	t_list *allred;
 } t_cmds;
 
@@ -59,13 +42,13 @@ typedef struct s_data
 {
 	char	*line;
 	char	**env;
-	int		last_exit_status;
-	int 	pipes_nb;
 	char	**exported;
-	int		command_count;
 	char	*expand_rage;
-	t_list	*cmd_list;
+	int 	pipes_nb;
+	int		command_count;
+	int		last_exit_status;
 	t_cmds	**cmds;
+	t_list	*cmd_list;
 } t_data;
 
 void	grammer(t_data *data);
@@ -150,3 +133,5 @@ int uppwd(t_data *data, char *path);
 int upoldpwd(t_data *data);
 char **adjust_shell_level(char **env, int change);
 void sync_envs(t_data *data);
+
+#endif

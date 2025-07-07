@@ -109,6 +109,7 @@ int		ft_iswhitespace(char c);
 // OTHERS
 char	*ft_getnextline(int fd);
 char 	*ft_getenv(char **env, const char *varname);
+void *ft_malloc(size_t size);
 
 //PRINTERS
 int		eputf(const char *s, ...);
