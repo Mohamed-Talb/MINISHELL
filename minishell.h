@@ -1,3 +1,6 @@
+#ifndef MINISHELL_H
+#define MINISHELL_H
+
 #define _POSIX_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,13 +42,13 @@ typedef struct s_data
 {
 	char	*line;
 	char	**env;
-	int		last_exit_status;
-	int 	pipes_nb;
 	char	**exported;
-	int		command_count;
 	char	*expand_rage;
-	t_list	*cmd_list;
+	int 	pipes_nb;
+	int		command_count;
+	int		last_exit_status;
 	t_cmds	**cmds;
+	t_list	*cmd_list;
 } t_data;
 
 void	grammer(t_data *data);
@@ -127,3 +130,5 @@ int uppwd(t_data *data, char *path);
 int upoldpwd(t_data *data);
 char **adjust_shell_level(char **env, int change);
 void sync_envs(t_data *data);
+
+#endif

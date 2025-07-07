@@ -7,7 +7,8 @@ SHELL_SRC = \
 	parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c parsing/redirection.c \
 	builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c builtin/unset.c builtin/env.c builtin/builtin_utils.c \
 	duplication/dupeexpand.c duplication/openredfiles.c herdoce/herdocdelimiter.c herdoce/herdocexpand.c \
-	helpers/utils.c helpers/lst_utils.c helpers/structs_utils.c helpers/signals.c helpers/cleanup.c helpers/env_utils.c \
+	helpers/utils.c helpers/lst_utils.c helpers/structs_utils.c helpers/signals.c helpers/cleanup.c\
+	enverements/env_utiles.c enverements/ft_getenv.c enverements/shlvl.c enverements/syncenvs.c\
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
