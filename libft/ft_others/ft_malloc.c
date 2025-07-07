@@ -8,7 +8,7 @@ void *ft_malloc(size_t size)
     if (ptr == NULL)
     {
         ft_putstr_fd("memory allocation faild\n", 2);
-        return (NULL);
+        exit(1);
     }
     return (ptr);
 }
