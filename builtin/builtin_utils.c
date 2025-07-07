@@ -1,45 +1,5 @@
 #include "../minishell.h"
 
-int upoldpwd(t_data *data)
-{
-	char *new;
-
-	new = ft_getenv(data->exported, "PWD");
-	if (new == NULL)
-		data->exported = envup(data->exported, "OLDPWD"); // this is needed when PWD is unset before a cd
-	else
-	{
-		new = ft_strjoin("OLDPWD=", new);
-		data->exported = envup(data->exported, new);
-		free(new);
-	}
-	if (!data->exported)
-		return (1);
-	return (0);
-}
-
-int uppwd(t_data *data, char *path)
-{
-	char buff[999999];
-	char *new;
-
-	if (getcwd(buff, sizeof(buff)) == NULL)
-	{
-		eputf("cd: %s: %s\n", GETCWD_ERR, strerror(errno));
-		new = ft_getenv(data->exported, "PWD");
-		new = append(new - 4, '/');
-		new = ft_strjoin_fc(new, path, 1);
-	}
-	else
-		new = ft_strjoin("PWD=", buff);
-	if (new == NULL)
-		return(eputf(MALLOC_ERROR), 1);
-	data->exported = envup(data->exported, new);
-	if (!data->exported)
-		return (1);
-	return (0);
-}
-
 char *ascii_order(char **arr)
 {
     int i;

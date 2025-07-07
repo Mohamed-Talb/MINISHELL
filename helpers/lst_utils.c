@@ -4,7 +4,7 @@ t_list *ft_lstfront(t_list **head, void *content)
 {
 	t_list *new_node;
 	
-	new_node = malloc(sizeof(t_list));
+	new_node = ft_malloc(sizeof(t_list));
 	new_node->content = content;
 	new_node->error = NULL;
 	new_node->next = NULL;

@@ -1,9 +1,44 @@
 #include "../minishell.h"
 
-/*
-	1 - sometimes we update in env and sometimes in exported, but we need consistency, both should be updated in all builtin and outside --> done
-	2 - should add caching bash doesnt only rely on pwd in env, in case pwd fails like in mkdir example, we use cached version
-*/
+int upoldpwd(t_data *data)
+{
+	char *new;
+
+	new = ft_getenv(data->exported, "PWD");
+	if (new == NULL)
+		data->exported = envup(data->exported, "OLDPWD");
+	else
+	{
+		new = ft_strjoin("OLDPWD=", new);
+		data->exported = envup(data->exported, new);
+		free(new);
+	}
+	if (!data->exported)
+		return (1);
+	return (0);
+}
+
+int uppwd(t_data *data, char *path)
+{
+	char buff[999999];
+	char *new;
+
+	if (getcwd(buff, sizeof(buff)) == NULL)
+	{
+		eputf("cd: %s: %s\n", GETCWD_ERR, strerror(errno));
+		new = ft_getenv(data->exported, "PWD");
+		new = append(new - 4, '/');
+		new = ft_strjoin_fc(new, path, 1);
+	}
+	else
+		new = ft_strjoin("PWD=", buff);
+	if (new == NULL)
+		return(eputf(MALLOC_ERROR), 1);
+	data->exported = envup(data->exported, new);
+	if (!data->exported)
+		return (1);
+	return (0);
+}
 
 int changedir(t_data *data, char *path)
 {

@@ -15,16 +15,22 @@
 static void	printerrors(t_data *data, t_cmds *command, bool found, bool permission)
 {
 	if (!found)
-		errcln(data, 127, "%s: command not found\n", command->flags[0]);
-	if (!permission)
-		errcln(data, 126, "minishell: %s: Permission denied\n", command->flags[0]);
+	{
+		eputf(CMD_NOT_FOUND, command->flags[0]);
+		errors(data, NULL, 127);
+	}
+	else if (!permission)
+	{
+		eputf(PERMISSIONS_DENIED, command->flags[0]);
+		errors(data, NULL, 126);
+	}
 }
 
 char 	**helper(t_data *data, t_cmds *command)
 {
-	char **paths = malloc(2 * sizeof(char *));
+	char **paths = ft_malloc(2 * sizeof(char *));
 	if (!paths)
-		errors(data, MALLOC_ERROR, 1);
+		errors(data, NULL, 1);;
 	paths[0] = ft_strdup(command->cmd);
 	paths[1] = NULL;
 	return paths;
@@ -47,24 +53,28 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 		return (NULL);
 	paths = ft_split(env_path, ':');
 	if (paths == NULL)
-		errors(data, MALLOC_ERROR, 1);
+		errors(data, NULL, 1);
 	while (paths[i])
 	{
 		paths[i] = ft_strjoin_fc(paths[i], "/", 1);
 		if (!paths[i])
-			errors(data, MALLOC_ERROR, 1);
+			errors(data, NULL, 1);
 		paths[i] = ft_strjoin_fc(paths[i], command->cmd, 1);
 		if (!paths[i])
-			errors(data, MALLOC_ERROR, 1);
+			errors(data, NULL, 1);
 		i++;
 	}
 	return (paths);
 }
 
-int isDirectory(const char *path) 
+void isDirectory(t_data *data, t_cmds *command) 
 {
 	struct stat sb;
-	return (stat(path, &sb) == 0 && S_ISDIR(sb.st_mode));
+	if (stat(command->flags[0], &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		eputf("minishell: %s: Is a directory\n", command->flags[0]);
+		errors(data, NULL, 126);
+	}
 }
 
 void	check(t_data *data, t_cmds *command)
@@ -77,11 +87,7 @@ void	check(t_data *data, t_cmds *command)
 	i = 0;
 	found = false;
 	permission = false;
-	if (isDirectory(command->flags[0]))
-	{
-		eputf("minishell: %s: Is a directory\n", command->flags[0]);
-		errors(data, NULL, 126);
-	}
+	isDirectory(data, command);
 	if (command->cmd[0] == 0)
 		printerrors(data, command, false, false);
 	paths = getabspaths(data, command);
@@ -99,7 +105,7 @@ void	check(t_data *data, t_cmds *command)
 					free(command->cmd);
 				command->cmd = ft_strdup(paths[i]);
 				if (!command->cmd)
-					errors(data, MALLOC_ERROR, 1);
+					errors(data, NULL, 1);
 				break ;
 			}
 		}

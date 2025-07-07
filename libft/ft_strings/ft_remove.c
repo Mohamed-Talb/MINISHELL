@@ -6,7 +6,7 @@ char *ft_remove(char *str, int pos)
 	int j = 0;
 	if(!str)
 		return NULL;
-	char *ptr = malloc(ft_strlen(str));
+	char *ptr = ft_malloc(ft_strlen(str));
 	while (str[i])
 	{
 		if(i == pos)

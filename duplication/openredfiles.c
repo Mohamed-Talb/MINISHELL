@@ -1,18 +1,18 @@
 #include "../minishell.h"
 
-int is_ambiguous_redirect(t_data *data, char *expanded, char *original)
+static int is_ambiguous_red(t_data *data, char *expanded, char *original)
 {
     (void)data;
     if (!expanded || expanded[0] == '\0' || ft_strchr(expanded, ' '))
     {
-        eputf("minishell: %s: ambiguous redirect\n", original);
+        eputf(AMBIGOUS_RED, original);
         free(original);
         exit(1);
     }
     return (0);
 }
 
-void ambiguous_redirect(t_data *data, t_list *node)
+static void getfilename(t_data *data, t_list *node)
 {
     char *content;
     char *tmp;
@@ -36,15 +36,15 @@ void ambiguous_redirect(t_data *data, t_list *node)
                 content++;
             }
         }
+        is_ambiguous_red(data, node->content, tmp);
     }
-    is_ambiguous_redirect(data, node->content, tmp);
 }
 
-void openredfiles(t_data *data, t_list *node)
+int openredfiles(t_data *data, t_list *node)
 {
 	int fd;
     char *error;
-    ambiguous_redirect(data , node);
+    getfilename(data , node);
     if (node->type == RIGHT_HER)
 	    fd = open(node->content, O_RDWR | O_CREAT | O_APPEND , 0644);
 	else if (node->type == RIGHT_RED)
@@ -57,5 +57,5 @@ void openredfiles(t_data *data, t_list *node)
         perror(error);
 		errcln(data, 1, NULL);
     }
-    close (fd);
+    return (fd);
 }
