@@ -29,7 +29,7 @@ char *hexpand(char *token, char **line)
 	s = *line + 1;
     if (*s == '\0')
         token = fappend(token, '$');
-    if (*s == '\'' || *s == '"')
+    else if (*s == '\'' || *s == '"')
         token = geth_enclosed_text(token, &s);
     else
     {
