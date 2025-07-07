@@ -8,7 +8,7 @@ Delimiter Syntax              | Actual Delimiter
 
 << $'HOME'                   | HOME
 << '$HOME'                   | $HOME
-<< "$HOME"                   | HOME
+<< "$HOME"                   | $HOME
 << $"HOME"                   | HOME
 << $""HOME                   | HOME
 << "$"HOME"                  | $HOME
@@ -21,9 +21,5 @@ Delimiter Syntax              | Actual Delimiter
 << "$"''HOME""               | $HOME
 << '$"HOME"'                 | $"HOME"
 << ""$"HOME"""               | HOME
-<< "$"HOME""                 | $HOME
 << $"$HOME"                  | $HOME
-<< "$"kk$ff""'               | $kk$ff
-<< '$"HOME"'                 | $"HOME"
-<< ""$"HOME"""               | HOME
 */

@@ -70,7 +70,6 @@ typedef struct s_data
 
 void	grammer(t_data *data);
 void	printdoule(char **str);
-void 	open_herdocs(t_data *data, t_list *node);
 char	*ft_strjoin_fc(char *str, char *buff, int choice);
 char	*ft_strjoin_es(char *str, char *buff, int choice);
 void	check(t_data *data, t_cmds *command);
@@ -103,6 +102,7 @@ int		respects_set(char *str, char *set);
 void 	errors(t_data *data, char *error, int exitcode);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(t_data *data, int exitcode, char *error, ...);
+char *mfor_printf(char *str, void *sarr[], int darr[]);
 
 // PARSING 
 t_list	*creat_node(t_data *data);
@@ -113,7 +113,10 @@ void	single_q(t_data *data, t_list *token, char **line);
 void	redirection(t_data *data, t_list *token, char **line);
 void	double_q(t_data *data, t_list *token, char **line, int state);
 
-//SIGNALS 
+// HEREDOC
+void heredoc(t_data *data, t_list *node);
+
+// SIGNALS 
 void 	signals(int mode);
 
 // BUILT-INS
@@ -139,7 +142,7 @@ int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
 char *herexpand(t_data *data, char **line);
 void openredfiles(t_data *data, t_list *node);
-char *getdelemiter(t_data *data, char *s, int *expand);
+char *getdelemiter(t_data *data, char *s);
 int varname_size(char *var);
 char **envup(char **env, char *var);
 char **envrm(char **env, char *var);

@@ -6,7 +6,7 @@ SHELL_SRC = \
 	grammere/grammer.c execution/check.c execution/child.c execution/parent.c \
 	parsing/expand.c parsing/qoutes.c parsing/pipe.c parsing/parsing.c parsing/redirection.c \
 	builtin/echo.c builtin/cd.c builtin/pwd.c builtin/export.c builtin/unset.c builtin/env.c builtin/builtin_utils.c \
-	duplication/dupeexpand.c duplication/openredfiles.c herdoce/herdocdelimiter.c herdoce/herdocexpand.c \
+	duplication/dupeexpand.c duplication/openredfiles.c herdoce/heredoc_utils.c \
 	helpers/utils.c helpers/lst_utils.c helpers/structs_utils.c helpers/signals.c helpers/cleanup.c helpers/env_utils.c \
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)

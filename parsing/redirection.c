@@ -1,13 +1,13 @@
 #include "../minishell.h"
 
-void redirect_errors(t_data *data, char **line)
+int redirect_errors(t_data *data, char **line)
 {
 	char *er = "";
 	char *s;
 	int  i = 0;
 
 	s = *line;
-	if (*s == '\0' || in_set(REDIRECTION_SET , *s) == 1)
+	if (*s == '\0' || in_set(REDIRECTION_SET , *s) == true)
 	{
 		er = ft_strjoin(er, UNEXPECTED_TOKEN);
 		if (*s == '\0')
@@ -22,8 +22,53 @@ void redirect_errors(t_data *data, char **line)
 			}
 		}
 		set_errors(data, ft_strjoin(er, "'\n"), 2);
+		*line = s;
+		return (1);
+	}
+	return (0);
+}
+
+int get_enclosed_text(t_list *token, char **line)
+{
+	char target;
+	char *s;
+
+	s = *line;
+	target = *s;
+	token->content = fappend(token->content, *s++);
+	while (true)
+	{
+		if (*s == '\0')
+			return (1);
+		if (*s == target)
+		{
+			token->content = fappend(token->content, *s++);
+			break;
+		}
+		token->content = fappend(token->content, *s++);
 	}
 	*line = s;
+	return (0);
+}
+
+int get_realtoken(t_list *token, char **line)
+{
+	char *s;
+	int value;
+
+	value = 0;
+	s = *line;
+	while (*s != '\0' && ft_iswhitespace(*s) == false && value == 0)
+	{
+		if (*s == '\'')
+			value = get_enclosed_text(token, &s);
+		else if (*s == '"')
+			value = get_enclosed_text(token, &s);
+		else
+			token->content = fappend(token->content, *s++);
+	}
+	*line = s;
+	return (value);
 }
 
 void redirect_helper(t_data *data, t_list *token, char **line)
@@ -32,18 +77,21 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 
 	s = *line;
 	redirect_errors(data, &s);
-	while (*s != '\0' && !in_set(REDIRECTION_SET, *s) && !ft_iswhitespace(*s))
+	if (token->type == LEFT_HER && get_realtoken(token, &s))
+		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
+	else
 	{
-		if(*s == '"' && token->type != LEFT_HER)
-			double_q(data, token, &s, 1);
-		else if(*s == '\''  && token->type != LEFT_HER)
-			single_q(data, token, &s);
-		else
+		while (*s != '\0' && !in_set(REDIRECTION_SET, *s) && !ft_iswhitespace(*s)) // expand is included in the other forms of redirection, with exeptions like expand inside expand
 		{
-			token->content = ft_append(token->content, *s, -1);
-			s++;
+			if(*s == '"')
+				double_q(data, token, &s, 1);
+			else if(*s == '\'')
+				single_q(data, token, &s);
+			else
+				token->content = fappend(token->content, *s++);
 		}
 	}
+	// printf("token of redirection is: %s\n", (char *) token->content);
 	*line = s;
 }
 

@@ -47,13 +47,14 @@ void heredoc(t_data *data, t_list *node)
 
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
-	del = getdelemiter(data, node->content, &expand);
-		printf("%s\n", del);
+	del = getdelemiter(data, node->content);
+	printf("%s\n", del);
 	line = readline(">>>> ");
 	while (line && ft_strcmp(del, line))
 	{
 		if (expand == 0)
 		line = getexline(data, line);
+		ft_printf("line: %s\n", line);
 		// printf("%s\n", line);
 		ft_putstr_fd(line, fd);
 		ft_putstr_fd("\n", fd);
@@ -65,10 +66,4 @@ void heredoc(t_data *data, t_list *node)
 	free(line);
     free(node->content);
     node->content = rname;
-}
-
-void open_herdocs(t_data *data, t_list *node)
-{
-	if (node->type == LEFT_HER)
-		heredoc(data, node);
 }

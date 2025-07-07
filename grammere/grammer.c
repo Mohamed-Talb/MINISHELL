@@ -4,7 +4,7 @@ int getredirections(t_data *data, t_list *list, int i)
 {
 	if (list->type == LEFT_HER)
 	{
-		open_herdocs(data, list);
+		heredoc(data, list);
 	}
 	ft_lstback(&(data->cmds[i]->allred), list->content);
 	ft_lstlast(data->cmds[i]->allred)->type = list->type;
@@ -16,11 +16,10 @@ int getcommand(t_cmds *command, t_list *list)
 	char **tmp = NULL;
 	int len;
 
-	if (!command->cmd)
+	if (command->cmd == NULL)
 	{
-		command->flags = malloc(2 * sizeof(char *));
+		command->flags = ft_calloc(2, sizeof(char *));
 		command->flags[0] = ft_strdup(list->content);
-		command->flags[1] = NULL;
 		command->cmd = ft_strdup(list->content); 
 	}
 	else
@@ -31,7 +30,7 @@ int getcommand(t_cmds *command, t_list *list)
 	}
 	if (tmp)
 		ft_freedouble(tmp);
-	return 0;
+	return (0);
 }
 
 void grammer(t_data *data)
@@ -50,10 +49,10 @@ void grammer(t_data *data)
 			list = list->next;
 			continue ;
 		}
-		if(type == PIPE)
+		if (type == PIPE)
 			i++;
-		else if(type == LEFT_HER || type == LEFT_RED || type == RIGHT_HER || type == RIGHT_RED)
-			getredirections(data, list, i);	
+		else if (type == LEFT_HER || type == LEFT_RED || type == RIGHT_HER || type == RIGHT_RED)
+			getredirections(data, list, i);
 		else
 			getcommand(data->cmds[i], list);
 		list = list->next;

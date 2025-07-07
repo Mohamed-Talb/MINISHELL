@@ -15,7 +15,7 @@ int is_ambiguous_redirect(t_data *data, char *expanded, char *original)
 void ambiguous_redirect(t_data *data, t_list *node)
 {
     char *content;
-    char *tmp;
+    char *tmp = NULL;
     char *exvalue;
     if (ft_strchr(node->content, '$'))
     {

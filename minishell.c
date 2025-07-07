@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+/* function to be completed, lacking history appending, space appending to the readline return, handling another pipe '|' inside the readline */
 int completline(t_data *data)
 {
 	char *completline;
@@ -40,6 +41,7 @@ int completline(t_data *data)
 	return 0;
 }
 
+/* needs to print prompt to stderr, and redirect readline to /dev/tty, and handle other readline errors such as pasting multiple time on the same line without runing clear before */
 void prompter(t_data *data)
 {
 	char *str;

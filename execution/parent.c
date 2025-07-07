@@ -12,6 +12,7 @@
 
 #include "../minishell.h"
 
+/* check process_exit_status of jobs.c and nojobs.c in bash, this function is incorrect */
 int	exitestatus(int status)
 {
 	if (WEXITSTATUS(status))

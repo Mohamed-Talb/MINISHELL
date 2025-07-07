@@ -27,7 +27,7 @@ bool check_cases(t_data *data, char **token, char *s, int *i)
 	return (false);
 }
 
-int hexpand(t_data *data, char **token, char *s)
+int regular_expand(t_data *data, char **token, char *s)
 {
 	char *env_var = NULL;
 	char *result = NULL;
@@ -44,7 +44,7 @@ int hexpand(t_data *data, char **token, char *s)
 	}
 	if (env_var[0] == 0)
 	{
-		*token = ft_append(*token, '$', -1);
+		*token = fappend(*token, '$');
 		return (i);
 	}
 	result = ft_getenv(data->exported, env_var);
@@ -64,7 +64,7 @@ int expand(t_data *data, char **line)
 	pos = *line - data->line;
 	str = ft_substr(data->line, 0, pos);
 	old_size = ft_strlen(str);
-	i = hexpand(data, &str, *line);
+	i = regular_expand(data, &str, *line);
 	expand_size = ft_strlen(str) - old_size;
 	data->line = ft_strjoin_fc(str, *line + i, 1);
 	*line = data->line + pos;

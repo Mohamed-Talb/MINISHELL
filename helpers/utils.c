@@ -145,3 +145,39 @@ void print_cmds(t_data *data)
 	}
 	printf("\n");
 }
+
+// mfor_printf: function to malloc a ready to print string for ft_printf
+char *mfor_printf(char *str, void *sarr[], int darr[])
+{
+    char *result;
+    int i;
+    int s;
+    int d;
+
+    s = 0;
+    d = 0;
+    i = 0;
+    result = NULL;
+    while (str[i])
+    {
+        if (str[i] == '%')
+        {
+            i++;
+            if (str[i] == 'c')
+                result = fappend(result, darr[d++]);
+            else if (str[i] == 'd' || str[i] == 'i')
+                result = ft_strjoin_es(result, ft_itoa(darr[d++]), 3);
+            else if (str[i] == 's')
+                result = ft_strjoin_es(result, sarr[s++], 1);
+            else if (str[i] == 'f')
+            {
+                result = ft_strjoin_es(result, sarr[s], 1);
+                free(sarr[s++]);
+            }
+            i++;
+        }
+        else
+            result = fappend(result, str[i++]);
+    }
+    return (result);
+}

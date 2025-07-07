@@ -13,7 +13,7 @@ void single_q(t_data *data, t_list *token, char **line)
 	if (*s == '\'')
 		s++;
 	else
-		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
+		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
 	*line = s;
 }
 
@@ -39,6 +39,6 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 	if (*s == '"')
 		s++;
 	else
-		set_errors(data, "minishell: syntax error: unclosed quote\n", 1);
+		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
 	*line = s;
 }
