@@ -59,29 +59,36 @@ char *getexline(t_data *data, char *line) // move this is function to herdocexpa
 
 void heredoc(t_data *data, t_list *node)
 {
-	char	*line;
-    char    *rname;
-	int		fd;
-	char 	*del;
 	int expand = 0;
+    char    *rname;
+    char	*line;
+	char 	*del;
+	int		fd;
+    int     id;
 
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
 	del = getdelemiter(data, node->content);
 	printf("%s\n", del);
-	line = readline(">>>> ");
-	while (line && ft_strcmp(del, line))
-	{
-		if (expand == 0)
-		line = getexline(data, line);
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
-		free(line);
-		line = readline(">>>> ");
-	}
+    id = fork();
+    if (id == 0)
+    {
+        signals(3);
+        line = readline(">>>> ");
+        while (line && ft_strcmp(del, line))
+        {
+            if (expand == 0)
+            line = getexline(data, line);
+            ft_putstr_fd(line, fd);
+            ft_putstr_fd("\n", fd);
+            free(line);
+            line = readline(">>>> ");
+        }
+        exit(0);
+    }
+    wait(NULL);
 	close(fd);
 	free(del);
-	free(line);
     free(node->content);
     node->content = rname;
 }

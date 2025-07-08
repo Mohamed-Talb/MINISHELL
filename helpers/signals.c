@@ -4,7 +4,7 @@ void handler_parent(int signum)
 {
 	if (signum == SIGINT)
 	{
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_redisplay();
@@ -25,12 +25,20 @@ void handler_child(int signum)
 	}
 }
 
+void heredoc_handler(int signum)
+{
+	if (signum == SIGINT)
+	{
+		rl_replace_line("", 0);
+		exit(0);
+	}
+}
+
 void signals(int mode)
 {
 	struct sigaction sa;
 
 	sigemptyset(&sa.sa_mask);
-
 	if (mode == 1)
 	{
 		sa.sa_handler = handler_parent;
@@ -40,6 +48,12 @@ void signals(int mode)
 	else if (mode == 2)
 	{
 		sa.sa_handler = handler_child;
+		sigaction(SIGINT, &sa, NULL);
+		sigaction(SIGQUIT, &sa, NULL);
+	}
+	else if (mode == 3)
+	{
+		sa.sa_handler = heredoc_handler;
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
 	}
