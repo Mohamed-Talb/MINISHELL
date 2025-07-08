@@ -28,9 +28,8 @@ static void	printerrors(t_data *data, t_cmds *command, bool found, bool permissi
 
 char 	**helper(t_data *data, t_cmds *command)
 {
+	(void)data;
 	char **paths = ft_malloc(2 * sizeof(char *));
-	if (!paths)
-		errors(data, NULL, 1);;
 	paths[0] = ft_strdup(command->cmd);
 	paths[1] = NULL;
 	return paths;
@@ -41,7 +40,6 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 	int i;
 	char **paths;
 	char *env_path;
-
 	if (ft_strchr(command->cmd, '/'))
 	{
 		paths = helper(data, command);
@@ -52,16 +50,10 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 	if (env_path == NULL)
 		return (NULL);
 	paths = ft_split(env_path, ':');
-	if (paths == NULL)
-		errors(data, NULL, 1);
 	while (paths[i])
 	{
 		paths[i] = ft_strjoin_fc(paths[i], "/", 1);
-		if (!paths[i])
-			errors(data, NULL, 1);
 		paths[i] = ft_strjoin_fc(paths[i], command->cmd, 1);
-		if (!paths[i])
-			errors(data, NULL, 1);
 		i++;
 	}
 	return (paths);
@@ -91,8 +83,6 @@ void	check(t_data *data, t_cmds *command)
 	if (command->cmd[0] == 0)
 		printerrors(data, command, false, false);
 	paths = getabspaths(data, command);
-	if (paths == NULL)
-		return ;
 	while (paths[i])
 	{
 		if (access(paths[i], F_OK) == 0)
@@ -104,8 +94,6 @@ void	check(t_data *data, t_cmds *command)
 				if (command->cmd)
 					free(command->cmd);
 				command->cmd = ft_strdup(paths[i]);
-				if (!command->cmd)
-					errors(data, NULL, 1);
 				break ;
 			}
 		}

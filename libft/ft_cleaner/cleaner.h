@@ -6,8 +6,12 @@
 # include <stdbool.h>
 # include <limits.h>
 
-typedef struct s_list
+typedef struct s_cleaner
 {
-    struct s_list *next;
-    void *address;
-} t_list;
+    struct s_cleaner *next;
+    void *adress;
+} t_cleaner;
+
+t_cleaner **gethead();
+void free_all_adresses();
+void free_one_adress(void *ptr);

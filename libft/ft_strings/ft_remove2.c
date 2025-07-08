@@ -13,8 +13,6 @@ char **ft_remove2(char **str, int index)
     if (index < 0 || index >= len)
         return (NULL);
     new = (char **) ft_calloc(len, sizeof(char *));
-    if (!new)
-        return (NULL);
     i = 0;
     j = 0;
     while (str[i])

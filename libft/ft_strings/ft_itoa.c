@@ -39,8 +39,6 @@ char	*ft_itoa(int n)
 	nb = (long int)n;
 	len = num_len(nb);
 	res = ft_malloc(len * sizeof(char) + 1);
-	if (!res)
-		return (NULL);
 	res[len] = 0;
 	len--;
 	if (!nb)

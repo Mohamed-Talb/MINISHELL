@@ -19,6 +19,7 @@
 # include <stdarg.h>
 # include <stdbool.h>
 # include <limits.h>
+# include "ft_cleaner/cleaner.h"
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1

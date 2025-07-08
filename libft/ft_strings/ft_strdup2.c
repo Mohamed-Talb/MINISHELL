@@ -23,8 +23,6 @@ char	**ft_strdup2(char **str)
 	while (str[i])
 		i++;
 	ptr = ft_calloc((i + 1), sizeof(char *));
-	if (!ptr)
-		return (NULL);
 	i = 0;
 	while (str[i])
 	{

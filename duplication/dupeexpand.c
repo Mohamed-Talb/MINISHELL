@@ -4,7 +4,6 @@ static char  *check_cases(t_data *data, char **line)
 {
     char *s = *line + 1;
     char *exvalue = ft_strdup("");
-
 	if (*s == '\0' || ft_iswhitespace(*s))
 	{
 		exvalue = ft_append(exvalue, '$', -1);

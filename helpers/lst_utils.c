@@ -24,11 +24,7 @@ t_list *ft_lstback(t_list **head, void *content)
 	t_list *new_node;
 	t_list *curr;
 
-	new_node = ft_calloc(1, sizeof(t_list));
-	if (! new_node)
-	{
-		return NULL;
-	}
+	new_node = ft_malloc(sizeof(t_list));
 	new_node->content = content;
 	new_node->next = NULL;
 	new_node->error = NULL;

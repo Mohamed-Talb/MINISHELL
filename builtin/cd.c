@@ -32,8 +32,6 @@ int uppwd(t_data *data, char *path)
 	}
 	else
 		new = ft_strjoin("PWD=", buff);
-	if (new == NULL)
-		return(eputf(MALLOC_ERROR), 1);
 	data->exported = envup(data->exported, new);
 	if (!data->exported)
 		return (1);
