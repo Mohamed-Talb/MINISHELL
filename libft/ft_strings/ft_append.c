@@ -76,7 +76,7 @@ char *fappend(char *org, char c)
 		result = ft_calloc((size + 2), sizeof(char));
 		strappend(result, org);
 		charappend(result, c);
-		free(org);
+		ft_free(org);
 	}
 	return (result);
 }
@@ -123,7 +123,7 @@ char	*ft_append(char *org, char c, int position)
 		ft_memcpy(result, org, position);
 		ft_memcpy(result + position, &c, 1);
 		ft_memcpy(result + position + 1, org + position, size - position);
-		free(org);
+		ft_free(org);
 	}
 	return (result);
 }

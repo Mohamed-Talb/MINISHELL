@@ -77,7 +77,7 @@ char **envup(char **env, char *var)
     {
 		if (issame_var(env[i], var))
 		{
-			free(env[i]);
+			ft_free(env[i]);
 			env[i] = ft_strdup(var);
 			return (env);
 		}

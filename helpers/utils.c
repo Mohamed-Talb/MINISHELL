@@ -36,9 +36,9 @@ char	*ft_strjoin_fc(char *str, char *buff, int choice)
 		return (NULL);
 	new = ft_strjoin(str, buff);
 	if (choice == 1 || choice == 3)
-		free(str);
+		ft_free(str);
 	if (choice == 2 || choice == 3)
-		free(buff);
+		ft_free(buff);
 	return (new);
 }
 
@@ -55,9 +55,9 @@ char	*ft_strjoin_es(char *str, char *buff, int choice)
 	else
 		new = ft_strjoin(str, buff);
 	if (choice == 1 || choice == 3)
-		free(str);
+		ft_free(str);
 	if (choice == 2 || choice == 3)
-		free(buff);
+		ft_free(buff);
 	return (new);
 }
 
@@ -152,7 +152,7 @@ char *mfor_printf(char *str, void *sarr[], int darr[])
             else if (str[i] == 'f')
             {
                 result = ft_strjoin_es(result, sarr[s], 1);
-                free(sarr[s++]);
+                ft_free(sarr[s++]);
             }
             i++;
         }

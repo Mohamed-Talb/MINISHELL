@@ -85,6 +85,6 @@ int	width(char *ptr, t_flag *params)
 	{
 		ft_putstr_fd(ptr, params->write_dest);
 	}
-	free(ptr);
+	ft_free(ptr);
 	return (len);
 }

@@ -54,8 +54,8 @@ void	ft_lstclear(t_list **Head)
 	{
 		temp = curr;
 		curr = curr->next;
-		free(temp->content);
-		free(temp);
+		ft_free(temp->content);
+		ft_free(temp);
 	}
 	*Head = NULL;
 }

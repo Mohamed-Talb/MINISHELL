@@ -13,14 +13,7 @@
 #include "../minishell.h"
 
 /* check process_exit_status of jobs.c and nojobs.c in bash, this function is incorrect */
-int	exitestatus(int status)
-{
-	if (WEXITSTATUS(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (WTERMSIG(status));
-	return (0);
-}
+
 
 int	parent(t_data *data)
 {

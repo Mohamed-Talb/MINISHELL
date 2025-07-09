@@ -41,9 +41,9 @@ char  *herdoc_expand(t_data *data, char *line)
 		}
 		varvalue = getenv(var);
 		result = ft_strjoin_fc(result, varvalue, 1);
-		free(var);
+		ft_free(var);
 	}
-	free(line);
+	ft_free(line);
 	line = NULL;
 	return (result);
 }

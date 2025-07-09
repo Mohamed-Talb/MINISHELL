@@ -44,10 +44,10 @@ static void	free_ptrs(char ***ptr, size_t f)
 {
 	while (f > 0)
 	{
-		free(*ptr[f]);
+		ft_free(*ptr[f]);
 		f--;
 	}
-	free(*ptr);
+	ft_free(*ptr);
 	ptr = NULL;
 }
 

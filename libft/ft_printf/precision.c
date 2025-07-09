@@ -19,7 +19,7 @@ static char	*persicionstr(int digits, char *str)
 	result = ft_calloc((digits + 1), sizeof(char));
 	ft_memmove(result, str, digits);
 	result[digits] = 0;
-	free(str);
+	ft_free(str);
 	return (result);
 }
 
@@ -32,7 +32,7 @@ static char	*precisionnbr(int digits, char *str)
 	result = ft_calloc((digits + 1), sizeof(char));
 	ft_memset(result, '0', digits);
 	ft_memmove(result + (digits - len), str, len + 1);
-	free(str);
+	ft_free(str);
 	return (result);
 }
 
@@ -55,7 +55,7 @@ char	*precision(t_flag *params, char *str)
 		else if (!digits && params->specifier > 2 && params->specifier < 8
 			&& str[0] == '0' && str[1] == '\0')
 		{
-			free(str);
+			ft_free(str);
 			return (ft_strdup(""));
 		}
 		if (digits < len && params->specifier == 2)

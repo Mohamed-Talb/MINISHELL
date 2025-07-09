@@ -22,7 +22,7 @@ SRC =	ft_fd/ft_putendl_fd.c \
 		ft_printf/utils.c ft_printf/checks.c ft_printf/precision.c \
 		ft_printf/width.c ft_printf/printint.c ft_printf/printstring.c \
 		ft_printf/printhexa.c ft_printf/printunsigned.c ft_printf/printmemory.c \
-		ft_others/ft_getnextline.c ft_strings/ft_remove2.c ft_strings/ft_uitoa.c ft_others/ft_malloc.c ft_cleaner/cleaner_utiles.c \
+		ft_strings/ft_remove2.c ft_strings/ft_uitoa.c ft_others/ft_malloc.c ft_cleaner/cleaner_utiles.c \
 		ft_cleaner/ft_cleaner.c
 OBJ = $(SRC:.c=.o)
 

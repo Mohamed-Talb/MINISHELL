@@ -6,7 +6,6 @@ static int is_ambiguous_red(t_data *data, char *expanded, char *original)
     if (!expanded || expanded[0] == '\0' || ft_strchr(expanded, ' '))
     {
         eputf(AMBIGOUS_RED, original);
-        free(original);
         exit(1);
     }
     return (0);
@@ -21,7 +20,6 @@ static void getfilename(t_data *data, t_list *node)
     {
         content = ft_strdup(node->content);
         tmp = content;
-        free(node->content);
         node->content = NULL;
         while (*content)
         {

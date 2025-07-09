@@ -2,10 +2,6 @@
 
 int getredirections(t_data *data, t_list *list, int i)
 {
-	if (list->type == LEFT_HER)
-	{
-		heredoc(data, list);
-	}
 	ft_lstback(&(data->cmds[i]->allred), list->content);
 	ft_lstlast(data->cmds[i]->allred)->type = list->type;
 	return 0;

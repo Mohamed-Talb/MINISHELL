@@ -49,7 +49,6 @@ int regular_expand(t_data *data, char **token, char *s)
 	}
 	result = ft_getenv(data->exported, env_var);
 	*token = ft_strjoin_es(*token, result, 1);
-	free(env_var);
 	return (i);
 }
 

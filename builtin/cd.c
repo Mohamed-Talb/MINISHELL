@@ -11,7 +11,6 @@ int upoldpwd(t_data *data)
 	{
 		new = ft_strjoin("OLDPWD=", new);
 		data->exported = envup(data->exported, new);
-		free(new);
 	}
 	if (!data->exported)
 		return (1);

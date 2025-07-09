@@ -30,65 +30,73 @@ char *getname()
     return randomname;
 }
 
-char *getexline(t_data *data, char *line) // move this is function to herdocexpand.c
+void fill_herdoc(t_data *data, t_list *node, int fd)
 {
-    char *newline;
-    char *exvalue;
+    char *line;
+    char *delemiter;
+    int  expand;
 
-    if (ft_strchr(line, '$'))
+    signals(3);
+    expand = 0;
+    delemiter = getdelemiter(data, node->content);
+    line = readline(">>>> ");
+    while (line && ft_strcmp(delemiter, line))
     {
-		newline = ft_strdup("");
-        while (*line)
-        {
-            if(*line == '$')
-            {
-				exvalue = herexpand(data, &line);
-			    newline = ft_strjoin_es(newline, exvalue, 0);
-            }
-            else
-            {
-                newline = ft_append(newline, *line, -1);
-                line++;
-            }
-        }
-		return newline;
+        if (ft_strchr(node->content, '\''), ft_strchr(node->content, '"'))
+            line = getexline(data, line);
+        ft_putstr_fd(line, fd);
+        ft_putstr_fd("\n", fd);
+        ft_free(line);
+        line = readline(">>>> ");
     }
-	else
-		return line;
 }
 
-void heredoc(t_data *data, t_list *node)
+
+int  heredoc(t_data *data, t_list *node)
 {
-	int expand = 0;
     char    *rname;
-    char	*line;
-	char 	*del;
 	int		fd;
     int     id;
+    int     status;
 
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
-	del = getdelemiter(data, node->content);
-	printf("%s\n", del);
     id = fork();
     if (id == 0)
     {
-        signals(3);
-        line = readline(">>>> ");
-        while (line && ft_strcmp(del, line))
-        {
-            if (expand == 0)
-            line = getexline(data, line);
-            ft_putstr_fd(line, fd);
-            ft_putstr_fd("\n", fd);
-            free(line);
-            line = readline(">>>> ");
-        }
+        fill_herdoc(data, node, fd);
         exit(0);
     }
-    wait(NULL);
-	close(fd);
-	free(del);
-    free(node->content);
+    wait(&status);
+    if (exitestatus(status))
+    {
+        close(fd);
+        data->last_exit_status = exitestatus(status);
+        return (1);
+    }
     node->content = rname;
+    return 0;
+}
+
+int openallherdocs(t_data *data)
+{
+    int i = 0;
+    t_list *allred;
+    while(data->cmds[i])
+    {   
+        allred = data->cmds[i]->allred;
+        while(allred)
+        {
+            printf("hhhh\n");
+            if (allred->type == LEFT_HER)
+                if (heredoc(data, allred) == 1)
+                {
+                    reset_data(data);
+                    return (1);
+                }
+            allred = allred->next;
+        }
+        i++;
+    }
+    return 0;
 }

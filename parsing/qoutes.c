@@ -35,7 +35,6 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 			s++;
 		}
 	}
-	
 	if (*s == '"')
 		s++;
 	else

@@ -46,7 +46,7 @@ char	*ftappend(char *org, char c, int position)
 	ft_memmove(result + position, &c, 1);
 	ft_memmove(result + position + 1, org + position, size - position);
 	result[size + 1] = 0;
-	free(org);
+	ft_free(org);
 	return (result);
 }
 

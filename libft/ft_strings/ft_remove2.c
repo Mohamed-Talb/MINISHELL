@@ -12,14 +12,14 @@ char **ft_remove2(char **str, int index)
     len = ft_strlen2(str);
     if (index < 0 || index >= len)
         return (NULL);
-    new = (char **) ft_calloc(len, sizeof(char *));
+    new = ft_calloc(len, sizeof(char *));
     i = 0;
     j = 0;
     while (str[i])
     {
         if (i == index)
         {
-            free(str[i]);
+            ft_free(str[i]);
             i++;
             continue;
         }
@@ -28,6 +28,5 @@ char **ft_remove2(char **str, int index)
         i++;
         j++;
     }
-    free(str);
     return (new);
 }

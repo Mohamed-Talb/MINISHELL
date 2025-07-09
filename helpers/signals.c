@@ -30,7 +30,8 @@ void heredoc_handler(int signum)
 	if (signum == SIGINT)
 	{
 		rl_replace_line("", 0);
-		exit(0);
+		// write(1, "\n", 1);
+		exit(130);
 	}
 }
 

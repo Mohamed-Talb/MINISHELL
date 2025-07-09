@@ -91,8 +91,6 @@ void	check(t_data *data, t_cmds *command)
 			if (access(paths[i], X_OK) == 0)
 			{
 				permission = true;
-				if (command->cmd)
-					free(command->cmd);
 				command->cmd = ft_strdup(paths[i]);
 				break ;
 			}

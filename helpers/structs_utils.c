@@ -11,7 +11,6 @@ void other_env(t_data *data)
 	{
 		newpwdvalue = ft_strjoin("PWD=", buff);
 		data->exported = envup(data->exported, newpwdvalue);
-		free(newpwdvalue);
 	}
 	data->exported = envup(data->exported, "OLDPWD");
 }

@@ -72,6 +72,8 @@ void minishell(t_data *data)
 		if (data->command_count == 0)
 			continue ;
 		grammer(data);
+		if (openallherdocs(data))
+			continue;
 		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
 		{
 			execute_builtin(data, data->cmds[0]);
@@ -81,6 +83,8 @@ void minishell(t_data *data)
 			parent(data);
 		}
 		reset_data(data);
+		// free_all_adresses();
+		// exit(1);
 	}
 }
 

@@ -77,7 +77,7 @@ int 	init_cmds(t_data *data);
 t_data	*init_data(char **penv);
 
 // UTILES
-char 	*randomnbr();
+int		exitestatus(int status);
 void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
 int		posin_set(char *set, char c);
@@ -85,7 +85,7 @@ int		respects_set(char *str, char *set);
 void 	errors(t_data *data, char *error, int exitcode);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(t_data *data, int exitcode, char *error, ...);
-char *mfor_printf(char *str, void *sarr[], int darr[]);
+char 	*mfor_printf(char *str, void *sarr[], int darr[]);
 
 // PARSING 
 t_list	*creat_node(t_data *data);
@@ -95,9 +95,6 @@ t_list	*hpipe(t_data *data, t_list *token, char **line);
 void	single_q(t_data *data, t_list *token, char **line);
 void	redirection(t_data *data, t_list *token, char **line);
 void	double_q(t_data *data, t_list *token, char **line, int state);
-
-// HEREDOC
-void heredoc(t_data *data, t_list *node);
 
 // SIGNALS 
 void 	signals(int mode);
@@ -125,7 +122,6 @@ int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
 char *herexpand(t_data *data, char **line);
 int openredfiles(t_data *data, t_list *node);
-char *getdelemiter(t_data *data, char *s);
 int varname_size(char *var);
 char **envup(char **env, char *var);
 char **envrm(char **env, char *var);
@@ -133,5 +129,10 @@ int uppwd(t_data *data, char *path);
 int upoldpwd(t_data *data);
 char **adjust_shell_level(char **env, int change);
 void sync_envs(t_data *data);
+char *ft_getenv(char **env, const char *var);
 
+// HERDOC
+char 	*getdelemiter(t_data *data, char *s);
+char	*getexline(t_data *data, char *line);
+int		openallherdocs(t_data *data);
 #endif

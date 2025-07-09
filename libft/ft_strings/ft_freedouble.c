@@ -21,8 +21,8 @@ void	ft_freedouble(char **ptr)
 		return ;
 	while (ptr[i])
 	{
-		free(ptr[i]);
+		ft_free(ptr[i]);
 		i++;
 	}
-	free(ptr);
+	ft_free(ptr);
 }

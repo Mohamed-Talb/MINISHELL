@@ -24,7 +24,7 @@ void free_all_adresses()
     *head = NULL;
 }
 
-void free_one_adress(void *ptr)
+void ft_free(void *ptr)
 {
     t_cleaner **head;
     t_cleaner *curr;

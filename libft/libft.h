@@ -21,9 +21,6 @@
 # include <limits.h>
 # include "ft_cleaner/cleaner.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
-# endif
 #define L_OVERFLOW 9223372036854775808ULL
 
 //  csuxXdip
@@ -71,7 +68,6 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_strlen2(char **ptr);
 int		ft_atoi(const char *nptr);
-long	ft_atoy(const char *nptr);
 int		ft_strcmp(char *s1, char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 
@@ -108,8 +104,6 @@ int		ft_isprint(int c);
 int		ft_iswhitespace(char c);
 
 // OTHERS
-char	*ft_getnextline(int fd);
-char 	*ft_getenv(char **env, const char *varname);
 void *ft_malloc(size_t size);
 
 //PRINTERS
