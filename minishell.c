@@ -46,7 +46,8 @@ void prompter(t_data *data)
 {
 	char *str;
 
-	str = "\e[1;96m⟦ minishell ⟧\e[0m \e[1;92m>>\e[0m ";
+	str = "\001\e[1;96m\002\001⟦\002\x7f minishell \001⟧\002\x7f \001\e[0m\002\001\e[1;92m\002>>\001\e[0m\002 ";
+
 	if (data->last_exit_status != 0)
 		str = ft_strjoin_fc("\e[1;96m⟦ minishell ⟧\e[0m\e[38;5;246m ", ft_strjoin_fc(ft_itoa(data->last_exit_status), "\e[0m\e[1;91m >>\e[0m ", 1), 2);
 	rl_replace_line("", 0);    // optional: clears current input
@@ -72,8 +73,6 @@ void minishell(t_data *data)
 		if (data->command_count == 0)
 			continue ;
 		grammer(data);
-		if (openallherdocs(data))
-			continue;
 		if (data->pipes_nb == 1 && data->cmds[0]->flags && check_builtin(data->cmds[0]->flags[0]))
 		{
 			execute_builtin(data, data->cmds[0]);
@@ -83,8 +82,6 @@ void minishell(t_data *data)
 			parent(data);
 		}
 		reset_data(data);
-		// free_all_adresses();
-		// exit(1);
 	}
 }
 

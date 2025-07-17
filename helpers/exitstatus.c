@@ -2,9 +2,8 @@
 
 int	exitestatus(int status)
 {
-	if (WEXITSTATUS(status))
-		return (WEXITSTATUS(status));
-	else if (WIFSIGNALED(status))
-		return (WTERMSIG(status));
-	return (0);
+ if (WIFSIGNALED (status))
+    return (128 + WTERMSIG (status));
+  else
+    return (WEXITSTATUS (status));
 }

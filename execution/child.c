@@ -31,6 +31,7 @@ int	child(t_data *data, t_cmds *command)
 	int	pid;
 
 	pid = fork();
+	signals(-1); // might need to reset it back to signal 1 for parent
 	if (pid == 0)
 	{
 		signals(2);

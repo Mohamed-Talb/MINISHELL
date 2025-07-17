@@ -83,8 +83,6 @@ int respects_set(char *str, char *set)
 			return (0);
 		i++;
 	}
-	if (ft_strcmp(str, set) != 0)
-		return (0);
 	return (1);
 }
 

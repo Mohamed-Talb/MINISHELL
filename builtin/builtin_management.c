@@ -60,7 +60,7 @@ void execute_builtin(t_data *data, t_cmds *command)
 		if (exst == -1)
 			exst = 1;
 		else
-			(free_data(data), exit(exst));
+			(exit(exst));
 	}
 	data->last_exit_status = exst;
 	dup2(stdin_dup, 0);

@@ -15,12 +15,11 @@ void handler_child(int signum)
 {
 	if (signum == SIGINT)
 	{
-		write(1, "\n", 1);
 		exit(130);
 	}
-	else if (signum == SIGQUIT)
+	if (signum == SIGQUIT)
 	{
-		write(1, "Quit (core dumped)\n", 20);
+		write(1, "Quit (core dumped)\n", 20); // since we print /n in parent, this will cause a \nQuit....\n
 		exit(131); 
 	}
 }
@@ -30,9 +29,14 @@ void heredoc_handler(int signum)
 	if (signum == SIGINT)
 	{
 		rl_replace_line("", 0);
-		// write(1, "\n", 1);
 		exit(130);
 	}
+}
+
+void do_nothing(int signum)
+{
+	(void)signum;
+	write(1, "\n", 1);
 }
 
 void signals(int mode)
@@ -57,5 +61,11 @@ void signals(int mode)
 		sa.sa_handler = heredoc_handler;
 		sigaction(SIGINT, &sa, NULL);
 		sigaction(SIGQUIT, &sa, NULL);
+	}
+	else
+	{
+		sa.sa_handler = do_nothing;
+		sigaction(SIGINT, &sa, NULL);     
+		signal(SIGQUIT, SIG_IGN);
 	}
 }
