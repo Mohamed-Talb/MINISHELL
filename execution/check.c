@@ -6,17 +6,20 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:06:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/03/14 14:24:50 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/18 13:30:57 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	printerrors(t_data *data, t_cmds *command, bool found, bool permission)
+static void	printerrors(t_data *data, t_cmds *command, int found, int permission)
 {
 	if (!found)
 	{
-		eputf(CMD_NOT_FOUND, command->flags[0]);
+		if (ft_strchr(command->cmd, '/'))
+			eputf(NO_SUCH_F_D, command->flags[0]);
+		else
+			eputf(CMD_NOT_FOUND, command->flags[0]);
 		errors(data, NULL, 127);
 	}
 	else if (!permission)
@@ -26,29 +29,21 @@ static void	printerrors(t_data *data, t_cmds *command, bool found, bool permissi
 	}
 }
 
-char 	**helper(t_data *data, t_cmds *command)
-{
-	(void)data;
-	char **paths = ft_malloc(2 * sizeof(char *));
-	paths[0] = ft_strdup(command->cmd);
-	paths[1] = NULL;
-	return paths;
-}
-
 static char	**getabspaths(t_data *data, t_cmds *command)
 {
 	int i;
 	char **paths;
 	char *env_path;
-	if (ft_strchr(command->cmd, '/'))
-	{
-		paths = helper(data, command);
-		return (paths);
-	}
+
 	i = 0;
-	env_path = ft_getenv(data->exported, "PATH");
-	if (env_path == NULL)
-		return (NULL);
+    if (ft_strchr(command->cmd, '/'))
+        return NULL;
+    env_path = ft_getenv(data->exported, "PATH");
+    if (!env_path || env_path[0] == 0)
+    {
+        command->cmd = ft_strjoin("./", command->cmd);
+        return NULL;
+    }
 	paths = ft_split(env_path, ':');
 	while (paths[i])
 	{
@@ -57,6 +52,20 @@ static char	**getabspaths(t_data *data, t_cmds *command)
 		i++;
 	}
 	return (paths);
+}
+
+static int cmd_isvalid(char *path, int *found, int *permission)
+{
+	if (access(path, F_OK) == 0)
+	{
+		*found = 1;
+		if (access(path, X_OK) == 0)
+		{
+			*permission = 1;
+			return 1;
+		}
+	}
+	return 0;
 }
 
 void isDirectory(t_data *data, t_cmds *command) 
@@ -72,31 +81,35 @@ void isDirectory(t_data *data, t_cmds *command)
 void	check(t_data *data, t_cmds *command)
 {
 	int  i;
-	bool found;
+	int found;
 	char **paths;
-	bool permission;
+	int permission;
 	
 	i = 0;
 	found = false;
 	permission = false;
-	isDirectory(data, command);
 	if (command->cmd[0] == 0)
 		printerrors(data, command, false, false);
 	paths = getabspaths(data, command);
-	while (paths[i])
+	if (!paths)
 	{
-		if (access(paths[i], F_OK) == 0)
-		{
-			found = true;
-			if (access(paths[i], X_OK) == 0)
-			{
-				permission = true;
-				command->cmd = ft_strdup(paths[i]);
-				break ;
-			}
-		}
-		i++;
+		isDirectory(data, command);
+		if (cmd_isvalid(command->cmd, &found, &permission))
+			return ;
+		else
+			printerrors(data, command, found, permission);
 	}
-	if (!found || !permission)
+	else
+	{
+		while (paths[i])
+		{
+			if (cmd_isvalid(command->cmd, &found, &permission))
+			{
+				command->cmd = ft_strdup(paths[i]);
+				return ;
+			}
+			i++;
+		}
 		printerrors(data, command, found, permission);
+	}	
 }
