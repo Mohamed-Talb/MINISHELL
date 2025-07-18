@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:06:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/18 13:30:57 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/18 14:01:54 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	check(t_data *data, t_cmds *command)
 	{
 		while (paths[i])
 		{
-			if (cmd_isvalid(command->cmd, &found, &permission))
+			if (cmd_isvalid(paths[i], &found, &permission))
 			{
 				command->cmd = ft_strdup(paths[i]);
 				return ;

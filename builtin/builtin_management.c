@@ -30,18 +30,11 @@ int check_builtin(char *cmd)
 	return (0);
 }
 
-void execute_builtin(t_data *data, t_cmds *command)
+int execute_builtin(t_data *data, t_cmds *command, char *cmdname)
 {
 	int exst;
-	int stdin_dup;
-	int stdout_dup;
 
 	exst = 0;
-	char *cmdname;
-	stdin_dup = dup(0);
-	stdout_dup = dup(1);
-	duplication(data, data->cmds[0]);
-	cmdname = getcmdname(command->flags[0]);
 	if (!ft_strcmp(cmdname, "echo"))
 		exst = ft_echo(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "cd"))
@@ -60,8 +53,23 @@ void execute_builtin(t_data *data, t_cmds *command)
 		if (exst == -1)
 			exst = 1;
 		else
-			(exit(exst));
+			(free_data(data), exit(exst));
 	}
+	return exst;
+}
+
+void builtin(t_data *data, t_cmds *command)
+{
+	int exst;
+	int stdin_dup;
+	char *cmdname;
+	int stdout_dup;
+
+	stdin_dup = dup(0);
+	stdout_dup = dup(1);
+	cmdname = getcmdname(command->flags[0]);
+	duplicattion(data, data->cmds[0]);
+	exst = execute_builtin(data, command, cmdname);
 	data->last_exit_status = exst;
 	dup2(stdin_dup, 0);
 	dup2(stdout_dup, 1);
