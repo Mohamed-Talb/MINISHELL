@@ -1,17 +1,43 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 10:34:40 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/19 10:34:41 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int ft_echo(int argc, char **argv, t_data *data)
+static int	respects_set(char *str, char *set)
 {
-	int rm_newline;
-	int i;
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (in_set(set, str[i]) == 0)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_echo(int argc, char **argv, t_data *data)
+{
+	int	rm_newline;
+	int	i;
 
 	i = 1;
-	(void) data;
+	(void)data;
 	rm_newline = 0;
 	while (i < argc)
 	{
 		if (argv[i][0] != '-' || !respects_set(&argv[i][1], "n"))
-			break;
+			break ;
 		rm_newline = 1;
 		i++;
 	}

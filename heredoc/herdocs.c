@@ -36,18 +36,27 @@ void fill_herdoc(t_data *data, t_list *node, int fd)
     char *delemiter;
     int  expand;
 
-    signals(3);
     expand = 0;
     delemiter = getdelemiter(data, node->content);
-    line = readline(">>>> ");
-    while (line && ft_strcmp(delemiter, line))
+    while (1)
     {
+        line = readline(">>>");
+        if (!line)
+        {
+            eputf("warning: here-document delimited by end-of-file (wanted `%s`)\n"
+                    , delemiter);
+            break;
+        }
+        if (ft_strcmp(delemiter, line) == 0)
+        {
+            ft_free(line);
+            break;
+        }
         if (ft_strchr(node->content, '\''), ft_strchr(node->content, '"'))
             line = getexline(data, line);
         ft_putstr_fd(line, fd);
         ft_putstr_fd("\n", fd);
         ft_free(line);
-        line = readline(">>>> ");
     }
 }
 
@@ -59,6 +68,8 @@ int  heredoc(t_data *data, t_list *node)
     int     id;
     int     status;
 
+    signal(SIGINT, SIG_IGN);
+    signal_state(1);
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
     id = fork();
@@ -67,6 +78,8 @@ int  heredoc(t_data *data, t_list *node)
         fill_herdoc(data, node, fd);
         exit(0);
     }
+    signal_state(0);
+    signals();
     wait(&status);
     if (exitestatus(status))
     {
@@ -87,7 +100,6 @@ int openallherdocs(t_data *data)
         allred = data->cmds[i]->allred;
         while(allred)
         {
-            printf("hhhh\n");
             if (allred->type == LEFT_HER)
                 if (heredoc(data, allred) == 1)
                 {

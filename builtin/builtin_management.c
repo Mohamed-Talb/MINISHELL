@@ -1,74 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_management.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/19 10:45:28 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-static char *getcmdname(char *cmd)
+int	check_builtin(char *cmd)
 {
-	int i;
-
-	i = 0;
-	if (ft_strchr(cmd, '/'))
-	{
-		while(cmd[i])
-			i++;
-		while(cmd[i - 1] != '/')
-			i--;
-		return (&cmd[i]);
-	}
-	else
-		return cmd; 
-}
-
-int check_builtin(char *cmd)
-{
-	char *cmdname;
-
-	cmdname = getcmdname(cmd);
-	if (!ft_strcmp(cmdname, "echo") || !ft_strcmp(cmdname, "cd")
-		|| !ft_strcmp(cmdname, "pwd") || !ft_strcmp(cmdname, "export")
-		|| !ft_strcmp(cmdname, "unset") || !ft_strcmp(cmdname, "env")
-		|| !ft_strcmp(cmdname, "exit"))
+	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd")
+		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export")
+		|| !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env")
+		|| !ft_strcmp(cmd, "exit"))
 		return (1);
 	return (0);
 }
 
-int execute_builtin(t_data *data, t_cmds *command, char *cmdname)
+int	execute_builtin(t_data *data, t_cmds *command, char *cmdname)
 {
-	int exst;
+	int	exst;
 
 	exst = 0;
 	if (!ft_strcmp(cmdname, "echo"))
 		exst = ft_echo(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "cd"))
 		exst = ft_cd(ft_strlen2(command->flags), command->flags, data);
-    else if (!ft_strcmp(cmdname, "pwd"))
-        exst = ft_pwd(ft_strlen2(command->flags), command->flags, data);
+	else if (!ft_strcmp(cmdname, "pwd"))
+		exst = ft_pwd(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "export"))
-        exst = ft_export(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_export(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "unset"))
-        exst = ft_unset(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_unset(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "env"))
-        exst = ft_env(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_env(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "exit"))
 	{
-        exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
 		if (exst == -1)
 			exst = 1;
 		else
 			(free_data(data), exit(exst));
 	}
-	return exst;
+	return (exst);
 }
 
-void builtin(t_data *data, t_cmds *command)
+void	builtin(t_data *data, t_cmds *command)
 {
-	int exst;
-	int stdin_dup;
-	char *cmdname;
-	int stdout_dup;
+	int		exst;
+	int		stdin_dup;
+	char	*cmdname;
+	int		stdout_dup;
 
 	stdin_dup = dup(0);
 	stdout_dup = dup(1);
-	cmdname = getcmdname(command->flags[0]);
-	duplicattion(data, data->cmds[0]);
+	cmdname = command->flags[0];
+	duplication(data, data->cmds[0]);
 	exst = execute_builtin(data, command, cmdname);
 	data->last_exit_status = exst;
 	dup2(stdin_dup, 0);

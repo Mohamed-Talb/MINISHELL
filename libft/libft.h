@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:32:07 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/05/21 11:26:49 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/19 10:39:13 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ typedef struct flags {
 
 // FT_STRINGS:
 char	*ft_itoa(int n);
+int		atoi_sign(char *nptr);
 char	**ft_strdup2(char **str);
 char	*ft_uitoa(unsigned int n);
 char	*ft_strdup(const char *s);
-int		atoi_sign(char *nptr);
+void 	ft_printdoule(char **str);
 char	*ft_strchr(const char *s, int c);
 unsigned long long	ft_atoi_l(char *nptr);
 char	*ft_strrchr(const char *s, int c);

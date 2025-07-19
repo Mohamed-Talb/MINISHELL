@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipexbonus.c                                       :+:      :+:    :+:   */
+/*   parent.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:53:44 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/03/14 14:38:06 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/19 16:29:36 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	parent(t_data *data)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
+	write(1, "\n", 1);
 	data->last_exit_status = exitestatus(status);
 	return (data->last_exit_status);
 }

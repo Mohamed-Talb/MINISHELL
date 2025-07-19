@@ -30,11 +30,13 @@ int	child(t_data *data, t_cmds *command)
 {
 	int	pid;
 
+	signal_state(2);
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
-	signals(-1); // might need to reset it back to signal 1 for parent
 	if (pid == 0)
 	{
-		signals(2);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
         duplication(data, command);
 		if (command->flags)
 		{
@@ -48,8 +50,8 @@ int	child(t_data *data, t_cmds *command)
 					errcln(data, 127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
 				else if (errno == EACCES)
 					errcln(data, 126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
-				else if(errno == ENOEXEC) // caused by test 445
-					errcln(data, 126, "minishell: %s: %s\n", command->flags[0], "Permission denied");
+				// else if(errno == ENOEXEC) // caused by test 445
+				// 	errcln(data, 126, "minishell: %s: %s\n", command->flags[0], "Permission denied");
 				else
 					errcln(data, 1, "minishell: %s: %s\n", command->flags[0], strerror(errno));
 			}
@@ -59,6 +61,7 @@ int	child(t_data *data, t_cmds *command)
 	}
 	else if (pid > 0)
 	{
+		signal_state(0);
 		close(command->pipein);
 		close(command->pipeout);
 	}

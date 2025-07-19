@@ -1,7 +1,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#define _POSIX_SOURCE
+// #define _POSIX_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -81,7 +81,6 @@ int		exitestatus(int status);
 void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
 int		posin_set(char *set, char c);
-int		respects_set(char *str, char *set);
 void 	errors(t_data *data, char *error, int exitcode);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(t_data *data, int exitcode, char *error, ...);
@@ -97,11 +96,11 @@ void	redirection(t_data *data, t_list *token, char **line);
 void	double_q(t_data *data, t_list *token, char **line, int state);
 
 // SIGNALS 
-void 	signals(int mode);
-
+void signals();
+int signal_state(int state);
 // BUILT-INS
 int		check_builtin(char *cmd);
-void	execute_builtin(t_data *data, t_cmds *command);
+void	builtin(t_data *data, t_cmds *command);
 int 	ft_echo(int argc, char **argv, t_data *data);
 int		ft_cd(int argc, char **argv, t_data *data);
 int		ft_pwd(int argc, char **argv, t_data *data);
@@ -112,9 +111,6 @@ int		ft_exit(int argc, char **argv, t_data *data);
 
 
 // EXPORT UTILES
-int issame_var(char *str1, char *str2);
-void print_exported(char **exported);
-void print_variable(char *var);
 
 
 int isvalid_var(char *var);
@@ -125,8 +121,6 @@ int openredfiles(t_data *data, t_list *node);
 int varname_size(char *var);
 char **envup(char **env, char *var);
 char **envrm(char **env, char *var);
-int uppwd(t_data *data, char *path);
-int upoldpwd(t_data *data);
 char **adjust_shell_level(char **env, int change);
 void sync_envs(t_data *data);
 char *ft_getenv(char **env, const char *var);

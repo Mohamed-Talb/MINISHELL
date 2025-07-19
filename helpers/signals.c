@@ -1,71 +1,81 @@
+// int signal_state(int state)
+// {
+//     static int value;
+//     if(state != -1)
+//         value = state;
+//     return value;
+// }
+
+// void hanlder(int sig)
+// {
+//     (void)sig;
+//     // Debug print to see if handler is called
+//     write(2, "DEBUG: Signal handler called\n", 29);
+	
+//     if (signal_state(-1) == 0)
+//     {
+//         write(1, "\n", 1);
+//         rl_on_new_line();
+//         rl_replace_line("", 0);
+//         rl_redisplay();
+//     }
+//     else if (signal_state(-1) == 1)
+//     {
+//         write(1, "\n", 1);
+//         exit(130);
+//     }
+	
+//     // Debug print to see which state we're in
+//     char debug_msg[50];
+//     int len = sprintf(debug_msg, "DEBUG: signal_state = %d\n", signal_state(-1));
+//     write(2, debug_msg, len);
+// }
+
+// void signals()
+// {
+//     // Use sigaction instead of signal for more reliable behavior
+//     struct sigaction sa;
+//     sa.sa_handler = hanlder;
+//     sigemptyset(&sa.sa_mask);
+//     // sa.sa_flags = SA_RESTART; // This is important for readline
+	
+//     sigaction(SIGINT, &sa, NULL);
+//     signal(SIGQUIT, SIG_IGN);
+	
+//     // Debug print
+//     write(2, "DEBUG: Signal handlers installed\n", 33);
+// }
+
 #include "../minishell.h"
 
-void handler_parent(int signum)
+int signal_state(int state)
 {
-	if (signum == SIGINT)
-	{
-		rl_replace_line("", 0);
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_redisplay();
-	}
+    static int value;
+    if(state != -1)
+        value = state;
+    return value;
 }
 
-void handler_child(int signum)
+void hanlder(int sig)
 {
-	if (signum == SIGINT)
-	{
-		exit(130);
-	}
-	if (signum == SIGQUIT)
-	{
-		write(1, "Quit (core dumped)\n", 20); // since we print /n in parent, this will cause a \nQuit....\n
-		exit(131); 
-	}
+    (void)sig;
+    if (signal_state(-1) == 0)
+    {
+        write(1, "\n", 1);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+    else if (signal_state(-1) == 1)
+    {
+        write(1, "\n", 1);
+        exit(130);
+    }
 }
 
-void heredoc_handler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		rl_replace_line("", 0);
-		exit(130);
-	}
-}
 
-void do_nothing(int signum)
+void signals()
 {
-	(void)signum;
-	write(1, "\n", 1);
-}
-
-void signals(int mode)
-{
-	struct sigaction sa;
-
-	sigemptyset(&sa.sa_mask);
-	if (mode == 1)
-	{
-		sa.sa_handler = handler_parent;
-		sigaction(SIGINT, &sa, NULL);     
-		signal(SIGQUIT, SIG_IGN);
-	}
-	else if (mode == 2)
-	{
-		sa.sa_handler = handler_child;
-		sigaction(SIGINT, &sa, NULL);
-		sigaction(SIGQUIT, &sa, NULL);
-	}
-	else if (mode == 3)
-	{
-		sa.sa_handler = heredoc_handler;
-		sigaction(SIGINT, &sa, NULL);
-		sigaction(SIGQUIT, &sa, NULL);
-	}
-	else
-	{
-		sa.sa_handler = do_nothing;
-		sigaction(SIGINT, &sa, NULL);     
-		signal(SIGQUIT, SIG_IGN);
-	}
+    signal(SIGINT, hanlder);
+    signal(SIGQUIT, SIG_IGN);
 }
