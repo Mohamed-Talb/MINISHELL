@@ -41,6 +41,7 @@ void fill_herdoc(t_data *data, t_list *node, int fd)
     while (1)
     {
         line = readline(">>>");
+        printf("test\n");
         if (!line)
         {
             eputf("warning: here-document delimited by end-of-file (wanted `%s`)\n"
@@ -67,20 +68,21 @@ int  heredoc(t_data *data, t_list *node)
 	int		fd;
     int     id;
     int     status;
+    signal_state(1);
 
     signal(SIGINT, SIG_IGN);
-    signal_state(1);
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
     id = fork();
     if (id == 0)
     {
+        signals();
         fill_herdoc(data, node, fd);
         exit(0);
     }
-    signal_state(0);
-    signals();
     wait(&status);
+    signals();
+    signal_state(0);
     if (exitestatus(status))
     {
         close(fd);
