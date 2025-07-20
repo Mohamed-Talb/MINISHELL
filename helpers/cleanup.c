@@ -1,11 +1,9 @@
 #include "../minishell.h"
 
-void reset_data(t_data *data)
+void trach(t_data *data)
 {
-	int i;
+	int 	i;
 
-	if (data == NULL)
-		return ;
 	if (data->cmds)
 	{
 		i = 0;
@@ -28,7 +26,13 @@ void reset_data(t_data *data)
 		free(data->line);
 		data->line = NULL;
 	}
-	data->expand_rage = NULL; // necessary to reset
+}
+void reset_data(t_data *data)
+{
+	if (data == NULL)
+		return ;
+	trach(data);
+	data->expand_rage = NULL; 
 	data->pipes_nb = 1;
 	data->command_count = 0;
 }

@@ -1,24 +1,5 @@
 #include "../minishell.h"
 
-t_list *ft_lstfront(t_list **head, void *content)
-{
-	t_list *new_node;
-	
-	new_node = ft_malloc(sizeof(t_list));
-	new_node->content = content;
-	new_node->error = NULL;
-	new_node->next = NULL;
-	new_node->type = 0;
-	if(*head == NULL)
-	{
-		*head = new_node;
-		return (*head);
-	}
-	new_node->next = *head;
-	*head = new_node;
-	return (*head);
-}
-
 t_list *ft_lstback(t_list **head, void *content)
 {
 	t_list *new_node;
@@ -105,24 +86,4 @@ int	ft_lstsize(t_list *lst)
 		i++;
 	}
 	return (i);
-}
-
-void f(void *content)
-{
-	char *str;
-
-	str = (char *) content;
-	printf("str is: %s\n", str);
-}
-
-void	ft_lstiter(t_list *lst, void (*f)(void *))
-{
-	if (!lst)
-		return ;
-	t_list *curr = lst;
-	while (curr != NULL)
-	{
-		f(curr->content);
-		curr = curr->next;
-	}
 }

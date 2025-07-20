@@ -25,7 +25,7 @@ t_data	*init_data(char **penv)
 		errors(data, MALLOC_ERROR, 1);
 		return (NULL);
 	}
-	data->exported = adjust_shell_level(ft_strdup2(penv), 1);
+	data->exported = ft_strdup2(penv);
 	other_env(data);
 	sync_envs(data);
 	data->pipes_nb = 1;

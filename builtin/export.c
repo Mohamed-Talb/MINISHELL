@@ -6,11 +6,27 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:34:52 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/19 10:34:53 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/20 13:31:39 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static int isvalid_var(char *var)
+{
+    int i;
+
+    if (ft_isalpha(var[0]) == 0 && var[0] != '_')
+        return (false);
+    i = 1;
+    while (var[i] && var[i] != '=')
+    {
+        if (ft_isalnum(var[i]) == false && var[i] != '_')
+            return (false);
+        i++;
+    }
+    return (true);
+}
 
 static char	*ascii_order(char **arr)
 {

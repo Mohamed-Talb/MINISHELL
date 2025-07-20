@@ -107,8 +107,8 @@ void minishell(t_data *data)
         prompter(data);
         if (data->line == NULL)
             break;
-        if (completline(data))
-            continue;
+        // if (completline(data))
+        //     continue;
         if (parser(data, data->line))
             continue ;
         if (data->command_count == 0)

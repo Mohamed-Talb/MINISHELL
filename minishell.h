@@ -77,6 +77,7 @@ int 	init_cmds(t_data *data);
 t_data	*init_data(char **penv);
 
 // UTILES
+t_list *creat_node(t_data *data);
 int		exitestatus(int status);
 void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
@@ -87,7 +88,6 @@ void	errcln(t_data *data, int exitcode, char *error, ...);
 char 	*mfor_printf(char *str, void *sarr[], int darr[]);
 
 // PARSING 
-t_list	*creat_node(t_data *data);
 int		parser(t_data *data, char *line);
 int		expand(t_data *data, char **line);
 t_list	*hpipe(t_data *data, t_list *token, char **line);
@@ -96,8 +96,8 @@ void	redirection(t_data *data, t_list *token, char **line);
 void	double_q(t_data *data, t_list *token, char **line, int state);
 
 // SIGNALS 
-void signals();
-int signal_state(int state);
+void	signals();
+int		signal_state(int state);
 // BUILT-INS
 int		check_builtin(char *cmd);
 void	builtin(t_data *data, t_cmds *command);
@@ -112,12 +112,8 @@ int		ft_exit(int argc, char **argv, t_data *data);
 
 // EXPORT UTILES
 
-
-int isvalid_var(char *var);
-int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
-char *herexpand(t_data *data, char **line);
-int openredfiles(t_data *data, t_list *node);
+int	openredfiles(t_data *data, t_list *node);
 int varname_size(char *var);
 char **envup(char **env, char *var);
 char **envrm(char **env, char *var);

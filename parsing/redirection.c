@@ -78,7 +78,7 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 	s = *line;
 	redirect_errors(data, &s);
 	if (token->type == LEFT_HER && get_realtoken(token, &s))
-		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
+		set_errors(data, UNCLOSED_ERROR, 2);
 	else
 	{
 		while (*s != '\0' && !in_set(REDIRECTION_SET, *s) && !ft_iswhitespace(*s)) // expand is included in the other forms of redirection, with exeptions like expand inside expand
@@ -91,7 +91,6 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 				token->content = fappend(token->content, *s++);
 		}
 	}
-	// printf("token of redirection is: %s\n", (char *) token->content);
 	*line = s;
 }
 
