@@ -6,14 +6,11 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:53:44 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/19 16:29:36 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/20 14:47:25 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/* check process_exit_status of jobs.c and nojobs.c in bash, this function is incorrect */
-
 
 int	parent(t_data *data)
 {
@@ -35,7 +32,6 @@ int	parent(t_data *data)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
-	write(1, "\n", 1);
 	data->last_exit_status = exitestatus(status);
 	return (data->last_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/20 14:39:43 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/20 14:45:21 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,6 @@ static int parsing_errors(t_data *data, t_list *list)
 		list = list->next;
 	}
 	return 0;
-}
-
-static t_list *creat_node(t_data *data)
-{
-	char *str;
-	t_list* new;
-
-	str = ft_strdup("");
-	new = ft_lstback(&data->cmd_list, str);
-	return (new);
 }
 
 static t_list	*regular_parse(t_data *data, t_list *token, char **line)
