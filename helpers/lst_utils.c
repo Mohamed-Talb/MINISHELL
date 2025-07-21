@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-<<<<<<< HEAD
 t_list *ft_lstnew(void *content)
 {
 	t_list *new_node;
@@ -25,8 +24,6 @@ t_list *ft_lstfront(t_list **head, void *content)
 	return (*head);
 }
 
-=======
->>>>>>> b172e4022ae91cff18430d6cf50ef69be9d55b18
 t_list *ft_lstback(t_list **head, void *content)
 {
 	t_list *new_node;

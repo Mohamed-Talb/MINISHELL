@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static int isvalid_var(char *var)
+int isvalid_var(char *var)
 {
     int i;
 

@@ -22,7 +22,7 @@ int	varname_size(char *var)
 	return (i);
 }
 
-static int	issame_var(char *str1, char *str2)
+int	issame_var(char *str1, char *str2)
 {
 	if (varname_size(str1) == varname_size(str2) && ft_strncmp(str1, str2,
 			varname_size(str1)) == 0)
