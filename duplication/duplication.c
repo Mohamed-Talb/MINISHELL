@@ -1,57 +1,92 @@
 #include "../minishell.h"
 
-void files_manager(t_data *data, t_cmds *cmd, t_list *input, t_list *output)
+t_list *parsing_illusion(t_data *data, char *line)
 {
-	t_list *curr;
-    int fd;
+    t_data *clone;
+    t_list *cmd_list;
 
-	curr = cmd->allred;
-	while (curr)
-	{
-		fd = openredfiles(data, curr);
-        if (curr == input)
-            cmd->infd = fd;
-        else if (curr == output)
-            cmd->outfd = fd;
-        else 
-            close(fd);
-		curr = curr->next;
-	}
+    clone = ft_calloc(1, sizeof(t_data));
+    clone->line = line;
+    clone->env = data->env;
+    clone->exported = data->exported;
+    clone->last_exit_status = clone->last_exit_status;
+    parser(clone, line);
+    cmd_list = clone->cmd_list;
+    free(clone->line);
+    free(clone);
+    return (cmd_list);
 }
 
-void last_in_out(t_cmds *cmd, t_list **input, t_list **output)
+void getfilename(t_data *data, t_list *node)
 {
-    t_list *list = cmd->allred;
-    while (list)
+    t_list *tokens;
+    
+    tokens = parsing_illusion(data, ft_strdup(node->content));
+    if (ft_lstsize(tokens) != 1)
     {
-        if (list->type == LEFT_HER || list->type == LEFT_RED)
-            *input = list;
-        if (list->type == RIGHT_RED || list->type == RIGHT_HER)
-            *output = list;
-        list = list->next;
+        (eputf(AMBIGOUS_RED, node->content), exit(1)); // better cleaning needed
+    }
+    node->content = ft_strdup(tokens->content);
+    ft_lstclear(&tokens);
+}
+
+int openredfiles(t_data *data, t_list *node)
+{
+	int fd;
+    char *error;
+
+    if (node->type != LEFT_HER)
+        getfilename(data , node);
+    if (node->type == RIGHT_HER)
+	    fd = open(node->content, O_RDWR | O_CREAT | O_APPEND , 0644);
+	else if (node->type == RIGHT_RED)
+        fd = open(node->content, O_RDWR | O_CREAT | O_TRUNC , 0644);
+    else
+	    fd = open(node->content, O_RDONLY);
+	if (fd == -1)
+    {
+        error = ft_strjoin("minishell: ", node->content);
+        perror(error);
+		errcln(data, 1, NULL);
+    }
+    return (fd);
+}
+
+void fds_manager(t_data *data, t_cmds *cmd)
+{
+    t_list *curr;
+    int fd;
+
+    curr = cmd->allred;
+    while (curr)
+    {
+        fd = openredfiles(data, curr);
+        if (curr->type == LEFT_HER || curr->type == LEFT_RED)
+        {
+            close(cmd->infd);
+            cmd->infd = fd;
+        }
+        else if (curr->type == RIGHT_RED || curr->type == RIGHT_HER)
+        {
+            close(cmd->outfd);
+            cmd->outfd = fd;
+        }
+        curr = curr->next;
     }
 }
 
 int duplication(t_data *data, t_cmds *cmd)
 {
-    t_list *input = NULL;
-    t_list *output = NULL;
-
-    last_in_out(cmd, &input, &output);
-    files_manager(data, cmd, input, output);
+    fds_manager(data, cmd);
     if (cmd->infd != -1)
     {
         dup2(cmd->infd, 0);
         close(cmd->infd);
     }
-    else if (cmd->infd == -1 && cmd->pipein != -1)
-          dup2(cmd->pipein, 0);
     if (cmd->outfd != -1)
     {
         dup2(cmd->outfd, 1);
         close(cmd->outfd);
     }
-    else if (cmd->outfd == -1 && cmd->pipeout != -1)
-          dup2(cmd->pipeout, 1);
     return (0);
 }

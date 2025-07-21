@@ -12,9 +12,6 @@
 
 #include "../minishell.h"
 
-/* check process_exit_status of jobs.c and nojobs.c in bash, this function is incorrect */
-
-
 int	parent(t_data *data)
 {
 	int	end[2];
@@ -26,16 +23,15 @@ int	parent(t_data *data)
 	{
 		if (pipe(end) == -1)
 			errors(data, "Pipe creation failed\n", 1);
-		data->cmds[i]->pipeout = end[1];
+		data->cmds[i]->outfd = end[1];
 		child(data, data->cmds[i]);
-		data->cmds[i + 1]->pipein = end[0];
+		data->cmds[i + 1]->infd = end[0];
 		i++;
 	}
 	pid = child(data, data->cmds[i]);
 	waitpid(pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
-	write(1, "\n", 1);
 	data->last_exit_status = exitestatus(status);
 	return (data->last_exit_status);
 }

@@ -2,9 +2,9 @@
 SHELL_SRC = \
 	minishell.c \
 	grammere/grammer.c \
-	heredoc/herdocs.c heredoc/herdocexpand.c heredoc/heredocdel.c\
+	duplication/duplication.c\
 	execution/child.c execution/check.c execution/parent.c \
-	duplication/dupeexpand.c duplication/duplication.c duplication/openredfiles.c \
+	heredoc/herdocs.c heredoc/herdocexpand.c heredoc/heredocdel.c\
 	env_tools/ft_getenv.c env_tools/shlvl.c env_tools/syncenvs.c env_tools/env_utils.c \
 	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c \
 	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c\

@@ -58,7 +58,8 @@ int get_realtoken(t_list *token, char **line)
 
 	value = 0;
 	s = *line;
-	while (*s != '\0' && ft_iswhitespace(*s) == false && value == 0)
+	while (*s != '\0' && ft_iswhitespace(*s) == false
+		&& value == 0 && !in_set("|><", *s))
 	{
 		if (*s == '\'')
 			value = get_enclosed_text(token, &s);
@@ -77,21 +78,8 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 
 	s = *line;
 	redirect_errors(data, &s);
-	if (token->type == LEFT_HER && get_realtoken(token, &s))
+	if (get_realtoken(token, &s))
 		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
-	else
-	{
-		while (*s != '\0' && !in_set(REDIRECTION_SET, *s) && !ft_iswhitespace(*s)) // expand is included in the other forms of redirection, with exeptions like expand inside expand
-		{
-			if(*s == '"')
-				double_q(data, token, &s, 1);
-			else if(*s == '\'')
-				single_q(data, token, &s);
-			else
-				token->content = fappend(token->content, *s++);
-		}
-	}
-	// printf("token of redirection is: %s\n", (char *) token->content);
 	*line = s;
 }
 
@@ -99,7 +87,7 @@ void redirection(t_data *data, t_list *token, char **line)
 {
 	char *s;
 
-	if(ft_strlen(token->content) != 0 || token->type != 0)
+	if (ft_strlen(token->content) != 0 || token->type != 0)
 		ft_lstback(&data->cmd_list, ft_strdup(""));
 	token = ft_lstlast(data->cmd_list);
 	s = *line;

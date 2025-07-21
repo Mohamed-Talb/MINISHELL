@@ -34,14 +34,11 @@ void fill_herdoc(t_data *data, t_list *node, int fd)
 {
     char *line;
     char *delemiter;
-    int  expand;
-
-    expand = 0;
+    
     delemiter = getdelemiter(data, node->content);
     while (1)
     {
-        line = readline(">>>");
-        printf("test\n");
+        line = readline(">>> ");
         if (!line)
         {
             eputf("warning: here-document delimited by end-of-file (wanted `%s`)\n"

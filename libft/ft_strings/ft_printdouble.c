@@ -8,6 +8,7 @@ void ft_printdoule(char **str)
 	while(str[i])
 	{
 		ft_putstr(str[i]);
+		ft_putchar('\n');
 		i++;
 	}
 }

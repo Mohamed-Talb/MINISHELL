@@ -1,72 +1,64 @@
 #include "../minishell.h"
 
-bool check_cases(t_data *data, char **token, char *s, int *i)
+static char  *check_cases(t_data *data, char **line)
 {
-	if (s[*i] == '\0' || ft_iswhitespace(s[*i]))
+	char *exvalue;
+    char *s;
+
+	s = *line + 1;
+    exvalue = ft_strdup("");
+	if (*s == '?')
 	{
-		*token = ft_append(*token, '$', -1);
-		return (true);
+		exvalue = ft_strjoin_es(exvalue, ft_itoa(data->last_exit_status), 3);
+		s++;
 	}
-	else if (s[*i] == '?')
+	else if (*s == '$')
 	{
-		char *status = ft_itoa(data->last_exit_status);
-		*token = ft_strjoin_fc(*token, status, 3);
-		(*i)++;
-		return (true);
+		exvalue = ft_strjoin_es(exvalue, "$$", 1);
+	    s++;
 	}
-	else if (s[*i] == '$')
-	{
-		*token = ft_strjoin_fc(*token, "$$", 1);
-		(*i)++;
-		return (true);
-	}
-	else if (s[*i] == '\'' || s[*i] == '"')
-	{
-		return (true);
-	}
-	return (false);
+	else if (*s == '\0' || ft_iswhitespace(*s))
+		exvalue = fappend(exvalue, '$');
+	else if (ft_isdigit(*s))
+		s++;
+	else if (*s != '\'' && *s != '"')
+		return (free(exvalue), NULL);
+    *line = s;
+	return (exvalue);
 }
 
-int regular_expand(t_data *data, char **token, char *s)
+char *regular_expand(t_data *data, char **line)
 {
-	char *env_var = NULL;
-	char *result = NULL;
-	int i;
+	char *env_var;
+	char *token;
+	char *s;
 
-	i = 1;
-	if (check_cases(data, token, s, &i))
-		return (i);
+	token = check_cases(data, line);
+	if (token != NULL)
+		return (token);
+	s = *line + 1;
 	env_var = ft_strdup("");
-	while (ft_isalnum(s[i]) || s[i] == '_')
-	{
-		env_var = ft_append(env_var, s[i], -1);
-		i++;
-	}
-	if (env_var[0] == 0)
-	{
-		*token = fappend(*token, '$');
-		return (i);
-	}
-	result = ft_getenv(data->exported, env_var);
-	*token = ft_strjoin_es(*token, result, 1);
-	return (i);
+	while (ft_isalnum(*s) || *s == '_')
+		env_var = fappend(env_var, *s++);
+	token = ft_strjoin_es(token, ft_getenv(data->exported, env_var), 0);
+	*line = s;
+	return (token);
 }
 
 int expand(t_data *data, char **line)
 {
-	int expand_size;
-	int old_size;
-	char *str;
-	int pos;
-	int i;
+	int old_pos;
+	char *chunk1;
+	char *exvalue;
+	char *chunk2;
 
-	pos = *line - data->line;
-	str = ft_substr(data->line, 0, pos);
-	old_size = ft_strlen(str);
-	i = regular_expand(data, &str, *line);
-	expand_size = ft_strlen(str) - old_size;
-	data->line = ft_strjoin_fc(str, *line + i, 1);
-	*line = data->line + pos;
-	data->expand_rage = *line + expand_size;
-	return (expand_size);
+	old_pos = *line - data->line;
+	chunk1 = ft_substr(data->line, 0, old_pos);
+	exvalue = regular_expand(data, line);
+	chunk2 = ft_substr(*line, 0, ft_strlen(*line));
+	free(data->line);
+	data->line = mfor_printf("%f%f%f", (void *[]){chunk1, exvalue, chunk2}, NULL);
+	*line = data->line + old_pos;
+	data->expand_rage = *line + ft_strlen(exvalue);
+	return (0);
 }

@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-char *ft_getenv(char **env, const char *var)
+char *ft_getenv(char **env, char *var)
 {
     int i;
     int j;
@@ -13,7 +13,7 @@ char *ft_getenv(char **env, const char *var)
         j = 0;
         while (env[i][j])
         {
-            if (env[i][j] == '=' && ft_strncmp(env[i], var, j) == 0)
+            if (env[i][j] == '=' && issame_var(env[i], var))
                 return (&env[i][j + 1]);
             j++;
         }

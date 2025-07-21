@@ -112,7 +112,7 @@ void minishell(t_data *data)
         if (parser(data, data->line))
             continue ;
         if (data->command_count == 0)
-            continue ;
+            continue ; // continues should reset data
         grammer(data);
         if (openallherdocs(data))
             continue ;

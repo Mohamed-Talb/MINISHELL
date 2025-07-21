@@ -62,8 +62,8 @@ int	child(t_data *data, t_cmds *command)
 	else if (pid > 0)
 	{
 		signal_state(0);
-		close(command->pipein);
-		close(command->pipeout);
+		close(command->infd);
+		close(command->outfd);
 	}
 	else
 		errors(data, "Unable to create a new process\n", 1);

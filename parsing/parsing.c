@@ -49,19 +49,21 @@ t_list	*regular_parse(t_data *data, t_list *token, char **line)
 		else if (*s == '<' || *s == '>')
 			redirection(data, token, &s);
 		else
-			token->content = ft_append(token->content, *s++, -1);
+			token->content = fappend(token->content, *s++);
 	}
 	else
-		token->content = ft_append(token->content, *s++, -1);
+		token->content = fappend(token->content, *s++);
 	*line = s;
 	return (token);
 }
 
-t_list *handle_arg(t_data *data, t_list *token, char **line)
+t_list *handle_arg(t_data *data, char **line)
 {
+	t_list *token;
 	char *s;
 
 	s = *line;
+	token = NULL;
 	while (*s != '\0' && ft_iswhitespace(*s) == false)
 	{
 		if (*s == '$' && s >= data->expand_rage)
@@ -85,7 +87,7 @@ int parser(t_data *data, char *line)
 	{
 		if (ft_iswhitespace(*line) == false)
 		{
-			new = handle_arg(data, NULL, &line);
+			new = handle_arg(data, &line);
 			if (new != NULL)
 			{
 				if (new->content != NULL && new->type != PIPE && new_pipe == 1)

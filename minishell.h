@@ -31,8 +31,6 @@ typedef struct s_cmds
 {
 	char *cmd;
 	char **flags;
-	int pipein;
-	int pipeout;
 	int infd;
 	int outfd;
 	t_list *allred;
@@ -62,6 +60,7 @@ int		child(t_data *data, t_cmds *command);
 //  LIST UTILS 
 void	f(void *content);
 int		ft_lstsize(t_list *lst);
+t_list *ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstprevlast(t_list *lst);
 void	ft_lstclear(t_list **Head);
@@ -90,9 +89,10 @@ char 	*mfor_printf(char *str, void *sarr[], int darr[]);
 t_list	*creat_node(t_data *data);
 int		parser(t_data *data, char *line);
 int		expand(t_data *data, char **line);
+t_list *handle_arg(t_data *data, char **line);
 t_list	*hpipe(t_data *data, t_list *token, char **line);
 void	single_q(t_data *data, t_list *token, char **line);
-void	redirection(t_data *data, t_list *token, char **line);
+void redirection(t_data *data, t_list *token, char **line);
 void	double_q(t_data *data, t_list *token, char **line, int state);
 
 // SIGNALS 
@@ -111,8 +111,7 @@ int		ft_exit(int argc, char **argv, t_data *data);
 
 
 // EXPORT UTILES
-
-
+int issame_var(char *str1, char *str2);
 int isvalid_var(char *var);
 int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
@@ -123,7 +122,7 @@ char **envup(char **env, char *var);
 char **envrm(char **env, char *var);
 char **adjust_shell_level(char **env, int change);
 void sync_envs(t_data *data);
-char *ft_getenv(char **env, const char *var);
+char *ft_getenv(char **env, char *var);
 
 // HERDOC
 char 	*getdelemiter(t_data *data, char *s);
