@@ -5,7 +5,7 @@
 #define PER_ERROR "Permission denied"
 #define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `"
 #define REDIRECTION_SET "<|>"
-
+#define UNCLOSED_ERROR "minishell: syntax error: unclosed quote\n"
 
 // types macros
 #define CMD 1

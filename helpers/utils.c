@@ -1,5 +1,14 @@
 #include "../minishell.h"
 
+t_list *creat_node(t_data *data)
+{
+	char *str;
+	t_list* new;
+
+	str = ft_strdup("");
+	new = ft_lstback(&data->cmd_list, str);
+	return (new);
+}
 // errcln: ERRor CLeaN
 // will print the error to stderr then free data
 void errcln(t_data *data, int exitcode, char *error, ...)

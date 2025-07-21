@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/20 14:45:21 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int parsing_errors(t_data *data, t_list *list)
+static int parsing_errors(t_data *data, t_list *list)
 {
 	if (!list)
 	{
@@ -20,20 +32,7 @@ int parsing_errors(t_data *data, t_list *list)
 	return 0;
 }
 
-t_list *creat_node(t_data *data)
-{
-	char *str;
-	t_list* new;
-
-	str = ft_strdup("");
-	new = ft_lstback(&data->cmd_list, str);
-	if (str == NULL || new == NULL)
-		errors(data, MALLOC_ERROR, 1);
-	return (new);
-}
-
-/* funtion to handle the other forms of parsing which require token to be unitialized unlike hpipe and expand */
-t_list	*regular_parse(t_data *data, t_list *token, char **line)
+static t_list	*regular_parse(t_data *data, t_list *token, char **line)
 {
 	char *s;
 
@@ -102,7 +101,5 @@ int parser(t_data *data, char *line)
 		else
 			line++;
 	}
-	if (parsing_errors(data, data->cmd_list) == 1)
-		return (1);
-	return (0);
+	return (parsing_errors(data, data->cmd_list) == 1);
 }

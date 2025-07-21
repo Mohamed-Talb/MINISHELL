@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   qoutes.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/20 14:39:52 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/20 14:39:53 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void single_q(t_data *data, t_list *token, char **line)
@@ -13,7 +25,7 @@ void single_q(t_data *data, t_list *token, char **line)
 	if (*s == '\'')
 		s++;
 	else
-		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
+		set_errors(data, UNCLOSED_ERROR, 2);
 	*line = s;
 }
 
@@ -26,9 +38,7 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 	while(*s != '"' && *s != 0)
 	{
 		if(*s == '$' && state == 1 && *(s + 1) != '"' && s >= data->expand_rage)
-		{
 			expand(data, &s);
-		}
 		else
 		{
 			token->content = ft_append(token->content, *s, -1);
@@ -38,6 +48,6 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 	if (*s == '"')
 		s++;
 	else
-		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
+		set_errors(data, UNCLOSED_ERROR, 2);
 	*line = s;
 }
