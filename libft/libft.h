@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:32:07 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/19 10:39:13 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/23 20:46:08 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct flags {
 }	t_flag;
 
 // FT_STRINGS:
+
+void	ft_putchar(char c);
+void	ft_putstr(char *s);
 char	*ft_itoa(int n);
 int		atoi_sign(char *nptr);
 char	**ft_strdup2(char **str);

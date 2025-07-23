@@ -2,7 +2,7 @@
 
 void other_env(t_data *data)
 {
-	char buff[99999];
+	char buff[99999]; // remove all that and get the null to getcwd because it allcated by self
 	char *newpwdvalue;
 
 	if (getcwd(buff, 99999) == NULL)

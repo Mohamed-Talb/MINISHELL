@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 09:38:18 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/19 10:46:37 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/23 22:46:45 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,36 @@ static int	upoldpwd(t_data *data)
 
 	new = ft_getenv(data->exported, "PWD");
 	if (new == NULL)
-		data->exported = envup(data->exported, "OLDPWD");
+	{
+		// getcwd
+		data->exported = envup(data->exported, "OLDPWD", 0);
+	}
 	else
 	{
 		new = ft_strjoin("OLDPWD=", new);
-		data->exported = envup(data->exported, new);
+		data->exported = envup(data->exported, new, 0);
 	}
 	if (!data->exported)
 		return (1);
 	return (0);
+
 }
 
 static int	uppwd(t_data *data, char *path)
 {
-	char	buff[999999];
+	char	*buff;
 	char	*new;
 
-	if (getcwd(buff, sizeof(buff)) == NULL)
+	buff = getcwd(NULL, 0);
+	if (buff == NULL)
 	{
-		eputf(GETCWD_ERR, strerror(errno));
-		new = ft_getenv(data->exported, "PWD");
-		new = append(new - 4, '/');
-		new = ft_strjoin_fc(new, path, 1);
+		perror("minshell: cd");
+		return 1;
 	}
 	else
 		new = ft_strjoin("PWD=", buff);
-	data->exported = envup(data->exported, new);
+	data->exported = envup(data->exported, new, 0);
+	free(buff);
 	if (!data->exported)
 		return (1);
 	return (0);
@@ -77,24 +81,6 @@ static int	changedir(t_data *data, char *path)
 	}
 	return (0);
 }
-
-// static char	*get_cdpath(t_data *data, char *path)
-// {
-// 	char	**cdpaths;
-// 	char	*cdpath;
-// 	int		i;
-
-// 	cdpath = ft_getenv(data->exported, "CDPATH");
-// 	if (cdpath == NULL)
-// 		return (path);
-// 	cdpaths = ft_split(cdpath, ':');
-// 	if (!cdpath)
-// 		return (eputf(MALLOC_ERROR), NULL);
-// 	i = 0;
-// 	while (cdpaths[i])
-// 		i++;
-// 	return (path);
-// }
 
 int	ft_cd(int argc, char **argv, t_data *data)
 {
