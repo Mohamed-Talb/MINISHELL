@@ -9,7 +9,7 @@ t_list *parsing_illusion(t_data *data, char *line)
     clone->line = line;
     clone->env = data->env;
     clone->exported = data->exported;
-    clone->last_exit_status = clone->last_exit_status;
+    clone->exit_code = clone->exit_code;
     parser(clone, line);
     cmd_list = clone->cmd_list;
     free(clone->line);

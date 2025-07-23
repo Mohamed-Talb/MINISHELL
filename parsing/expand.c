@@ -21,7 +21,7 @@ static char  *check_cases(t_data *data, char **line)
     exvalue = ft_strdup("");
 	if (*s == '?')
 	{
-		exvalue = ft_strjoin_es(exvalue, ft_itoa(data->last_exit_status), 3);
+		exvalue = ft_strjoin_es(exvalue, ft_itoa(data->exit_code), 3);
 		s++;
 	}
 	else if (*s == '$')

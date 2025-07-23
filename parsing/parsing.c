@@ -29,7 +29,7 @@ static int parsing_errors(t_data *data, t_list *list)
 		}
 		list = list->next;
 	}
-	return 0;
+	return (0);
 }
 
 static t_list	*regular_parse(t_data *data, t_list *token, char **line)
@@ -80,8 +80,10 @@ int parser(t_data *data, char *line)
 {
 	t_list	*new;
 	int		new_pipe;
+	int cmd_count;
 
 	new_pipe = 1;
+	cmd_count = 0;
 	while (*line != '\0')
 	{
 		if (ft_iswhitespace(*line) == false)
@@ -91,7 +93,7 @@ int parser(t_data *data, char *line)
 			{
 				if (new->content != NULL && new->type != PIPE && new_pipe == 1)
 				{
-					data->command_count++;
+					cmd_count++;
 					new_pipe = 0;
 				}
 				else
@@ -101,5 +103,5 @@ int parser(t_data *data, char *line)
 		else
 			line++;
 	}
-	return (parsing_errors(data, data->cmd_list) == 1);
+	return (parsing_errors(data, data->cmd_list) || cmd_count == 0);
 }

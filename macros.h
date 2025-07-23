@@ -33,3 +33,11 @@
 #define CMD_NOT_FOUND "minishell: %s: command not found\n"
 #define NO_SUCH_F_D "minishell: %s: no such file or directory\n"
 #define PERMISSIONS_DENIED "minishell: %s: Permission denied\n"
+
+// HEREDOC
+#define HEREDOC_EOF "warning: here-document delimited by end-of-file (wanted `%s')\n"
+
+// PROMPT
+#define PROMPT_DEFAULT "\001\e[1;96m\002\001⟦\002\x7f minishell \001⟧\002\x7f \001\e[0m\002\001\e[1;92m\002>>\001\e[0m\002 "
+#define PROMPT_PREFIX "\e[1;96m⟦ minishell ⟧\e[0m\e[38;5;246m "
+#define PROMPT_SUFFIX "\e[0m\e[1;91m >>\e[0m "

@@ -22,12 +22,12 @@ char *randomnbr()
 
 char *getname()
 {
+    char *randomname;
     char *rnbr;
     
     rnbr = randomnbr();
-    char *randomname;
     randomname = ft_strjoin("/tmp/herdoc_", rnbr);
-    return randomname;
+    return (randomname);
 }
 
 void fill_herdoc(t_data *data, t_list *node, int fd)
@@ -41,8 +41,7 @@ void fill_herdoc(t_data *data, t_list *node, int fd)
         line = readline(">>> ");
         if (!line)
         {
-            eputf("warning: here-document delimited by end-of-file (wanted `%s`)\n"
-                    , delemiter);
+            eputf(HEREDOC_EOF, delemiter);
             break;
         }
         if (ft_strcmp(delemiter, line) == 0)
@@ -50,10 +49,9 @@ void fill_herdoc(t_data *data, t_list *node, int fd)
             ft_free(line);
             break;
         }
-        if (ft_strchr(node->content, '\''), ft_strchr(node->content, '"'))
+        if (ft_strchr(node->content, '\''), ft_strchr(node->content, '"')) // should be fixed i forgot its fix lol
             line = getexline(data, line);
-        ft_putstr_fd(line, fd);
-        ft_putstr_fd("\n", fd);
+        ft_putendl_fd(line, fd); // better remove these, dont print char by char to avoid print mix
         ft_free(line);
     }
 }
@@ -64,8 +62,8 @@ int  heredoc(t_data *data, t_list *node)
 	int		fd;
     int     id;
     int     status;
-    signal_state(1);
 
+    signal_state(1);
     signal(SIGINT, SIG_IGN);
     rname = getname();
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
@@ -82,21 +80,23 @@ int  heredoc(t_data *data, t_list *node)
     if (exitestatus(status))
     {
         close(fd);
-        data->last_exit_status = exitestatus(status);
+        data->exit_code = exitestatus(status);
         return (1);
     }
     node->content = rname;
-    return 0;
+    return (0);
 }
 
 int openallherdocs(t_data *data)
 {
-    int i = 0;
     t_list *allred;
-    while(data->cmds[i])
+    int i;
+
+    i = 0;
+    while (data->cmds[i])
     {   
         allred = data->cmds[i]->allred;
-        while(allred)
+        while (allred)
         {
             if (allred->type == LEFT_HER)
                 if (heredoc(data, allred) == 1)
@@ -108,5 +108,5 @@ int openallherdocs(t_data *data)
         }
         i++;
     }
-    return 0;
+    return (0);
 }

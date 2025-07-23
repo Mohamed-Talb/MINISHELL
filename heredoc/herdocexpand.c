@@ -9,7 +9,7 @@ static char  *check_cases(t_data *data, char **line)
 		exvalue = ft_append(exvalue, '$', -1);
 	else if (*s == '?')
 	{
-		char *status = ft_itoa(data->last_exit_status);
+		char *status = ft_itoa(data->exit_code);
 		exvalue = ft_strjoin_fc(exvalue, status, 3);
 		s++;
 	}
@@ -74,8 +74,8 @@ char *getexline(t_data *data, char *line)
                 line++;
             }
         }
-		return newline;
+		return (newline);
     }
 	else
-		return line;
+		return (line);
 }

@@ -26,6 +26,29 @@ void run_builtin(t_data *data, t_cmds *command)
 	exit(exst);
 }
 
+void child_exec(t_data *data, t_cmds *command)
+{
+	if (command->flags)
+	{
+		if (check_builtin(command->flags[0]))
+			run_builtin(data, command);
+		else
+		{
+			check(data, command);
+			execve(command->cmd, command->flags, data->env);
+			if (errno == ENOENT)
+				errcln(127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+			else
+				errcln(126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+		}
+	}
+	else
+	{
+		// free_all_adresses(); should be added in the future after it's working correctly
+		exit(0); // dont worry about fds they were closed in duplication in a clean way
+	}
+}
+
 int	child(t_data *data, t_cmds *command)
 {
 	int	pid;
@@ -37,23 +60,8 @@ int	child(t_data *data, t_cmds *command)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-        duplication(data, command);
-		if (command->flags)
-		{
-			if (check_builtin(command->flags[0]))
-				run_builtin(data, command);
-			else
-			{
-				check(data, command);
-				execve(command->cmd, command->flags, data->env);
-				if (errno == ENOENT)
-					errcln(127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
-				else
-					errcln(126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
-			}
-		}
-		else
-			exit(0);
+		duplication(data, command);
+		child_exec(data, command);
 	}
 	else if (pid > 0)
 	{
@@ -62,6 +70,6 @@ int	child(t_data *data, t_cmds *command)
 		close(command->outfd);
 	}
 	else
-		errcln(1, "Unable to create a new process\n");
+		errcln(EXIT_FAILURE, "minishell: fork: %s\n", strerror(errno));
 	return (pid);
 }

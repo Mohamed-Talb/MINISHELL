@@ -62,7 +62,7 @@ void	builtin(t_data *data, t_cmds *command)
 	cmdname = command->flags[0];
 	duplication(data, data->cmds[0]);
 	exst = execute_builtin(data, command, cmdname);
-	data->last_exit_status = exst;
+	data->exit_code = exst;
 	dup2(stdin_dup, 0);
 	dup2(stdout_dup, 1);
 }

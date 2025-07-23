@@ -32,6 +32,6 @@ int	parent(t_data *data)
 	waitpid(pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
-	data->last_exit_status = exitestatus(status);
-	return (data->last_exit_status);
+	data->exit_code = exitestatus(status);
+	return (data->exit_code);
 }

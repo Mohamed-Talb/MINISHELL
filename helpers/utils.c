@@ -200,5 +200,5 @@ void errcln(int exitcode, char *error, ...)
 void set_errors(t_data *data, char *error, int exitcode)// change the prototype .... (mtaleb)
 {
 	ft_lstlast(data->cmd_list)->error = error;
-	data->last_exit_status = exitcode;
+	data->exit_code = exitcode;
 }

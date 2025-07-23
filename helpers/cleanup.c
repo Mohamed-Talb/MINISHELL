@@ -34,7 +34,6 @@ void reset_data(t_data *data)
 	trach(data);
 	data->expand_rage = NULL; 
 	data->pipes_nb = 1;
-	data->command_count = 0;
 }
 
 void free_data(t_data *data)

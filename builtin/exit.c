@@ -37,7 +37,7 @@ int	ft_exit(int argc, char **argv, t_data *data)
 
 	((void)data, ft_putstr("exit\n"));
 	if (argc == 1)
-		return (data->last_exit_status);
+		return (data->exit_code);
 	result = exit_checker(ft_atoi_l(argv[1]), atoi_sign(argv[1]), argv[1]);
 	if (result == NUMREQ_CODE)
 		return (2);

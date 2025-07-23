@@ -17,7 +17,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <stdbool.h>
-#include "errors.h"
+#include "macros.h"
 
 typedef struct s_list
 {
@@ -43,8 +43,7 @@ typedef struct s_data
 	char	**exported;
 	char	*expand_rage;
 	int 	pipes_nb;
-	int		command_count;
-	int		last_exit_status;
+	int		exit_code;
 	t_cmds	**cmds;
 	t_list	*cmd_list;
 } t_data;

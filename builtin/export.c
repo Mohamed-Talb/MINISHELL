@@ -89,7 +89,7 @@ int	ft_export(int argc, char **argv, t_data *data)
 {
 	int	i;
 
-	data->last_exit_status = 0;
+	data->exit_code = 0;
 	if (argc == 1)
 		print_exported(data->exported);
 	else
@@ -100,7 +100,7 @@ int	ft_export(int argc, char **argv, t_data *data)
 			if (isvalid_var(argv[i]) == false)
 			{
 				eputf(INVALID_IDERR, argv[i]);
-				data->last_exit_status = 1;
+				data->exit_code = 1;
 				i++;
 				continue ;
 			}
@@ -109,5 +109,5 @@ int	ft_export(int argc, char **argv, t_data *data)
 		}
 	}
 	sync_envs(data);
-	return (data->last_exit_status);
+	return (data->exit_code);
 }
