@@ -81,10 +81,13 @@ int		exitestatus(int status);
 void	print_cmds(t_data *data);
 int 	in_set(char *set, char c);
 int		posin_set(char *set, char c);
-void 	errors(t_data *data, char *error, int exitcode);
+char	*unexpected_redirect(char **line, char token[10]);
 void 	set_errors(t_data *data, char *error, int exitcode);
-void	errcln(t_data *data, int exitcode, char *error, ...);
-char 	*mfor_printf(char *str, void *sarr[], int darr[]);
+void	errcln(int exitcode, char *error, ...);
+int		ft_printf(char *s, ...);
+char	*margs_printf(char *s, va_list args);
+char	*mprintf(char *s, ...);
+int		eputf(char *s, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);

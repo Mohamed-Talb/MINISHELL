@@ -69,7 +69,7 @@ int expand(t_data *data, char **line)  ///??????????????????????????????????????
 	exvalue = regular_expand(data, line);
 	chunk2 = ft_substr(*line, 0, ft_strlen(*line));
 	free(data->line);
-	data->line = mfor_printf("%f%f%f", (void *[]){chunk1, exvalue, chunk2}, NULL);
+	data->line = mprintf("%f%f%f", chunk1, exvalue, chunk2);
 	*line = data->line + old_pos;
 	data->expand_rage = *line + ft_strlen(exvalue);
 	return (0);

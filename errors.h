@@ -3,7 +3,7 @@
 #define MALLOC_ERROR "memory allocation faild"
 #define CMD_NOTFOUND "command not found"
 #define PER_ERROR "Permission denied"
-#define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `"
+#define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `%s'\n"
 #define REDIRECTION_SET "<|>"
 #define UNCLOSED_ERROR "minishell: syntax error: unclosed quote\n"
 

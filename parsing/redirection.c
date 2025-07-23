@@ -12,32 +12,31 @@
 
 #include "../minishell.h"
 
-int redirect_errors(t_data *data, char **line)
+char *unexpected_redirect(char **line, char slot[10])
 {
-	char *er = "";
+	char *result;
 	char *s;
-	int  i = 0;
 
 	s = *line;
-	if (*s == '\0' || in_set(REDIRECTION_SET , *s) == true)
+	if (*s == '\0')
+		ft_strlcpy(slot, "newline", 10);
+	else if (in_set("<>", *s))
 	{
-		er = ft_strjoin(er, UNEXPECTED_TOKEN);
-		if (*s == '\0')
-			er = ft_strjoin(er, "newline");
-		else
-		{
-			while (i < 2 && in_set(REDIRECTION_SET , *s))
-			{
-				er = ft_append(er, *s, -1);
-				i++;
-				s++;
-			}
-		}
-		set_errors(data, ft_strjoin(er, "'\n"), 2);
-		*line = s;
-		return (1);
+		slot[0] = *s++;
+		if (in_set("<>", *s))
+			slot[1] = *s++;
 	}
-	return (0);
+	else if (*s == '|')
+	{
+		slot[0] = *s++;
+		if (in_set("|", *s))
+			slot[1] = *s++;
+	}
+	else
+		return (NULL);
+	result = mprintf(UNEXPECTED_TOKEN, slot);
+	*line = s;
+	return (result);
 }
 
 int get_enclosed_text(t_list *token, char **line)
@@ -86,12 +85,19 @@ int get_realtoken(t_list *token, char **line)
 
 void redirect_helper(t_data *data, t_list *token, char **line)
 {
+	char slot[10];
+	char *result;
 	char *s;
 
 	s = *line;
-	redirect_errors(data, &s);
+	ft_bzero(slot, 10);
+	while (ft_iswhitespace(*s))
+		s++;
+	result = unexpected_redirect(&s, slot);
+	if (result != NULL)
+		set_errors(data, result, 2);
 	if (get_realtoken(token, &s))
-		set_errors(data, "minishell: syntax error: unclosed quote\n", 2);
+		set_errors(data, UNCLOSED_ERROR, 2);
 	*line = s;
 }
 
@@ -123,8 +129,6 @@ void redirection(t_data *data, t_list *token, char **line)
 			s++;
 		}
 	}
-	while (ft_iswhitespace(*s))
-		s++;
 	redirect_helper(data, token, &s);
 	*line = s;
 }

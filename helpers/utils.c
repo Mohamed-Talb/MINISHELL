@@ -9,33 +9,6 @@ t_list *creat_node(t_data *data)
 	new = ft_lstback(&data->cmd_list, str);
 	return (new);
 }
-// errcln: ERRor CLeaN
-// will print the error to stderr then free data
-void errcln(t_data *data, int exitcode, char *error, ...)
-{
-	if (error)
-	{
-		va_list	args;
-		va_start(args, error);
-		veputf(error, args);
-		va_end(args);
-	}
-	free_data(data);
-	exit(exitcode);
-}
-
-void errors(t_data *data, char *error, int exitcode)
-{
-	ft_putstr_fd(error, 2);
-	free_data(data);
-	exit(exitcode);
-}
-
-void set_errors(t_data *data, char *error, int exitcode)// change the prototype .... (mtaleb)
-{
-	ft_lstlast(data->cmd_list)->error = error;
-	data->last_exit_status = exitcode;
-}
 
 char	*ft_strjoin_fc(char *str, char *buff, int choice)
 {
@@ -133,38 +106,99 @@ void print_cmds(t_data *data)
 	printf("\n");
 }
 
-// mfor_printf: function to malloc a ready to print string for ft_printf
-char *mfor_printf(char *str, void *sarr[], int darr[])
+char *margs_printf(char *s, va_list args)
 {
     char *result;
-    int i;
-    int s;
-    int d;
-
-    s = 0;
-    d = 0;
-    i = 0;
+	char *ptr;
+    
     result = NULL;
-    while (str[i])
+    while (*s)
     {
-        if (str[i] == '%')
+        if (*s == '%')
         {
-            i++;
-            if (str[i] == 'c')
-                result = fappend(result, darr[d++]);
-            else if (str[i] == 'd' || str[i] == 'i')
-                result = ft_strjoin_es(result, ft_itoa(darr[d++]), 3);
-            else if (str[i] == 's')
-                result = ft_strjoin_es(result, sarr[s++], 1);
-            else if (str[i] == 'f')
+            s++;
+            if (*s == 'c')
+                result = fappend(result, va_arg(args, int));
+            else if (*s == 'd' || *s == 'i')
+                result = ft_strjoin_es(result, ft_itoa(va_arg(args, int)), 3);
+            else if (*s == 's')
+                result = ft_strjoin_es(result, va_arg(args, char *), 1);
+            else if (*s == 'f')
             {
-                result = ft_strjoin_es(result, sarr[s], 1);
-                ft_free(sarr[s++]);
+				ptr = va_arg(args, char *);
+                result = ft_strjoin_es(result, ptr, 1);
+                ft_free(ptr);
             }
-            i++;
+            s++;
         }
         else
-            result = fappend(result, str[i++]);
+            result = fappend(result, *s++);
     }
     return (result);
+}
+
+char *mprintf(char *s, ...)
+{
+	va_list	args;
+	char *result;
+
+	va_start(args, s);
+	result = margs_printf(s, args);
+	va_end(args);
+	return (result);
+}
+
+int eputf(char *s, ...)
+{
+	va_list	args;
+	char *result;
+	int len;
+
+	va_start(args, s);
+	result = margs_printf(s, args);
+	ft_putstr_fd(result, 2);
+	len = ft_strlen(result);
+	ft_free(result);
+	va_end(args);
+	return (len);
+}
+
+int ft_printf(char *s, ...)
+{
+	va_list	args;
+	char *result;
+	int len;
+
+	va_start(args, s);
+	result = margs_printf(s, args);
+	ft_putstr_fd(result, 1);
+	len = ft_strlen(result);
+	ft_free(result);
+	va_end(args);
+	return (len);
+}
+
+// errcln: ERRor CLeaN
+// will print the error to stderr then free memory
+void errcln(int exitcode, char *error, ...)
+{
+	char *result;
+	
+	if (error)
+	{
+		va_list	args;
+		va_start(args, error);
+		result = margs_printf(error, args);
+		ft_putstr_fd(result, 2);
+		va_end(args);
+		ft_free(result);
+	}
+	// free_all_adresses(); causes double free now, but necessary later
+	exit(exitcode);
+}
+
+void set_errors(t_data *data, char *error, int exitcode)// change the prototype .... (mtaleb)
+{
+	ft_lstlast(data->cmd_list)->error = error;
+	data->last_exit_status = exitcode;
 }

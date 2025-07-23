@@ -19,20 +19,15 @@ static void pipe_errors(t_data *data, char c)
 
 	prev = ft_lstprevlast(data->cmd_list);
 	if (data->line && data->line[ft_strlen(data->line) - 1] == '|')
-	{
-		strerror = ft_strjoin(UNEXPECTED_TOKEN, "newline`\n");
-		set_errors(data, strerror, 2);
-		return;
-	}
+		strerror = mprintf(UNEXPECTED_TOKEN, "newline");
 	if (c == '|')
-		strerror = ft_strjoin(UNEXPECTED_TOKEN, "||'\n");
+		strerror = mprintf(UNEXPECTED_TOKEN, "||");
 	else if (data->line[0] == '|' || !ft_strcmp(prev->content, "|"))
-		strerror = ft_strjoin(UNEXPECTED_TOKEN, "|'\n");
+		strerror = mprintf(UNEXPECTED_TOKEN, "|");
 	else 
 		return ;
 	set_errors(data, strerror, 2);
 }
-
 
 t_list	*hpipe(t_data *data, t_list *token, char **line)
 {

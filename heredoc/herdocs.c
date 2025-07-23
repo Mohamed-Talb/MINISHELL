@@ -58,7 +58,6 @@ void fill_herdoc(t_data *data, t_list *node, int fd)
     }
 }
 
-
 int  heredoc(t_data *data, t_list *node)
 {
     char    *rname;

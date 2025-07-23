@@ -47,13 +47,9 @@ int	child(t_data *data, t_cmds *command)
 				check(data, command);
 				execve(command->cmd, command->flags, data->env);
 				if (errno == ENOENT)
-					errcln(data, 127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
-				else if (errno == EACCES)
-					errcln(data, 126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
-				// else if(errno == ENOEXEC) // caused by test 445
-				// 	errcln(data, 126, "minishell: %s: %s\n", command->flags[0], "Permission denied");
+					errcln(127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
 				else
-					errcln(data, 1, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+					errcln(126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
 			}
 		}
 		else
@@ -66,6 +62,6 @@ int	child(t_data *data, t_cmds *command)
 		close(command->outfd);
 	}
 	else
-		errors(data, "Unable to create a new process\n", 1);
+		errcln(1, "Unable to create a new process\n");
 	return (pid);
 }

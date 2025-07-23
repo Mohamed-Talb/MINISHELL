@@ -107,32 +107,8 @@ int		ft_iswhitespace(char c);
 // OTHERS
 void *ft_malloc(size_t size);
 
-//PRINTERS
-int		eputf(const char *s, ...);
-int		ft_printf(const char *s, ...);
-int		veputf(const char *s, va_list args);
-//1- init
-void	initflags(t_flag *flag);
-int		initstruct(char **str, t_flag *flag);
-//2- print 
-char	*printmemory(void *addr);
-char	*printunsigned(unsigned int n);
-char	*printstring(const char *s);
-char	*printint(int n, t_flag *params);
-int		printchar(int c, int width, bool minus, int write_dest);
-char	*printhexa(unsigned int n, char *base, t_flag *params);
-//3- check errors
-int		checkorder(char *s);
-int		checkoverflow(char *s);
-char	*checknull(t_flag *params);
-// 4- bonus functions
-int		width(char *ptr, t_flag *params);
-char	*flags(char *ptr, t_flag *params);
-char	*precision(t_flag *flag, char *str);
 //5- utils 
 void	ft_putchar(char c);
 void	ft_putstr(char *s);
-long	ftnewatoi(char **nptr);
-char	*ftappend(char *org, char c, int position);
 
 #endif

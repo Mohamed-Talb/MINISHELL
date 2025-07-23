@@ -22,7 +22,7 @@ t_data	*init_data(char **penv)
 	data = ft_calloc(1, sizeof(t_data));
 	if (data == NULL)
 	{
-		errors(data, MALLOC_ERROR, 1);
+		errcln(1, MALLOC_ERROR);
 		return (NULL);
 	}
 	data->exported = ft_strdup2(penv);
@@ -39,7 +39,7 @@ int init_cmds(t_data *data)
 	data->cmds = ft_calloc((data->pipes_nb + 1), sizeof(t_cmds *));
 	if (data->cmds == NULL)
 	{
-		errors(data, MALLOC_ERROR, 1);
+		errcln(1, MALLOC_ERROR);
 		return (1);
 	}
 	i = 0;

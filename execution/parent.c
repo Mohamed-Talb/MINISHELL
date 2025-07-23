@@ -22,7 +22,7 @@ int	parent(t_data *data)
 	while (data->cmds[i + 1])
 	{
 		if (pipe(end) == -1)
-			errors(data, "Pipe creation failed\n", 1);
+			errcln(1, "Pipe creation failed\n");
 		data->cmds[i]->outfd = end[1];
 		child(data, data->cmds[i]);
 		data->cmds[i + 1]->infd = end[0];
