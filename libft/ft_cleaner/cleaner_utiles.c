@@ -29,7 +29,8 @@ void ft_free(void *ptr)
     t_cleaner **head;
     t_cleaner *curr;
     t_cleaner *prev;
-
+    if (ptr == NULL)
+        return ;
     head = gethead();
     curr = *head;
     prev = NULL;

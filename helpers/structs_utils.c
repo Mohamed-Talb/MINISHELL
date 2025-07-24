@@ -20,11 +20,6 @@ t_data	*init_data(char **penv)
 	t_data *data;
 
 	data = ft_calloc(1, sizeof(t_data));
-	if (data == NULL)
-	{
-		errcln(1, MALLOC_ERROR);
-		return (NULL);
-	}
 	data->exported = ft_strdup2(penv);
 	other_env(data);
 	sync_envs(data);
@@ -37,11 +32,6 @@ int init_cmds(t_data *data)
 	int i;
 
 	data->cmds = ft_calloc((data->pipes_nb + 1), sizeof(t_cmds *));
-	if (data->cmds == NULL)
-	{
-		errcln(1, MALLOC_ERROR);
-		return (1);
-	}
 	i = 0;
 	while (i < data->pipes_nb)
 	{

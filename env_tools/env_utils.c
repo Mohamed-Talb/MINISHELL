@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:37:22 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/23 22:27:22 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:23:48 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	**envrm(char **env, char *var)
 	return (env);
 }
 
-char	**envup(char **env, char *var, int choise)
+char	**envup(char **env, char *var)
 {
 	int	i;
 
@@ -65,6 +65,5 @@ char	**envup(char **env, char *var, int choise)
 		}
 		i++;
 	}
-	if (choise == 1)
-		return (ft_append2(env, var, ft_strlen2(env)));
+	return (ft_append2(env, var, ft_strlen2(env)));
 }

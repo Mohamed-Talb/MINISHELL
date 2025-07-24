@@ -26,7 +26,7 @@ void run_builtin(t_data *data, t_cmds *command)
 	exit(exst);
 }
 
-void child_exec(t_data *data, t_cmds *command)
+void childexec(t_data *data, t_cmds *command)
 {
 	if (command->flags)
 	{
@@ -37,15 +37,21 @@ void child_exec(t_data *data, t_cmds *command)
 			check(data, command);
 			execve(command->cmd, command->flags, data->env);
 			if (errno == ENOENT)
-				errcln(127, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+			{
+				eputf("minishell: %s: %s\n", command->flags[0], strerror(errno));
+				errors(NULL, 127);
+			} 
 			else
-				errcln(126, "minishell: %s: %s\n", command->flags[0], strerror(errno));
+			{
+				eputf("minishell: %s: %s\n", command->flags[0], strerror(errno));
+				errors(NULL, 126);
+			}
 		}
 	}
 	else
 	{
 		// free_all_adresses(); should be added in the future after it's working correctly
-		exit(0); // dont worry about fds they were closed in duplication in a clean way
+		exit(0);
 	}
 }
 
@@ -61,7 +67,7 @@ int	child(t_data *data, t_cmds *command)
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		duplication(data, command);
-		child_exec(data, command);
+		childexec(data, command);
 	}
 	else if (pid > 0)
 	{
@@ -70,6 +76,9 @@ int	child(t_data *data, t_cmds *command)
 		close(command->outfd);
 	}
 	else
-		errcln(EXIT_FAILURE, "minishell: fork: %s\n", strerror(errno));
+	{
+		eputf("minishell: fork: %s\n", strerror(errno));
+		errors(NULL, EXIT_FAILURE);
+	}
 	return (pid);
 }

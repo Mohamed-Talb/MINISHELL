@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:34:56 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/19 10:34:57 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/24 16:10:32 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int	ft_pwd(int argc, char **argv, t_data *data)
 		eputf(GETCWD_ERR, strerror(errno));
 		return (1);
 	}
-	ft_printf("%s\n", result);
+	printf("%s\n", result);
 	return (0);
 }

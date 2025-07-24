@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:53:44 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/20 14:47:25 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/24 17:37:54 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ int	parent(t_data *data)
 	while (data->cmds[i + 1])
 	{
 		if (pipe(end) == -1)
-			errcln(1, "Pipe creation failed\n");
+		{
+			eputf("Pipe creation failed\n");
+			errors(NULL, 1);
+		}
 		data->cmds[i]->outfd = end[1];
 		child(data, data->cmds[i]);
 		data->cmds[i + 1]->infd = end[0];

@@ -75,6 +75,8 @@ int 	init_cmds(t_data *data);
 t_data	*init_data(char **penv);
 
 // UTILES
+
+void errors(char *error, int exitcode);
 t_list *creat_node(t_data *data);
 int		exitestatus(int status);
 void	print_cmds(t_data *data);
@@ -119,7 +121,7 @@ int getenvpos(char **env, char *var);
 char *dupexpand(t_data *data, char **line);
 int	openredfiles(t_data *data, t_list *node);
 int varname_size(char *var);
-char **envup(char **env, char *var, int choise);
+char **envup(char **env, char *var);
 char **envrm(char **env, char *var);
 char **adjust_shell_level(char **env, int change);
 void sync_envs(t_data *data);

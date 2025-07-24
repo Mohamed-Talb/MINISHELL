@@ -7,8 +7,8 @@ SHELL_SRC = \
 	heredoc/herdocs.c heredoc/herdocexpand.c heredoc/heredocdel.c\
 	env_tools/ft_getenv.c env_tools/syncenvs.c env_tools/env_utils.c \
 	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c \
-	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c\
-	builtin/echo.c builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c builtin/unset.c builtin/builtin_management.c builtin/builtin_utils.c builtin/cd.c \
+	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c helpers/print_utils.c\
+	builtin/echo.c builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c builtin/unset.c builtin/builtin_management.c  builtin/cd.c \
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 

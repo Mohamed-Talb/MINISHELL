@@ -23,7 +23,10 @@ void getfilename(t_data *data, t_list *node)
     
     tokens = parsing_illusion(data, ft_strdup(node->content));
     if (ft_lstsize(tokens) != 1)
-        errcln(1, AMBIGOUS_RED, node->content);
+    {
+        eputf(AMBIGOUS_RED, node->content);
+        errors(NULL, 1);
+    }
     node->content = ft_strdup(tokens->content);
     ft_lstclear(&tokens);
 }
@@ -31,7 +34,6 @@ void getfilename(t_data *data, t_list *node)
 int openredfiles(t_data *data, t_list *node)
 {
 	int fd;
-    char *error;
 
     if (node->type != LEFT_HER)
         getfilename(data , node);
@@ -43,8 +45,8 @@ int openredfiles(t_data *data, t_list *node)
 	    fd = open(node->content, O_RDONLY);
 	if (fd == -1)
     {
-        error = mprintf("minishell: %s: %s\n", node->content, strerror(errno));
-		errcln(1, error);
+        eputf("minishell: %s: %s\n", node->content, strerror(errno));
+		errors(NULL, 1);
     }
     return (fd);
 }
