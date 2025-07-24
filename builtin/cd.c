@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 09:38:18 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/24 17:16:42 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/24 18:17:05 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	upoldpwd(t_data *data)
 	new = ft_getenv(data->exported, "PWD");
 	if (new == NULL)
 	{
-		envup(data->exported, "OLDPWD");
+		data->exported = envup(data->exported, "OLDPWD");
 	}
 	else
 	{
@@ -37,9 +37,9 @@ static int	uppwd(t_data *data)
 	char	*buff;
 	char	*new;
 
-	buff = getcwd(NULL, 0);
-	if (ft_getenv(data->env, "PDW"))
+	if (!ft_getenv(data->env, "PWD"))
 		return (0);
+	buff = getcwd(NULL, 0);
 	if (buff == NULL)
 	{
 		perror("minshell: cd");
@@ -78,7 +78,6 @@ static int	changedir(t_data *data, char *path)
 	{
 		if (path == NULL)
 			path = homepath;
-		eputf("minishell: cd: %s: %s\n", path, strerror(errno));
 		return (1);
 	}
 	return (0);
