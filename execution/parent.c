@@ -15,10 +15,11 @@
 int	parent(t_data *data)
 {
 	int	end[2];
-	int	i = 0;
+	int	i;
 	int pid;
 	int status;
 
+	i = 0;
 	while (data->cmds[i + 1])
 	{
 		if (pipe(end) == -1)

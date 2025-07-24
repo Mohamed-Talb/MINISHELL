@@ -9,7 +9,6 @@
 /*   Updated: 2025/07/19 10:35:00 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../minishell.h"
 
 int	ft_unset(int argc, char **argv, t_data *data)

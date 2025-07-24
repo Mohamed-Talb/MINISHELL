@@ -52,7 +52,7 @@ char *regular_expand(t_data *data, char **line)
 	env_var = ft_strdup("");
 	while (ft_isalnum(*s) || *s == '_')
 		env_var = fappend(env_var, *s++);
-	token = ft_strjoin_es(token, ft_getenv(data->exported, env_var), 0);
+	token = ft_strjoin_es(token, ft_getenv(data->exported, env_var), 1);
 	*line = s;
 	return (token);
 }
@@ -68,7 +68,7 @@ int expand(t_data *data, char **line)  ///??????????????????????????????????????
 	chunk1 = ft_substr(data->line, 0, old_pos);
 	exvalue = regular_expand(data, line);
 	chunk2 = ft_substr(*line, 0, ft_strlen(*line));
-	free(data->line);
+	ft_free(data->line);
 	data->line = mprintf("%f%f%f", chunk1, exvalue, chunk2);
 	*line = data->line + old_pos;
 	data->expand_rage = *line + ft_strlen(exvalue);

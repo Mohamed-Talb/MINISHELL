@@ -19,7 +19,7 @@ void single_q(t_data *data, t_list *token, char **line)
 	s = *line + 1;
 	while (*s != '\0' && *s != '\'')
 	{
-		token->content = ft_append(token->content, *s, -1);
+		token->content = fappend(token->content, *s);
 		s++;
 	}
 	if (*s == '\'')
@@ -41,7 +41,7 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 			expand(data, &s);
 		else
 		{
-			token->content = ft_append(token->content, *s, -1);
+			token->content = fappend(token->content, *s);
 			s++;
 		}
 	}

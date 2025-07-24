@@ -49,8 +49,8 @@ void fill_herdoc(t_data *data, t_list *node, int fd)
             ft_free(line);
             break;
         }
-        if (ft_strchr(node->content, '\'') || ft_strchr(node->content, '"')) // should be fixed i forgot its fix lol
-            line = getexline(data, line);
+        if (!ft_strchr(node->content, '\'') && !ft_strchr(node->content, '"')) // should be fixed i forgot its fix lol
+            line = get_expanded_line(data, line);
         ft_putendl_fd(line, fd); // better remove these, dont print char by char to avoid print mix
         ft_free(line);
     }

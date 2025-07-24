@@ -35,7 +35,7 @@ int	ft_exit(int argc, char **argv, t_data *data)
 {
 	int	result;
 
-	((void)data, ft_putstr("exit\n"));
+	(void) data;
 	if (argc == 1)
 		return (data->exit_code);
 	result = exit_checker(ft_atoi_l(argv[1]), atoi_sign(argv[1]), argv[1]);

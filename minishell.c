@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	prompter(t_data *data)

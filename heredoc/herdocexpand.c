@@ -6,7 +6,7 @@ static char  *check_cases(t_data *data, char **line)
     char *exvalue = ft_strdup("");
 
 	if (*s == '\0' || ft_iswhitespace(*s) || *s == '\'' || *s == '"')
-		exvalue = ft_append(exvalue, '$', -1);
+		exvalue = fappend(exvalue, '$');
 	else if (*s == '?')
 	{
 		char *status = ft_itoa(data->exit_code);
@@ -39,12 +39,12 @@ static char *expandline(t_data *data, char **line)
 	env_var = ft_strdup("");
 	while (ft_isalnum(*s) || *s == '_')
 	{
-		env_var = ft_append(env_var, *s, -1);
+		env_var = fappend(env_var, *s);
 		s++;
 	}
 	if (env_var[0] == 0)
 	{
-		exvalue = ft_append(exvalue, '$', -1);
+		exvalue = fappend(exvalue, '$');
 		return exvalue;
 	}
 	result = ft_getenv(data->exported, env_var);
@@ -53,7 +53,7 @@ static char *expandline(t_data *data, char **line)
 	return exvalue;
 }
 
-char *getexline(t_data *data, char *line)
+char *get_expanded_line(t_data *data, char *line)
 {
     char *newline;
     char *exvalue;
@@ -63,14 +63,14 @@ char *getexline(t_data *data, char *line)
 		newline = ft_strdup("");
         while (*line)
         {
-            if(*line == '$')
+            if (*line == '$')
             {
 				exvalue = expandline(data, &line);
 			    newline = ft_strjoin_es(newline, exvalue, 0);
             }
             else
             {
-                newline = ft_append(newline, *line, -1);
+                newline = fappend(newline, *line);
                 line++;
             }
         }

@@ -129,6 +129,6 @@ char *ft_getenv(char **env, char *var);
 
 // HERDOC
 char 	*getdelemiter(t_data *data, char *s);
-char	*getexline(t_data *data, char *line);
 int		openallherdocs(t_data *data);
+char	*get_expanded_line(t_data *data, char *line);
 #endif
