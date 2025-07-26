@@ -2,9 +2,11 @@
 
 static char  *check_cases(t_data *data, char **line)
 {
-    char *s = *line + 1;
-    char *exvalue = ft_strdup("");
+	char *s;
+	char *exvalue;
 
+	s = *line + 1;
+	exvalue = ft_strdup("");
 	if (*s == '\0' || ft_iswhitespace(*s) || *s == '\'' || *s == '"')
 		exvalue = fappend(exvalue, '$');
 	else if (*s == '?')
@@ -16,9 +18,9 @@ static char  *check_cases(t_data *data, char **line)
 	else if (*s == '$')
 	{
 		exvalue = ft_strjoin_fc(exvalue, "$$", 1);
-	    s++;
+		s++;
 	}
-    *line = s;
+	*line = s;
 	return (exvalue);
 }
 

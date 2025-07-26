@@ -20,16 +20,6 @@ char *randomnbr()
     return (str);
 }
 
-char *getname()
-{
-    char *randomname;
-    char *rnbr;
-    
-    rnbr = randomnbr();
-    randomname = ft_strjoin("/tmp/herdoc_", rnbr);
-    return (randomname);
-}
-
 void fill_herdoc(t_data *data, t_list *node, int fd)
 {
     char *line;
@@ -65,7 +55,7 @@ int  heredoc(t_data *data, t_list *node)
 
     signal_state(1);
     signal(SIGINT, SIG_IGN);
-    rname = getname();
+    rname = ft_strjoin("/tmp/herdoc_", randomnbr());
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
     id = fork();
     if (id == 0)
