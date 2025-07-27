@@ -12,8 +12,8 @@ t_list *parsing_illusion(t_data *data, char *line)
     clone->exit_code = clone->exit_code;
     parser(clone, line);
     cmd_list = clone->cmd_list;
-    free(clone->line);
-    free(clone);
+    ft_free(clone->line);
+    ft_free(clone);
     return (cmd_list);
 }
 

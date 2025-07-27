@@ -33,7 +33,7 @@ static char  *check_cases(t_data *data, char **line)
 	else if (ft_isdigit(*s))
 		s++;
 	else if (*s != '\'' && *s != '"')
-		return (free(exvalue), NULL);
+		return (ft_free(exvalue), NULL);
     *line = s;
 	return (exvalue);
 }

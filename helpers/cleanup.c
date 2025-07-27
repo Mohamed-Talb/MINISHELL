@@ -9,11 +9,11 @@ void trach(t_data *data)
 		i = 0;
 		while (data->cmds[i])
 		{
-			free(data->cmds[i]->cmd);
-			free(data->cmds[i]);
+			ft_free(data->cmds[i]->cmd);
+			ft_free(data->cmds[i]);
 			i++;
 		}
-		free(data->cmds);
+		ft_free(data->cmds);
 		data->cmds = NULL;
 	}
 	if (data->cmd_list != NULL)
@@ -23,7 +23,7 @@ void trach(t_data *data)
 	}
 	if (data->line != NULL)
 	{
-		free(data->line);
+		ft_free(data->line);
 		data->line = NULL;
 	}
 }
@@ -41,7 +41,7 @@ void free_data(t_data *data)
 	if (data != NULL)
 	{
 		reset_data(data);
-		free(data);
+		ft_free(data);
 		data = NULL;
 	}
 }

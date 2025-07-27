@@ -6,22 +6,22 @@ t_cleaner **gethead()
     return &head;
 }
 
-void free_all_adresses() // temporarily commented because of double free
+void free_all_adresses()
 {
-    // t_cleaner **head;
-    // t_cleaner *curr;
-    // t_cleaner *tmp;
+    t_cleaner **head;
+    t_cleaner *curr;
+    t_cleaner *tmp;
 
-    // head = gethead();
-    // curr = *head;
-    // while(curr)
-    // {
-    //     tmp = curr;
-    //     curr = curr->next;
-    //     free(tmp->adress);
-    //     free(tmp);
-    // }
-    // *head = NULL;
+    head = gethead();
+    curr = *head;
+    while(curr)
+    {
+        tmp = curr;
+        curr = curr->next;
+        free(tmp->adress);
+        free(tmp);
+    }
+    *head = NULL;
 }
 
 void ft_free(void *ptr)
@@ -47,4 +47,3 @@ void ft_free(void *ptr)
     prev = curr;
     curr = curr->next;
 }
-
