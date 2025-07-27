@@ -51,7 +51,7 @@ char *regular_expand(t_data *data, char **line)
 	env_var = ft_strdup("");
 	while (ft_isalnum(*s) || *s == '_')
 		env_var = fappend(env_var, *s++);
-	token = ft_getenv(data->exported, env_var);
+	token = ft_strjoin_es(token, ft_getenv(data->exported, env_var), 2);
 	*line = s;
 	return (token);
 }

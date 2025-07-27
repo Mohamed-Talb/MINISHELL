@@ -48,7 +48,7 @@ static int	uppwd(t_data *data)
 	else
 		new = ft_strjoin("PWD=", buff);
 	data->exported = envup(data->exported, new);
-	ft_free(buff);
+	ft_free(buff); // shouldnt really use ft_free here, but i guess it will still work which is phenomenal!
 	ft_free(new);
 	if (!data->exported)
 		return (1);

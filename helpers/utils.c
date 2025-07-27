@@ -69,10 +69,15 @@ void print_cmds(t_data *data)
 	printf("\n");
 }
 
-
-
 void set_errors(t_data *data, char *error, int exitcode)
 {
 	ft_lstlast(data->cmd_list)->error = error;
 	data->exit_code = exitcode;
+}
+
+int isDirectory(char *path)
+{
+    struct stat sb;
+
+    return ((stat(path, &sb) == 0) && S_ISDIR(sb.st_mode));
 }

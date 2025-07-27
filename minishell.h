@@ -29,11 +29,13 @@ typedef struct s_list
 
 typedef struct s_cmds
 {
-	char *cmd;
-	char **flags;
 	int infd;
 	int outfd;
+	int found;
+	int permission;
 	t_list *allred;
+	char **flags;
+	char *cmd;
 } t_cmds;
 
 typedef struct s_data
@@ -79,6 +81,7 @@ void errors(char *error, int exitcode);
 t_list *creat_node(t_data *data);
 int		exitestatus(int status);
 void	print_cmds(t_data *data);
+int		isDirectory(char *path);
 char	*unexpected_redirect(char **line, char token[10]);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(int exitcode, char *error, ...);
