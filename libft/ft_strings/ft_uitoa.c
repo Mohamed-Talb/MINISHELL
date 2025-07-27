@@ -26,7 +26,7 @@ char	*ft_uitoa(unsigned int n)
 	len = numberlen(nb);
 	res = ft_malloc(len * sizeof(char) + 1);
 	if (!res)
-		return (0);
+		return (NULL);
 	res[len] = 0;
 	len--;
 	if (!nb)

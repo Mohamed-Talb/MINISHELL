@@ -12,19 +12,15 @@
 
 #include "../minishell.h"
 
-static int parsing_errors(t_data *data, t_list *list)
+static int parsing_errors(t_list *list)
 {
 	if (!list)
-	{
-		reset_data(data);
 		return (1);
-	}
 	while (list)
 	{
 		if (list->error)
 		{
 			ft_putstr_fd(list->error, 2);
-			reset_data(data);
 			return (1);
 		}
 		list = list->next;
@@ -66,7 +62,7 @@ t_list *handle_arg(t_data *data, char **line)
 	while (*s != '\0' && ft_iswhitespace(*s) == false)
 	{
 		if (*s == '$' && s >= data->expand_rage)
-			expand(data, &s);
+			data->line = expand(data, data->line, &s);
 		else if (*s == '|' && s >= data->expand_rage)
 			token = hpipe(data, token, &s);
 		else
@@ -103,5 +99,5 @@ int parser(t_data *data, char *line)
 		else
 			line++;
 	}
-	return (parsing_errors(data, data->cmd_list) || cmd_count == 0);
+	return (parsing_errors(data->cmd_list) || cmd_count == 0);
 }

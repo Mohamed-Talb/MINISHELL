@@ -36,6 +36,7 @@
 
 // HEREDOC
 #define HEREDOC_EOF "warning: here-document delimited by end-of-file (wanted `%s')\n"
+#define HEREDOC_PROMPT ">>> "  // maybe change this to ">"
 
 // PROMPT
 #define PROMPT_DEFAULT "\001\e[1;96m\002\001⟦\002\x7f minishell \001⟧\002\x7f \001\e[0m\002\001\e[1;92m\002>>\001\e[0m\002 "

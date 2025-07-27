@@ -3,8 +3,8 @@ SHELL_SRC = \
 	minishell.c \
 	grammere/grammer.c \
 	duplication/duplication.c\
+	heredoc/heredocs.c heredoc/heredocdel.c\
 	execution/child.c execution/check.c execution/parent.c \
-	heredoc/herdocs.c heredoc/herdocexpand.c heredoc/heredocdel.c\
 	env_tools/ft_getenv.c env_tools/syncenvs.c env_tools/env_utils.c \
 	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c \
 	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c helpers/print_utils.c\

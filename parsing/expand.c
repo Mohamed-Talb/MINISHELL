@@ -9,7 +9,6 @@
 /*   Updated: 2025/07/20 14:39:36 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../minishell.h"
 
 static char  *check_cases(t_data *data, char **line)
@@ -57,20 +56,22 @@ char *regular_expand(t_data *data, char **line)
 	return (token);
 }
 
-int expand(t_data *data, char **line)  ///??????????????????????????????????????????????????
+char *expand(t_data *data, char *start, char **line)  ///??????????????????????????????????????????????????
 {
 	int old_pos;
 	char *chunk1;
 	char *exvalue;
 	char *chunk2;
+	int len;
 
-	old_pos = *line - data->line;
-	chunk1 = ft_substr(data->line, 0, old_pos);
+	old_pos = *line - start;
+	chunk1 = ft_substr(start, 0, old_pos);
 	exvalue = regular_expand(data, line);
 	chunk2 = ft_substr(*line, 0, ft_strlen(*line));
-	ft_free(data->line);
-	data->line = mprintf("%f%f%f", chunk1, exvalue, chunk2);
-	*line = data->line + old_pos;
-	data->expand_rage = *line + ft_strlen(exvalue);
-	return (0);
+	len = ft_strlen(exvalue);
+	ft_free(start);
+	start = mprintf("%f%f%f", chunk1, exvalue, chunk2);
+	*line = start + old_pos;
+	data->expand_rage = *line + len;
+	return (start);
 }

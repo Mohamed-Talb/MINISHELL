@@ -1,28 +1,6 @@
 #include "../minishell.h"
 
-char *geth_enclosed_text(char *token, char **line)
-{
-	char target;
-	char *s;
-
-	s = *line;
-	target = *s++;
-	while (true)
-	{
-		if (*s == '\0')
-			return (NULL);
-		if (*s == target)
-		{
-			s++;
-			break;
-		}
-		token = fappend(token, *s++);
-	}
-	*line = s;
-	return (token);
-}
-
-static char *expanddelemiter(char *token, char **line)
+static char *expand_delemiter(char *token, char **line)
 {
 	char *s;
 
@@ -40,18 +18,17 @@ static char *expanddelemiter(char *token, char **line)
 	return (token);
 }
 
-char *getdelemiter(t_data *data, char *s)
+char *getdelemiter(char *s)
 {
     char *ret;
 
-    (void) data;
     ret = ft_strdup("");
     while (*s != '\0' && ft_iswhitespace(*s) == false)
     {
         if (*s == '\'' || *s == '"')
             ret = geth_enclosed_text(ret, &s);
         else if (*s == '$')
-            ret = expanddelemiter(ret, &s);
+            ret = expand_delemiter(ret, &s);
         else
             ret = fappend(ret, *s++);
     }

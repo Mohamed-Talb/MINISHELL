@@ -85,19 +85,19 @@ int eputf(char *s, ...)
 // 	return (len);
 // }
 
-// void errcln(int exitcode, char *error, ...)
-// {
-// 	char *result;
+void errcln(int exitcode, char *error, ...)
+{
+	char *result;
 	
-// 	if (error)
-// 	{
-// 		va_list	args;
-// 		va_start(args, error);
-// 		result = margs_printf(error, args);
-// 		ft_putstr_fd(result, 2);
-// 		va_end(args);
-// 		ft_free(result);
-// 	}
-// 	// free_all_adresses(); causes double free now, but necessary later
-// 	exit(exitcode);
-// }
+	if (error)
+	{
+		va_list	args;
+		va_start(args, error);
+		result = margs_printf(error, args);
+		ft_putstr_fd(result, 2);
+		va_end(args);
+		ft_free(result);
+	}
+	free_all_adresses();
+	exit(exitcode);
+}

@@ -25,6 +25,7 @@ void minishell(t_data *data)
     {
         signals();
         signal_state(0);
+        reset_data(data);
         prompter(data);
         if (data->line == NULL)
             break;
@@ -41,7 +42,6 @@ void minishell(t_data *data)
         {
             parent(data);
         }
-        reset_data(data);
     }
 }
 

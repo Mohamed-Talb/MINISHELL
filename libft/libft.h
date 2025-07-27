@@ -40,20 +40,23 @@ typedef struct flags {
 }	t_flag;
 
 // FT_STRINGS:
-
+char	*ft_itoa(int n);
 void	ft_putchar(char c);
 void	ft_putstr(char *s);
-char	*ft_itoa(int n);
 int		atoi_sign(char *nptr);
 char	**ft_strdup2(char **str);
 char	*ft_uitoa(unsigned int n);
 char	*ft_strdup(const char *s);
 void 	ft_printdoule(char **str);
+int 	in_set(char *set, char c);
+int		posin_set(char *set, char c);
+char 	*ft_remove(char *str, int pos);
 char	*ft_strchr(const char *s, int c);
 unsigned long long	ft_atoi_l(char *nptr);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(char const *s, char c);
-char 	*ft_remove(char *str, int pos);
+int		hasfrom_set(char *str, char *set);
+int		respects_set(char *str, char *set);
 char 	**ft_remove2(char **str, int index);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);

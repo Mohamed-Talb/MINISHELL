@@ -29,6 +29,7 @@ static void	printerrors(t_cmds *cmd, int found, int perm)
 int isDirectory(t_cmds *command) 
 {
 	struct stat sb;
+
 	if (ft_strchr(command->cmd, '/'))
 	{
 		if (stat(command->flags[0], &sb) == 0 && S_ISDIR(sb.st_mode))
@@ -59,31 +60,6 @@ static int cmd_isvalid(char *path, int *found, int *permission)
 	}
 	return (0);
 }
-
-// static char	**getabspaths(t_data *data, t_cmds *command)
-// {
-// 	int i;
-// 	char **paths;
-// 	char *env_path;
-
-// 	i = 0;
-//     if (ft_strchr(command->cmd, '/'))
-//         return NULL;
-//     env_path = ft_getenv(data->exported, "PATH");
-//     if (!env_path || env_path[0] == 0)
-//     {
-//         command->cmd = ft_strjoin("./", command->cmd);
-//         return NULL;
-//     }
-// 	paths = ft_split(env_path, ':');
-// 	while (paths[i])
-// 	{
-// 		paths[i] = ft_strjoin_fc(paths[i], "/", 1);
-// 		paths[i] = ft_strjoin_fc(paths[i], command->cmd, 1);
-// 		i++;
-// 	}
-// 	return (paths);
-// }
 
 void find_cmd(t_data *data, t_cmds *command)
 {
@@ -121,58 +97,3 @@ void	check(t_data *data, t_cmds *command)
 		return ;
 	find_cmd(data, command);
 }
-
-
-
-
-
-
-
-
-
-// char **getpaths(t_data *data, char *cmd)
-// {
-//     char *env_path;
-//     char **paths;
-//     int i;
-
-//     env_path = ft_getenv(data->exported, "PATH");
-//     if (!env_path || env_path[0] == 0)
-//         return NULL;
-//     paths = ft_split(env_path, ':');
-//     i = 0;
-//     while (paths[i])
-//     {
-//         char *tmp = mprintf("%s/%s", paths[i], cmd);
-//         ft_free(paths[i]);
-//         paths[i] = tmp;
-//         i++;
-//     }
-//     return paths;
-// }
-
-// void find_cmd(t_data *data, t_cmds *command)
-// {
-//     char **paths;
-//     int i;
-//     int found = false;
-//     int permission = false;
-
-//     paths = getpaths(data, command->cmd);
-//     if (!paths)
-//         return;
-//     i = 0;
-//     while (paths[i])
-//     {
-//         if (cmd_isvalid(paths[i], &found, &permission))
-//         {
-//             free(command->cmd);
-//             command->cmd = ft_strdup(paths[i]);
-//             ft_freedouble(paths);
-//             return;
-//         }
-//         i++;
-//     }
-//     ft_freedouble(paths);
-//     printerrors(command, found, permission);
-// }

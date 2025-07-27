@@ -43,43 +43,6 @@ char	*ft_strjoin_es(char *str, char *buff, int choice)
 	return (new);
 }
 
-int in_set(char *set, char c)
-{
-	while (*set)
-	{
-		if (*set == c)
-			return (1);
-		set++;
-	}
-	return (0);
-}
-
-int respects_set(char *str, char *set)
-{
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (in_set(set, str[i]) == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int posin_set(char *set, char c)
-{
-	int i = 0;
-	while (set[i] != '\0')
-	{
-		if (set[i] == c)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
 void printdoule(char **str)
 {
 	if(!str || !*str)

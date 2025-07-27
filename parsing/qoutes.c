@@ -12,6 +12,51 @@
 
 #include "../minishell.h"
 
+char *get_enclosed_text(char *token, char **line)
+{
+	char target;
+	char *s;
+
+	s = *line;
+	target = *s;
+	token = fappend(token, *s++);
+	while (true)
+	{
+		if (*s == '\0')
+			return (NULL);
+		if (*s == target)
+		{
+			token = fappend(token, *s++);
+			break;
+		}
+		token = fappend(token, *s++);
+	}
+	*line = s;
+	return (token);
+}
+
+char *geth_enclosed_text(char *token, char **line)
+{
+	char target;
+	char *s;
+
+	s = *line;
+	target = *s++;
+	while (true)
+	{
+		if (*s == '\0')
+			return (NULL);
+		if (*s == target)
+		{
+			s++;
+			break;
+		}
+		token = fappend(token, *s++);
+	}
+	*line = s;
+	return (token);
+}
+
 void single_q(t_data *data, t_list *token, char **line)
 {
 	char *s;
@@ -38,7 +83,7 @@ void double_q(t_data *data, t_list *token, char **line, int state)
 	while(*s != '"' && *s != 0)
 	{
 		if(*s == '$' && state == 1 && *(s + 1) != '"' && s >= data->expand_rage)
-			expand(data, &s);
+			data->line = expand(data, data->line, &s);
 		else
 		{
 			token->content = fappend(token->content, *s);

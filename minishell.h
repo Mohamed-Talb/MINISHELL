@@ -75,13 +75,10 @@ int 	init_cmds(t_data *data);
 t_data	*init_data(char **penv);
 
 // UTILES
-
 void errors(char *error, int exitcode);
 t_list *creat_node(t_data *data);
 int		exitestatus(int status);
 void	print_cmds(t_data *data);
-int 	in_set(char *set, char c);
-int		posin_set(char *set, char c);
 char	*unexpected_redirect(char **line, char token[10]);
 void 	set_errors(t_data *data, char *error, int exitcode);
 void	errcln(int exitcode, char *error, ...);
@@ -92,12 +89,14 @@ int		eputf(char *s, ...);
 
 // PARSING 
 int		parser(t_data *data, char *line);
-int		expand(t_data *data, char **line);
-t_list *handle_arg(t_data *data, char **line);
+char	*expand(t_data *data, char *start, char **line);
+t_list	*handle_arg(t_data *data, char **line);
 t_list	*hpipe(t_data *data, t_list *token, char **line);
 void	single_q(t_data *data, t_list *token, char **line);
-void redirection(t_data *data, t_list *token, char **line);
+void	redirection(t_data *data, t_list *token, char **line);
 void	double_q(t_data *data, t_list *token, char **line, int state);
+char	*get_enclosed_text(char *token, char **line);
+char	*geth_enclosed_text(char *token, char **line);
 
 // SIGNALS 
 void	signals();
@@ -128,7 +127,7 @@ void sync_envs(t_data *data);
 char *ft_getenv(char **env, char *var);
 
 // HERDOC
-char 	*getdelemiter(t_data *data, char *s);
+char	*getdelemiter(char *s);
 int		openallherdocs(t_data *data);
-char	*get_expanded_line(t_data *data, char *line);
+char	*get_expanded_line(t_data *data, char **line);
 #endif

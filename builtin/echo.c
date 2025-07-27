@@ -12,20 +12,6 @@
 
 #include "../minishell.h"
 
-static int	respects_set(char *str, char *set)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (in_set(set, str[i]) == 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	ft_echo(int argc, char **argv, t_data *data)
 {
 	int	rm_newline;

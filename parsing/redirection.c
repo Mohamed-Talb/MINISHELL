@@ -39,48 +39,23 @@ char *unexpected_redirect(char **line, char slot[10])
 	return (result);
 }
 
-int get_enclosed_text(t_list *token, char **line)
-{
-	char target;
-	char *s;
-
-	s = *line;
-	target = *s;
-	token->content = fappend(token->content, *s++);
-	while (true)
-	{
-		if (*s == '\0')
-			return (1);
-		if (*s == target)
-		{
-			token->content = fappend(token->content, *s++);
-			break;
-		}
-		token->content = fappend(token->content, *s++);
-	}
-	*line = s;
-	return (0);
-}
-
-int get_realtoken(t_list *token, char **line)
+char *get_realtoken(t_list *token, char **line)
 {
 	char *s;
-	int value;
 
-	value = 0;
 	s = *line;
 	while (*s != '\0' && ft_iswhitespace(*s) == false
-		&& value == 0 && !in_set("|><", *s))
+		&& token->content && !in_set("|><", *s))
 	{
 		if (*s == '\'')
-			value = get_enclosed_text(token, &s);
+			token->content = get_enclosed_text(token->content, &s);
 		else if (*s == '"')
-			value = get_enclosed_text(token, &s);
+			token->content = get_enclosed_text(token->content, &s);
 		else
 			token->content = fappend(token->content, *s++);
 	}
 	*line = s;
-	return (value);
+	return (token->content);
 }
 
 void redirect_helper(t_data *data, t_list *token, char **line)
@@ -96,7 +71,7 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 	result = unexpected_redirect(&s, slot);
 	if (result != NULL)
 		set_errors(data, result, 2);
-	if (get_realtoken(token, &s))
+	if (get_realtoken(token, &s) == NULL)
 		set_errors(data, UNCLOSED_ERROR, 2);
 	*line = s;
 }
