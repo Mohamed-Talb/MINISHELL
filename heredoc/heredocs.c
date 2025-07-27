@@ -44,7 +44,10 @@ void fill_herdoc(t_data *data, t_list *node, char *rname)
 
     fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
     if (fd < 0)
-        errcln(EXIT_FAILURE, "minishell: open: %s\n", strerror(errno));
+    {
+        eputf("minishell: open: %s\n", strerror(errno));
+        errors(NULL, EXIT_FAILURE);
+    }
     delemiter = getdelemiter(node->content);
     line = readline(HEREDOC_PROMPT);
     while (line != NULL && ft_strcmp(delemiter, line) != 0)
@@ -72,7 +75,10 @@ int  heredoc(t_data *data, t_list *node)
     signal_state(1);
     id = fork();
     if (id == -1)
-        errcln(EXIT_FAILURE, "minishell: fork: %s\n", strerror(errno));
+    {
+        eputf( "minishell: fork: %s\n", strerror(errno));
+        errors(NULL, EXIT_FAILURE);
+    }
     if (id == 0)
     {
         signals();

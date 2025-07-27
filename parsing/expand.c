@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/20 14:39:35 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/20 14:39:36 by mtaleb           ###   ########.fr       */
+/*   Created: 2025/07/27 19:59:48 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/27 20:13:30 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../minishell.h"
 
 static char  *check_cases(t_data *data, char **line)
@@ -50,13 +51,16 @@ char *regular_expand(t_data *data, char **line)
 	s = *line + 1;
 	env_var = ft_strdup("");
 	while (ft_isalnum(*s) || *s == '_')
-		env_var = fappend(env_var, *s++);
+	{
+		env_var = fappend(env_var, *s);
+		s++;	
+	}
 	token = ft_strjoin_es(token, ft_getenv(data->exported, env_var), 2);
 	*line = s;
 	return (token);
 }
 
-char *expand(t_data *data, char *start, char **line)  ///??????????????????????????????????????????????????
+char *expand(t_data *data, char *start, char **line)
 {
 	int old_pos;
 	char *chunk1;
@@ -70,8 +74,11 @@ char *expand(t_data *data, char *start, char **line)  ///???????????????????????
 	chunk2 = ft_substr(*line, 0, ft_strlen(*line));
 	len = ft_strlen(exvalue);
 	ft_free(start);
-	start = mprintf("%f%f%f", chunk1, exvalue, chunk2);
+	start = mprintf("%s%s%s", chunk1, exvalue, chunk2);
 	*line = start + old_pos;
 	data->expand_rage = *line + len;
+	ft_free(chunk1);
+	ft_free(chunk2);
+	ft_free(exvalue);
 	return (start);
 }
