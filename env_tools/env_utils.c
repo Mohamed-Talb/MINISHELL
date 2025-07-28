@@ -54,7 +54,7 @@ char	**envup(char **env, char *var)
 	if (!env || !var)
 		return (NULL);
 	i = 0;
-	env = ft_strdup2(env);
+	env = ft_strdup2(env); // to reconsider
 	while (env[i])
 	{
 		if (issame_var(env[i], var))

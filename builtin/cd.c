@@ -32,7 +32,7 @@ static int	upoldpwd(t_data *data)
 	return (0);
 }
 
-static int	uppwd(t_data *data)
+static int	uppwd(t_data *data, char *path)
 {
 	char	*buff;
 	char	*new;
@@ -45,6 +45,8 @@ static int	uppwd(t_data *data)
 		perror("minshell: cd");
 		return (1);
 	}
+	else if (ft_strcmp(path, "//") == 0)
+		new = ft_strdup("PWD=//");
 	else
 		new = ft_strjoin("PWD=", buff);
 	data->exported = envup(data->exported, new);
@@ -94,7 +96,7 @@ int	ft_cd(int argc, char **argv, t_data *data)
 		return (1);
 	if (upoldpwd(data))
 		return (1);
-	if (uppwd(data))
+	if (uppwd(data, argv[1]))
 		return (1);
 	sync_envs(data);
 	return (0);

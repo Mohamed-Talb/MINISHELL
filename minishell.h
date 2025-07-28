@@ -79,7 +79,7 @@ t_list				*creat_node(t_data *data);
 int					exitestatus(int status);
 void				print_cmds(t_data *data);
 int					isdirectory(char *path);
-char				*unexpected_redirect(char **line, char token[10]);
+char				*unexpected_redirect(char **line);
 void				set_errors(t_data *data, char *error, int exitcode);
 void				errcln(int exitcode, char *error, ...);
 int					ft_printf(char *s, ...);

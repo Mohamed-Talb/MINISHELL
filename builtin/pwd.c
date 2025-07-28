@@ -14,16 +14,19 @@
 
 int	ft_pwd(int argc, char **argv, t_data *data)
 {
-	char	cwd[999999];
 	char	*result;
 
 	((void)argc, (void)argv, (void)data);
-	result = getcwd(cwd, sizeof(cwd));
+	result = getcwd(NULL, 0);
 	if (result == NULL)
 	{
 		eputf(GETCWD_ERR, strerror(errno));
 		return (1);
 	}
-	printf("%s\n", result);
+	if (ft_strcmp(ft_getenv(data->exported, "PWD"), "//") == 0)
+		printf("//\n");
+	else
+		printf("%s\n", result);
+	ft_free(result);
 	return (0);
 }

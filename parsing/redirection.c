@@ -9,34 +9,28 @@
 /*   Updated: 2025/07/28 10:35:27 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../minishell.h"
 
-char	*unexpected_redirect(char **line, char slot[10])
+char	*unexpected_redirect(char **line)
 {
-	char	*result;
 	char	*s;
+	char	*err;
+	char	*result;
 
 	s = *line;
-	if (*s == '\0')
-		ft_strlcpy(slot, "newline", 10);
-	else if (in_set("<>", *s))
+	result = NULL;
+	if (in_set(REDIRECTION_SET, *s))
 	{
-		slot[0] = *s++;
-		if (in_set("<>", *s))
-			slot[1] = *s++;
-	}
-	else if (*s == '|')
-	{
-		slot[0] = *s++;
-		if (in_set("|", *s))
-			slot[1] = *s++;
+		result = fappend(result, *s++);
+		if (*s == **line)
+			result = fappend(result, *s++);
 	}
 	else
 		return (NULL);
-	result = mprintf(UNEXPECTED_TOKEN, slot);
+	err = mprintf(UNEXPECTED_TOKEN, result);
+	ft_free(result);
 	*line = s;
-	return (result);
+	return (err);
 }
 
 char	*get_realtoken(t_list *token, char **line)
@@ -60,15 +54,13 @@ char	*get_realtoken(t_list *token, char **line)
 
 void	redirect_helper(t_data *data, t_list *token, char **line)
 {
-	char	slot[10];
 	char	*result;
 	char	*s;
 
 	s = *line;
-	ft_bzero(slot, 10);
 	while (ft_iswhitespace(*s))
 		s++;
-	result = unexpected_redirect(&s, slot);
+	result = unexpected_redirect(&s);
 	if (result != NULL)
 		set_errors(data, result, 2);
 	if (get_realtoken(token, &s) == NULL)

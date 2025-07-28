@@ -70,7 +70,8 @@ int	child(t_data *data, t_cmds *command)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		duplication(data, command);
+		if (duplication(data, command) == -1)
+			errors(NULL, 1);
 		childexec(data, command);
 	}
 	else if (pid > 0)

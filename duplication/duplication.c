@@ -40,7 +40,7 @@ char	*get_dupname(t_data *data, char *line)
 	return (filename);
 }
 
-void	getfilename(t_data *data, t_list *node)
+int	getfilename(t_data *data, t_list *node)
 {
 	char	*filename;
 
@@ -48,17 +48,19 @@ void	getfilename(t_data *data, t_list *node)
 	if (filename == NULL)
 	{
 		eputf(AMBIGOUS_RED, node->content);
-		errors(NULL, 1);
+		ft_free(filename);
+		return (-1);
 	}
 	node->content = filename;
+	return (0);
 }
 
 int	openredfiles(t_data *data, t_list *node)
 {
 	int	fd;
 
-	if (node->type != LEFT_HER)
-		getfilename(data, node);
+	if (node->type != LEFT_HER && getfilename(data, node))
+		return (-1);
 	if (node->type == RIGHT_HER)
 		fd = open(node->content, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (node->type == RIGHT_RED)
@@ -68,12 +70,12 @@ int	openredfiles(t_data *data, t_list *node)
 	if (fd == -1)
 	{
 		eputf("minishell: %s: %s\n", node->content, strerror(errno));
-		errors(NULL, 1);
+		return (-1);
 	}
 	return (fd);
 }
 
-void	fds_manager(t_data *data, t_cmds *cmd)
+int	fds_manager(t_data *data, t_cmds *cmd)
 {
 	t_list	*curr;
 	int		fd;
@@ -82,6 +84,8 @@ void	fds_manager(t_data *data, t_cmds *cmd)
 	while (curr)
 	{
 		fd = openredfiles(data, curr);
+		if (fd < 0)
+			return (fd);
 		if (curr->type == LEFT_HER || curr->type == LEFT_RED)
 		{
 			close(cmd->infd);
@@ -94,11 +98,13 @@ void	fds_manager(t_data *data, t_cmds *cmd)
 		}
 		curr = curr->next;
 	}
+	return (0);
 }
 
 int	duplication(t_data *data, t_cmds *cmd)
 {
-	fds_manager(data, cmd);
+	if (fds_manager(data, cmd) < 0)
+		return (-1);
 	if (cmd->infd != -1)
 	{
 		dup2(cmd->infd, 0);
@@ -109,5 +115,5 @@ int	duplication(t_data *data, t_cmds *cmd)
 		dup2(cmd->outfd, 1);
 		close(cmd->outfd);
 	}
-	return (0);
+	return (1);
 }
