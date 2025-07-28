@@ -54,7 +54,7 @@ int	main(int ac, char **av, char **penv)
 	(void)av;
 	data = init_data(penv);
 	minishell(data);
-	ft_putstr_fd("exit\n", 1);
+	ft_putstr_fd("exit\n", 2);
 	rl_clear_history();
 	return (0);
 }

@@ -12,28 +12,22 @@
 
 #include "../minishell.h"
 
-static void	pipe_errors(t_data *data, char c, int check_prev)
+static void	pipe_errors(t_data *data, char *s, int check_prev)
 {
-	t_list	*prev;
 	char	*strerror;
-	int		i;
 
 	strerror = NULL;
-	if (check_prev)
+	if (check_prev && ft_lstprevlast(data->cmd_list) == NULL)
+		strerror = mprintf(UNEXPECTED_TOKEN, "|");
+	else if (*s == '|')
+		strerror = mprintf(UNEXPECTED_TOKEN, "||");
+	else
 	{
-		prev = ft_lstprevlast(data->cmd_list);
-		if (c == '|')
-			strerror = mprintf(UNEXPECTED_TOKEN, "||");
-		else if (data->line[0] == '|' || prev == NULL
-			|| !ft_strcmp(prev->content, "|"))
+		while (ft_iswhitespace(*s))
+			s++;
+		if (*s == '|')
 			strerror = mprintf(UNEXPECTED_TOKEN, "|");
-	}
-	if (!strerror)
-	{
-		i = ft_strlen(data->line) - 1;
-		while (ft_iswhitespace(data->line[i]))
-			i--;
-		if (data->line[i] == '|')
+		else if (*s == '\0')
 			strerror = mprintf(UNEXPECTED_TOKEN, "newline");
 	}
 	if (strerror)
@@ -59,7 +53,7 @@ t_list	*hpipe(t_data *data, t_list *token, char **line)
 		}
 		i--;
 	}
-	pipe_errors(data, *(s + 1), check_prev);
+	pipe_errors(data, s + 1, check_prev);
 	token->content = fappend(token->content, *s++);
 	token->type = PIPE;
 	token = NULL;

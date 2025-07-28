@@ -42,7 +42,7 @@ int	execute_builtin(t_data *data, t_cmds *command, char *cmdname)
 	else if (!ft_strcmp(cmdname, "exit"))
 	{
 		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
-		ft_putstr("exit\n");
+		eputf("exit\n");
 		if (exst == -1)
 			exst = 1;
 		else

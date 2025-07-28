@@ -38,9 +38,9 @@ static t_list	*regular_parse(t_data *data, t_list *token, char **line)
 	if (s >= data->expand_rage)
 	{
 		if (*s == '\'')
-			single_q(data, token, &s);
+			token->content = single_q(data, token->content, &s);
 		else if (*s == '"')
-			double_q(data, token, &s, 1);
+			token->content = double_q(data, token->content, &s);
 		else if (*s == '<' || *s == '>')
 			redirection(data, token, &s);
 		else

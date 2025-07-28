@@ -57,14 +57,14 @@ char	*geth_enclosed_text(char *token, char **line)
 	return (token);
 }
 
-void	single_q(t_data *data, t_list *token, char **line)
+char	*single_q(t_data *data, char *token, char **line)
 {
 	char	*s;
 
 	s = *line + 1;
 	while (*s != '\0' && *s != '\'')
 	{
-		token->content = fappend(token->content, *s);
+		token = fappend(token, *s);
 		s++;
 	}
 	if (*s == '\'')
@@ -72,9 +72,10 @@ void	single_q(t_data *data, t_list *token, char **line)
 	else
 		set_errors(data, UNCLOSED_ERROR, 2);
 	*line = s;
+	return (token);
 }
 
-void	double_q(t_data *data, t_list *token, char **line, int state)
+char	*double_q(t_data *data, char *token, char **line)
 {
 	char	*s;
 
@@ -82,12 +83,11 @@ void	double_q(t_data *data, t_list *token, char **line, int state)
 	s++;
 	while (*s != '"' && *s != 0)
 	{
-		if (*s == '$' && state == 1 && *(s + 1) != '"'
-			&& s >= data->expand_rage)
+		if (*s == '$' && *(s + 1) != '"' && s >= data->expand_rage)
 			data->line = expand(data, data->line, &s);
 		else
 		{
-			token->content = fappend(token->content, *s);
+			token = fappend(token, *s);
 			s++;
 		}
 	}
@@ -96,4 +96,5 @@ void	double_q(t_data *data, t_list *token, char **line, int state)
 	else
 		set_errors(data, UNCLOSED_ERROR, 2);
 	*line = s;
+	return (token);
 }

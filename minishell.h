@@ -92,10 +92,9 @@ int					parser(t_data *data, char *line);
 char				*expand(t_data *data, char *start, char **line);
 t_list				*handle_arg(t_data *data, char **line);
 t_list				*hpipe(t_data *data, t_list *token, char **line);
-void				single_q(t_data *data, t_list *token, char **line);
 void				redirection(t_data *data, t_list *token, char **line);
-void				double_q(t_data *data, t_list *token, char **line,
-						int state);
+char				*single_q(t_data *data, char *token, char **line);
+char				*double_q(t_data *data, char *token, char **line);
 char				*get_enclosed_text(char *token, char **line);
 char				*geth_enclosed_text(char *token, char **line);
 
