@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 20:54:23 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/02/15 18:30:20 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:46:50 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,37 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	ptr[p] = 0;
 	return (ptr);
+}
+
+char	*ft_strjoin_fc(char *str, char *buff, int choice)
+{
+	char	*new;
+
+	if (!str || !buff)
+		return (NULL);
+	new = ft_strjoin(str, buff);
+	if (choice == 1 || choice == 3)
+		ft_free(str);
+	if (choice == 2 || choice == 3)
+		ft_free(buff);
+	return (new);
+}
+
+char	*ft_strjoin_es(char *str, char *buff, int choice)
+{
+	char	*new;
+
+	if (!str && !buff)
+		new = ft_strjoin("", "");
+	else if (!str)
+		new = ft_strjoin("", buff);
+	else if (!buff)
+		new = ft_strjoin(str, "");
+	else
+		new = ft_strjoin(str, buff);
+	if (choice == 1 || choice == 3)
+		ft_free(str);
+	if (choice == 2 || choice == 3)
+		ft_free(buff);
+	return (new);
 }

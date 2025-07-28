@@ -16,8 +16,8 @@ int	parent(t_data *data)
 {
 	int	end[2];
 	int	i;
-	int pid;
-	int status;
+	int	pid;
+	int	status;
 
 	i = 0;
 	while (data->cmds[i + 1])

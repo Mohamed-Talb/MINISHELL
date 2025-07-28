@@ -12,20 +12,20 @@
 
 #include "../minishell.h"
 
-int isvalid_var(char *var)
+int	isvalid_var(char *var)
 {
-    int i;
+	int	i;
 
-    if (ft_isalpha(var[0]) == 0 && var[0] != '_')
-        return (false);
-    i = 1;
-    while (var[i] && var[i] != '=')
-    {
-        if (ft_isalnum(var[i]) == false && var[i] != '_')
-            return (false);
-        i++;
-    }
-    return (true);
+	if (ft_isalpha(var[0]) == 0 && var[0] != '_')
+		return (false);
+	i = 1;
+	while (var[i] && var[i] != '=')
+	{
+		if (ft_isalnum(var[i]) == false && var[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
 static char	*ascii_order(char **arr)

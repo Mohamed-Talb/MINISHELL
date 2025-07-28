@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "../libft.h"
 
-char *fappend(char *org, char c)
+char	*fappend(char *org, char c)
 {
 	char	*result;
 	size_t	size;

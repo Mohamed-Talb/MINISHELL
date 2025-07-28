@@ -39,9 +39,9 @@ int	ft_atoi(const char *nptr)
 	return (r * sign);
 }
 
-int atoi_sign(char *nptr)
+int	atoi_sign(char *nptr)
 {
-	int sign;
+	int	sign;
 
 	sign = 1;
 	while (ft_iswhitespace(*nptr))
@@ -65,9 +65,9 @@ int atoi_sign(char *nptr)
 	return (sign);
 }
 
-unsigned long long ft_atoi_l(char *nptr)
+unsigned long long	ft_atoi_l(char *nptr)
 {
-	unsigned long long result;
+	unsigned long long	result;
 
 	if (atoi_sign(nptr) == 0)
 		return (L_OVERFLOW + 1ULL);

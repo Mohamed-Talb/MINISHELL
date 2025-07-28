@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:37:22 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/24 18:16:16 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 08:49:30 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	**envup(char **env, char *var)
 	if (!env || !var)
 		return (NULL);
 	i = 0;
-	env = ft_strdup2(env); // this causes leaks, sometimes we need to update only one element
+	env = ft_strdup2(env);
 	while (env[i])
 	{
 		if (issame_var(env[i], var))

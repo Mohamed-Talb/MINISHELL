@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_set.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 10:43:42 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/28 10:47:06 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../libft.h"
 
-int in_set(char *set, char c)
+int	in_set(char *set, char c)
 {
 	while (*set)
 	{
@@ -11,9 +23,9 @@ int in_set(char *set, char c)
 	return (0);
 }
 
-int posin_set(char *set, char c)
+int	posin_set(char *set, char c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (set[i] != '\0')
@@ -25,23 +37,23 @@ int posin_set(char *set, char c)
 	return (-1);
 }
 
-int hasfrom_set(char *str, char *set)
+int	hasfrom_set(char *str, char *set)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (in_set(set, str[i]))
-            return (1);
-        i++;
-    }
-    return (0);
+	i = 0;
+	while (str[i])
+	{
+		if (in_set(set, str[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
-int respects_set(char *str, char *set)
+int	respects_set(char *str, char *set)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

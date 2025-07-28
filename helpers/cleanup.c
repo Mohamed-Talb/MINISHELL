@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleanup.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 09:16:39 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/28 09:28:41 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-void trach(t_data *data)
+void	trach(t_data *data)
 {
-	int 	i;
+	int	i;
 
 	if (data->cmds)
 	{
@@ -27,16 +39,17 @@ void trach(t_data *data)
 		data->line = NULL;
 	}
 }
-void reset_data(t_data *data)
+
+void	reset_data(t_data *data)
 {
 	if (data == NULL)
 		return ;
 	trach(data);
-	data->expand_rage = NULL; 
+	data->expand_rage = NULL;
 	data->pipes_nb = 1;
 }
 
-void free_data(t_data *data)
+void	free_data(t_data *data)
 {
 	if (data != NULL)
 	{

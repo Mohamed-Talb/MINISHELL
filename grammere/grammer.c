@@ -1,22 +1,35 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   grammer.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 09:05:17 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/28 09:05:18 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-int getredirections(t_data *data, t_list *list, int i)
+int	getredirections(t_data *data, t_list *list, int i)
 {
 	ft_lstback(&(data->cmds[i]->allred), list->content);
 	ft_lstlast(data->cmds[i]->allred)->type = list->type;
-	return 0;
+	return (0);
 }
 
-int getcommand(t_cmds *command, t_list *list)
+int	getcommand(t_cmds *command, t_list *list)
 {
-	char **tmp = NULL;
-	int len;
+	char	**tmp;
+	int		len;
 
+	tmp = NULL;
 	if (command->cmd == NULL)
 	{
 		command->flags = ft_calloc(2, sizeof(char *));
 		command->flags[0] = ft_strdup(list->content);
-		command->cmd = ft_strdup(list->content); 
+		command->cmd = ft_strdup(list->content);
 	}
 	else
 	{
@@ -29,15 +42,16 @@ int getcommand(t_cmds *command, t_list *list)
 	return (0);
 }
 
-void grammer(t_data *data)
+void	grammer(t_data *data)
 {
-	int i;
-	int type;
+	int		i;
+	int		type;
+	t_list	*list;
 
 	i = 0;
 	init_cmds(data);
-	t_list *list = (data->cmd_list);
-	while(list)
+	list = (data->cmd_list);
+	while (list)
 	{
 		type = list->type;
 		if (list->content == NULL)
@@ -47,7 +61,8 @@ void grammer(t_data *data)
 		}
 		if (type == PIPE)
 			i++;
-		else if (type == LEFT_HER || type == LEFT_RED || type == RIGHT_HER || type == RIGHT_RED)
+		else if (type == LEFT_HER || type == LEFT_RED || type == RIGHT_HER
+			|| type == RIGHT_RED)
 			getredirections(data, list, i);
 		else
 			getcommand(data->cmds[i], list);

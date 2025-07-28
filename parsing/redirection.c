@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:40:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/20 14:40:06 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:35:27 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char *unexpected_redirect(char **line, char slot[10])
+char	*unexpected_redirect(char **line, char slot[10])
 {
-	char *result;
-	char *s;
+	char	*result;
+	char	*s;
 
 	s = *line;
 	if (*s == '\0')
@@ -39,13 +39,13 @@ char *unexpected_redirect(char **line, char slot[10])
 	return (result);
 }
 
-char *get_realtoken(t_list *token, char **line)
+char	*get_realtoken(t_list *token, char **line)
 {
-	char *s;
+	char	*s;
 
 	s = *line;
-	while (*s != '\0' && ft_iswhitespace(*s) == false
-		&& token->content && !in_set("|><", *s))
+	while (*s != '\0' && ft_iswhitespace(*s) == false && token->content
+		&& !in_set("|><", *s))
 	{
 		if (*s == '\'')
 			token->content = get_enclosed_text(token->content, &s);
@@ -58,11 +58,11 @@ char *get_realtoken(t_list *token, char **line)
 	return (token->content);
 }
 
-void redirect_helper(t_data *data, t_list *token, char **line)
+void	redirect_helper(t_data *data, t_list *token, char **line)
 {
-	char slot[10];
-	char *result;
-	char *s;
+	char	slot[10];
+	char	*result;
+	char	*s;
 
 	s = *line;
 	ft_bzero(slot, 10);
@@ -76,28 +76,26 @@ void redirect_helper(t_data *data, t_list *token, char **line)
 	*line = s;
 }
 
-void redirection(t_data *data, t_list *token, char **line)
+void	redirection(t_data *data, t_list *token, char **line)
 {
-	char *s;
+	char	*s;
 
 	if (ft_strlen(token->content) != 0 || token->type != 0)
 		ft_lstback(&data->cmd_list, ft_strdup(""));
 	token = ft_lstlast(data->cmd_list);
 	s = *line;
-	if (*s == '>')
+	if (*s++ == '>')
 	{
 		token->type = RIGHT_RED;
-		s++;
 		if (*s == '>')
 		{
 			token->type = RIGHT_HER;
 			s++;
 		}
 	}
-	else if (*s == '<')
+	else if (*s++ == '<')
 	{
 		token->type = LEFT_RED;
-		s++;
 		if (*s == '<')
 		{
 			token->type = LEFT_HER;

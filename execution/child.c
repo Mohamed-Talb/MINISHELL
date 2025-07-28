@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/28 09:04:28 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/28 09:04:29 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
-void run_builtin(t_data *data, t_cmds *command)
+void	run_builtin(t_data *data, t_cmds *command)
 {
-	int exst;
+	int	exst;
 
 	exst = 0;
 	if (!ft_strcmp(command->flags[0], "echo"))
@@ -10,23 +22,23 @@ void run_builtin(t_data *data, t_cmds *command)
 	else if (!ft_strcmp(command->flags[0], "cd"))
 		exst = ft_cd(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "pwd"))
-        exst = ft_pwd(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_pwd(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "export"))
-        exst = ft_export(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_export(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "unset"))
-        exst = ft_unset(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_unset(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "env"))
-        exst = ft_env(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_env(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "exit"))
 	{
-        exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
+		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
 		if (exst == -1)
 			exst = 1;
 	}
 	exit(exst);
 }
 
-void childexec(t_data *data, t_cmds *command)
+void	childexec(t_data *data, t_cmds *command)
 {
 	if (command->flags)
 	{
@@ -36,23 +48,15 @@ void childexec(t_data *data, t_cmds *command)
 		{
 			check(data, command);
 			execve(command->cmd, command->flags, data->env);
+			eputf("minishell: %s: %s\n", command->flags[0], strerror(errno));
 			if (errno == ENOENT)
-			{
-				eputf("minishell: %s: %s\n", command->flags[0], strerror(errno));
 				errors(NULL, 127);
-			} 
 			else
-			{
-				eputf("minishell: %s: %s\n", command->flags[0], strerror(errno));
 				errors(NULL, 126);
-			}
 		}
 	}
 	else
-	{
-		// free_all_adresses(); should be added in the future after it's working correctly
-		exit(0);
-	}
+		errors(NULL, 0);
 }
 
 int	child(t_data *data, t_cmds *command)

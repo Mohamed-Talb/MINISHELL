@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 09:38:18 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/24 18:17:05 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 08:41:31 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	uppwd(t_data *data)
 	else
 		new = ft_strjoin("PWD=", buff);
 	data->exported = envup(data->exported, new);
-	ft_free(buff); // shouldnt really use ft_free here, but i guess it will still work which is phenomenal!
+	ft_free(buff);
 	ft_free(new);
 	if (!data->exported)
 		return (1);

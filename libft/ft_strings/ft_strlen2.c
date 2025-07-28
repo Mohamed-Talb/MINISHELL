@@ -18,7 +18,7 @@ int	ft_strlen2(char **ptr)
 
 	i = 0;
 	if (!ptr)
-		return 0;
+		return (0);
 	while (ptr[i])
 	{
 		i++;

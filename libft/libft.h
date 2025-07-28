@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:32:07 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/23 20:46:08 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:52:55 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,7 @@
 # include <limits.h>
 # include "ft_cleaner/cleaner.h"
 
-#define L_OVERFLOW 9223372036854775808ULL
-
-//  csuxXdip
-// 012345678
-typedef struct flags {
-	bool	zero;
-	bool	minus;
-	bool	plus;
-	bool	precision_exist;
-	bool	negative;
-	bool	space;
-	bool	hashtag;
-	int		specifier;
-	int		precision;
-	int		width;
-	int		write_dest;
-}	t_flag;
+#define L_OVERFLOW 9223372036854775808ULL  
 
 // FT_STRINGS:
 char	*ft_itoa(int n);
@@ -47,28 +31,27 @@ int		atoi_sign(char *nptr);
 char	**ft_strdup2(char **str);
 char	*ft_uitoa(unsigned int n);
 char	*ft_strdup(const char *s);
-void 	ft_printdoule(char **str);
-int 	in_set(char *set, char c);
+void	ft_printdoule(char **str);
+int		in_set(char *set, char c);
 int		posin_set(char *set, char c);
-char 	*ft_remove(char *str, int pos);
+char	*ft_remove(char *str, int pos);
 char	*ft_strchr(const char *s, int c);
 unsigned long long	ft_atoi_l(char *nptr);
 char	*ft_strrchr(const char *s, int c);
 char	**ft_split(char const *s, char c);
 int		hasfrom_set(char *str, char *set);
 int		respects_set(char *str, char *set);
-char 	**ft_remove2(char **str, int index);
+char	**ft_remove2(char **str, int index);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strjoin_es(char *str, char *buff, int choice);
+char	*ft_strjoin_fc(char *str, char *buff, int choice);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 
 // APPEND
-char	*append(char *org, char c);
 char	*fappend(char *org, char c);
-char	*pappend(char *org, char c, int position);
-char	*ft_append(char *org, char c, int position);
 char	**ft_append2(char **src, char *str, int pos);
 
 int		ft_tolower(int c);
@@ -87,13 +70,11 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 
-
 // FT_MEMORY MANIPULATION
 void	*ft_memset(void *s, int c, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *dest, const void *src, size_t n);
-
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 
 // FT_FD
@@ -111,7 +92,7 @@ int		ft_isprint(int c);
 int		ft_iswhitespace(char c);
 
 // OTHERS
-void *ft_malloc(size_t size);
+void	*ft_malloc(size_t size);
 
 //5- utils 
 void	ft_putchar(char c);

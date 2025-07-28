@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/20 14:45:21 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 10:34:37 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static int parsing_errors(t_list *list)
+static int	parsing_errors(t_list *list)
 {
 	if (!list)
 		return (1);
@@ -30,7 +30,7 @@ static int parsing_errors(t_list *list)
 
 static t_list	*regular_parse(t_data *data, t_list *token, char **line)
 {
-	char *s;
+	char	*s;
 
 	s = *line;
 	if (token == NULL)
@@ -52,10 +52,10 @@ static t_list	*regular_parse(t_data *data, t_list *token, char **line)
 	return (token);
 }
 
-t_list *handle_arg(t_data *data, char **line)
+t_list	*handle_arg(t_data *data, char **line)
 {
-	t_list *token;
-	char *s;
+	t_list	*token;
+	char	*s;
 
 	s = *line;
 	token = NULL;
@@ -72,11 +72,11 @@ t_list *handle_arg(t_data *data, char **line)
 	return (token);
 }
 
-int parser(t_data *data, char *line)
+int	parser(t_data *data, char *line)
 {
 	t_list	*new;
 	int		new_pipe;
-	int cmd_count;
+	int		cmd_count;
 
 	new_pipe = 1;
 	cmd_count = 0;

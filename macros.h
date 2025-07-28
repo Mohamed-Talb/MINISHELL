@@ -17,8 +17,9 @@
 
 // BUILTIN-DEFINES:
 
-// cd 
-#define GETCWD_ERR "minishell: error retrieving current directory: getcwd: cannot access parent directories: %s\n"
+// cd
+#define GETCWD_ERR "minishell: error retrieving current directory: getcwd: cannot access parent directories:
+% s\n "
 #define ARG_ERROR "minishell: cd: too many arguments\n"
 #define HOME_ERROR "minishell: cd: HOME not set\n"
 // exit:
@@ -36,13 +37,13 @@
 
 // HEREDOC
 #define HEREDOC_EOF "warning: here-document delimited by end-of-file (wanted `%s')\n"
-#define HEREDOC_PROMPT ">>> "  // maybe change this to ">"
+#define HEREDOC_PROMPT ">>> " // maybe change this to ">"
 
 // PROMPT
 #define PROMPT_DEFAULT "\001\e[1;96m\002\001⟦\002\x7f minishell \001⟧\002\x7f \001\e[0m\002\001\e[1;92m\002>>\001\e[0m\002 "
 #define PROMPT_PREFIX "\e[1;96m⟦ minishell ⟧\e[0m\e[38;5;246m "
 #define PROMPT_SUFFIX "\e[0m\e[1;91m >>\e[0m "
 
-// CHECK 
+// CHECK
 #define IS_DIR "minishell: %s: Is a directory\n"
 #define IS_NOT_DIR "minishell: %s: Is Not a directory\n"
