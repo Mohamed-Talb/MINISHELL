@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:48 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 10:24:36 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:45:47 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 static void	pipe_errors(t_data *data, char *s, int check_prev)
 {
 	char	*strerror;
+	t_list 	*prev;
 
 	strerror = NULL;
-	if (check_prev && ft_lstprevlast(data->cmd_list) == NULL)
+	prev = ft_lstprevlast(data->cmd_list);
+	if (check_prev && prev == NULL)
 		strerror = mprintf(UNEXPECTED_TOKEN, "|");
 	else if (*s == '|')
 		strerror = mprintf(UNEXPECTED_TOKEN, "||");

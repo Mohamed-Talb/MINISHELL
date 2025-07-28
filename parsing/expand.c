@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:59:48 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/27 20:30:52 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:43:20 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*getexvalue(t_data *data, char **line)
 		s++;
 	}
 	env_value = ft_getenv(data->exported, env_var);
-	token = ft_strjoin_es(token, env_value, 2);
+	token = ft_strjoin_es(token, env_value, 0);
 	*line = s;
 	return (token);
 }

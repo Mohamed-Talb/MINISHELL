@@ -30,12 +30,14 @@ void	minishell(t_data *data)
 		if (data->line == NULL)
 			break ;
 		if (parser(data, data->line))
-			continue ; // all continues should reset data
+			continue ; 
+		printf("h2\n");
 		grammer(data);
 		if (openallherdocs(data))
-			continue ;
+		continue ;
+		printf("h3\n");
 		if (data->pipes_nb == 1 && data->cmds[0]->flags
-			&& check_builtin(data->cmds[0]->flags[0]))
+		&& check_builtin(data->cmds[0]->flags[0]))
 		{
 			builtin(data, data->cmds[0]);
 		}
@@ -43,6 +45,7 @@ void	minishell(t_data *data)
 		{
 			parent(data);
 		}
+		printf("h4\n");
 	}
 }
 
