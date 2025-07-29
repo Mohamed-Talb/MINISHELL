@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:40:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/29 13:11:06 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/29 14:22:55 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ void	redirection(t_data *data, t_list *token, char **line)
 		ft_lstback(&data->cmd_list, ft_strdup(""));
 	token = ft_lstlast(data->cmd_list);
 	s = *line;
-	if (*s++ == '>')
+	if (*s == '>')
 	{
+		s++;
 		token->type = RIGHT_RED;
 		if (*s == '>')
 		{
@@ -86,11 +87,15 @@ void	redirection(t_data *data, t_list *token, char **line)
 			s++;
 		}
 	}
-	else if (*s++ == '<')
+	else if (*s == '<')
 	{
+		s++;
 		token->type = LEFT_RED;
-		if (*s++ == '<')
+		if (*s == '<')
+		{
 			token->type = LEFT_HER;
+			s++;
+		}
 	}
 	redirect_helper(data, token, &s);
 	*line = s;

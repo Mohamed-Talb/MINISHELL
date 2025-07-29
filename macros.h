@@ -27,11 +27,14 @@
 #define HEREDOC_PROMPT ">>> " // maybe change this to ">"
 
 // PROMPT
-#define PROMPT_DEFAULT "\001\e[1;96m\002[ minishell ]\001\e[0m\002 \001\e[1;92m\002>>\001\e[0m\002 "
-#define PROMPT_ERR "\001\e[1;96m\002[ minishell ]\001\e[0m\002 \001\e[38;5;246m\002%d\001\e[0m\002 \001\e[1;91m\002>>\001\e[0m\002 " // pretty sure escapes like \x7f are needed here too
+#define PROMPT_DEFAULT "minishell>>  " 
+
+// "\001\e[1;96m\002[ minishell ]\001\e[0m\002 \001\e[1;92m\002>>\001\e[0m\002 "
+#define PROMPT_ERR "minishell>>  " 
+// "\001\e[1;96m\002[ minishell ]\001\e[0m\002 \001\e[38;5;246m\002%d\001\e[0m\002 \001\e[1;91m\002>>\001\e[0m\002 " // pretty sure escapes like \x7f are needed here too
 
 // CHECK
-#define IS_DIR "minishell: %s: Is a directory\n"
+#define IS_DIR "%s: Is a directory\n"
 #define IS_NOT_DIR "minishell: %s: Is Not a directory\n"
 
 /* BUILTIN-DEFINES: */

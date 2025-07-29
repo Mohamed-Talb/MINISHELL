@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   duplication.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/07/28 11:38:34 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:03:11 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*get_dupname(t_data *data, char *line)
