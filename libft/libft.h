@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:32:07 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 10:52:55 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/29 12:05:49 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <limits.h>
 # include "ft_cleaner/cleaner.h"
 
-#define L_OVERFLOW 9223372036854775808ULL  
+#define L_OVERFLOW 9223372036854775808ULL 
 
 // FT_STRINGS:
 char	*ft_itoa(int n);

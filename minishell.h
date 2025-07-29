@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/29 11:54:30 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/29 13:11:24 by mtaleb           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -88,7 +100,7 @@ char				*mprintf(char *s, ...);
 int					eputf(char *s, ...);
 
 // PARSING
-int					parser(t_data *data, char *line);
+int					parser(t_data *data, char *line, int cmd_count);
 char				*expand(t_data *data, char *start, char **line);
 t_list				*handle_arg(t_data *data, char **line);
 t_list				*hpipe(t_data *data, t_list *token, char **line);
@@ -115,13 +127,10 @@ int					ft_exit(int argc, char **argv, t_data *data);
 // EXPORT UTILES
 int					issame_var(char *str1, char *str2);
 int					isvalid_var(char *var);
-int					getenvpos(char **env, char *var);
-char				*dupexpand(t_data *data, char **line);
 int					openredfiles(t_data *data, t_list *node);
 int					varname_size(char *var);
 char				**envup(char **env, char *var);
 char				**envrm(char **env, char *var);
-char				**adjust_shell_level(char **env, int change);
 void				sync_envs(t_data *data);
 char				*ft_getenv(char **env, char *var);
 
@@ -129,4 +138,6 @@ char				*ft_getenv(char **env, char *var);
 char				*getdelemiter(char *s);
 int					openallherdocs(t_data *data);
 char				*get_expanded_line(t_data *data, char **line);
+void				fill_herdoc(t_data *data, t_list *node, char *rname);
+
 #endif

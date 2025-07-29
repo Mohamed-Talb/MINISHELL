@@ -15,7 +15,7 @@
 static void	pipe_errors(t_data *data, char *s, int check_prev)
 {
 	char	*strerror;
-	t_list 	*prev;
+	t_list	*prev;
 
 	strerror = NULL;
 	prev = ft_lstprevlast(data->cmd_list);

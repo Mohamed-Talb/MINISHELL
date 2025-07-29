@@ -6,7 +6,7 @@ SHELL_SRC = \
 	heredoc/heredocs.c heredoc/heredocdel.c\
 	execution/child.c execution/check.c execution/parent.c \
 	env_tools/ft_getenv.c env_tools/syncenvs.c env_tools/env_utils.c \
-	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c \
+	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c heredoc/fillherdoc.c\
 	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c helpers/print_utils.c\
 	builtin/echo.c builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c builtin/unset.c builtin/builtin_management.c  builtin/cd.c \
 

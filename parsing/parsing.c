@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 14:40:27 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/29 13:15:50 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,12 @@ t_list	*handle_arg(t_data *data, char **line)
 	return (token);
 }
 
-int	parser(t_data *data, char *line)
+int	parser(t_data *data, char *line, int cmd_count)
 {
 	t_list	*new;
 	int		new_pipe;
-	int		cmd_count;
 
 	new_pipe = 1;
-	cmd_count = 0;
 	while (*line != '\0')
 	{
 		if (ft_iswhitespace(*line) == false)

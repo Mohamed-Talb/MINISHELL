@@ -36,7 +36,7 @@
 
 /* BUILTIN-DEFINES: */
 // cd
-#define GETCWD_ERR "minishell: error retrieving current directory: getcwd: cannot access parent directories: %s\n"
+#define GETCWD_ERR "minishell: error retrieving current directory: getcwd:cannot access parent directories: %s\n"
 #define ARG_ERROR "minishell: cd: too many arguments\n"
 #define HOME_ERROR "minishell: cd: HOME not set\n"
 // exit:

@@ -6,9 +6,10 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:40:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 10:35:27 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/29 13:11:06 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../minishell.h"
 
 char	*unexpected_redirect(char **line)
@@ -88,11 +89,8 @@ void	redirection(t_data *data, t_list *token, char **line)
 	else if (*s++ == '<')
 	{
 		token->type = LEFT_RED;
-		if (*s == '<')
-		{
+		if (*s++ == '<')
 			token->type = LEFT_HER;
-			s++;
-		}
 	}
 	redirect_helper(data, token, &s);
 	*line = s;
