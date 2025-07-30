@@ -21,7 +21,7 @@ char	*randomnbr(void)
 	if (fd < 0)
 		errcln(EXIT_FAILURE, "minishell: open: %s\n", strerror(errno));
 	read(fd, &buff, 4);
-	close(fd);
+	ft_close(fd);
 	return (ft_uitoa(buff));
 }
 

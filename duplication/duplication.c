@@ -63,7 +63,7 @@ int	openredfiles(t_data *data, t_list *node)
 	if (node->type != LEFT_HER && getfilename(data, node))
 		return (-1);
 	if (node->type == RIGHT_HER)
-		fd = open(node->content, O_RDWR | O_CREAT | O_APPEND, 0644);
+		fd = open(node->content, O_RDWR | O_CREAT | O_APPEND, 0644); // why open it as O_RDWR? only one opperation is needed
 	else if (node->type == RIGHT_RED)
 		fd = open(node->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else
@@ -89,13 +89,13 @@ int	fds_manager(t_data *data, t_cmds *cmd)
 			return (fd);
 		if (curr->type == LEFT_HER || curr->type == LEFT_RED)
 		{
-			close(cmd->infd);
-			cmd->infd = fd;
+			ft_close(cmd->inpipe[0]);
+			cmd->inpipe[0] = fd;
 		}
 		else if (curr->type == RIGHT_RED || curr->type == RIGHT_HER)
 		{
-			close(cmd->outfd);
-			cmd->outfd = fd;
+			ft_close(cmd->outpipe[1]);
+			cmd->outpipe[1] = fd;
 		}
 		curr = curr->next;
 	}
@@ -104,17 +104,19 @@ int	fds_manager(t_data *data, t_cmds *cmd)
 
 int	duplication(t_data *data, t_cmds *cmd)
 {
+	ft_close(cmd->inpipe[1]); // should already be closed but we will close it anyway
+	ft_close(cmd->outpipe[0]);
 	if (fds_manager(data, cmd) < 0)
 		return (-1);
-	if (cmd->infd != -1)
+	if (cmd->inpipe[0] != -1)
 	{
-		dup2(cmd->infd, 0);
-		close(cmd->infd);
+		dup2(cmd->inpipe[0], 0);
+		ft_close(cmd->inpipe[0]);
 	}
-	if (cmd->outfd != -1)
+	if (cmd->outpipe[1] != -1)
 	{
-		dup2(cmd->outfd, 1);
-		close(cmd->outfd);
+		dup2(cmd->outpipe[1], 1);
+		ft_close(cmd->outpipe[1]);
 	}
 	return (1);
 }

@@ -32,8 +32,10 @@ int	init_cmds(t_data *data)
 	while (i < data->pipes_nb)
 	{
 		data->cmds[i] = ft_calloc(1, sizeof(t_cmds));
-		data->cmds[i]->infd = -1;
-		data->cmds[i]->outfd = -1;
+		data->cmds[i]->inpipe[0] = -1;
+		data->cmds[i]->inpipe[1] = -1;
+		data->cmds[i]->outpipe[0] = -1;
+		data->cmds[i]->outpipe[1] = -1;
 		i++;
 	}
 	data->cmds[i] = NULL;

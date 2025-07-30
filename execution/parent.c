@@ -27,15 +27,14 @@ int	parent(t_data *data)
 			eputf("Pipe creation failed\n");
 			errors(NULL, 1);
 		}
-		data->cmds[i]->outfd = end[1];
+		ft_memcpy(data->cmds[i]->outpipe, end, 2 * sizeof(int));
 		child(data, data->cmds[i]);
-		data->cmds[i + 1]->infd = end[0];
+		ft_memcpy(data->cmds[i + 1]->inpipe, end, 2 * sizeof(int));
 		i++;
 	}
 	pid = child(data, data->cmds[i]);
 	waitpid(pid, &status, 0);
-	while (wait(NULL) > 0)
-		;
+	while (wait(NULL) > 0);
 	data->exit_code = exitestatus(status);
 	return (data->exit_code);
 }

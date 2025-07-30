@@ -40,8 +40,8 @@ typedef struct s_list
 
 typedef struct s_cmds
 {
-	int				infd;
-	int				outfd;
+	int				inpipe[2];
+	int				outpipe[2];
 	int				found;
 	int				permission;
 	t_list			*allred;

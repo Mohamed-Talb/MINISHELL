@@ -23,18 +23,3 @@ void	ft_putendl_fd(char *s, int fd)
 	}
 	write(fd, "\n", 2);
 }
-// #include <fcntl.h>
-// #include <sys/stat.h>
-
-// int main()
-// {
-
-//     int fd = open("dscp.txt", O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-//     if (fd == -1)
-// 	{
-//         return (1);
-//     }
-//     printf("The file descriptor is: %d\n", fd);
-//     ft_putendl_fd("hello I am in that file", fd);
-//     return (0);
-// }

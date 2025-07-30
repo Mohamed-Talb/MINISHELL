@@ -59,7 +59,7 @@ void	childexec(t_data *data, t_cmds *command)
 		errors(NULL, 0);
 }
 
-int	child(t_data *data, t_cmds *command)
+int	child(t_data *data, t_cmds *cmd)
 {
 	int	pid;
 
@@ -70,19 +70,19 @@ int	child(t_data *data, t_cmds *command)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (duplication(data, command) == -1)
+		if (duplication(data, cmd) == -1)
 			errors(NULL, 1);
-		childexec(data, command);
+		childexec(data, cmd);
 	}
 	else if (pid > 0)
 	{
 		signal_state(0);
-		close(command->infd);
-		close(command->outfd);
+		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
 	}
 	else
 	{
-		eputf("minishell: fork: %s\n", strerror(errno));
+		eputf("minishell: fork: %s\n", strerror(errno)); // shouldnt we restore signal state to 0 here too?
+		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
 		errors(NULL, EXIT_FAILURE);
 	}
 	return (pid);

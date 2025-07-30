@@ -73,5 +73,5 @@ void	fill_herdoc(t_data *data, t_list *node, char *rname)
 	delemiter = getdelemiter(node->content);
 	handle_lines(data, node, fd, delemiter);
 	errors(NULL, 0);
-	close(fd);
+	ft_close(fd);
 }

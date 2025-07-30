@@ -17,7 +17,7 @@ SRC =	ft_fd/ft_putendl_fd.c \
 		ft_strings/ft_striteri.c ft_strings/ft_strmapi.c ft_strings/ft_strnstr.c \
 		ft_strings/ft_strjoin.c ft_strings/ft_strtrim.c ft_strings/ft_freedouble.c ft_strings/ft_set.c \
 		ft_strings/ft_atoi.c ft_strings/ft_strcmp.c ft_strings/ft_strncmp.c ft_strings/ft_remove.c \
-		ft_strings/ft_remove2.c ft_strings/ft_printdouble.c ft_strings/ft_uitoa.c ft_others/ft_malloc.c ft_cleaner/cleaner_utiles.c
+		ft_strings/ft_remove2.c ft_strings/ft_printdouble.c ft_strings/ft_uitoa.c ft_others/ft_malloc.c ft_others/ft_close.c ft_cleaner/cleaner_utiles.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
