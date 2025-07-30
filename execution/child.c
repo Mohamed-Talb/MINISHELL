@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:04:28 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 10:56:10 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:58:38 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ int	child(t_data *data, t_cmds *cmd)
 		signal(SIGQUIT, SIG_DFL);
 		if (duplication(data, cmd) == -1)
 			errors(NULL, 1);
-		if (ft_strcmp("ls", cmd->cmd) == 0)
-		{
-			print_open_fds();
-		}
+		// if (ft_strcmp("ls", cmd->cmd) == 0)
+		// {
+		// 	print_open_fds();
+		// }
 		childexec(data, cmd);
 	}
 	else if (pid > 0)

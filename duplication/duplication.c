@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/07/31 10:57:21 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:58:27 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	duplication(t_data *data, t_cmds *cmd)
 	}
 	if (cmd->outpipe[1] != -1)
 	{
-		eputf("out: %d\n", cmd->outpipe[1]);
+		eputf("cmd: %s, out: %d\n", (char *) cmd->cmd, cmd->outpipe[1]);
 		dup2(cmd->outpipe[1], 1);
 		ft_close(cmd->outpipe[1]);
 	}
