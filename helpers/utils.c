@@ -38,6 +38,6 @@ int	isdirectory(char *path)
 void	errors(char *error, int exitcode)
 {
 	ft_putstr_fd(error, 2);
-	free_all_adresses();
+	// free_all_adresses();
 	exit(exitcode);
 }

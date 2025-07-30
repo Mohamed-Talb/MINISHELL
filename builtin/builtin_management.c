@@ -46,7 +46,7 @@ int	execute_builtin(t_data *data, t_cmds *command, char *cmdname)
 		if (exst == -1)
 			exst = 1;
 		else
-			(free_data(data), exit(exst));
+			(free_all_adresses(), exit(exst));
 	}
 	return (exst);
 }

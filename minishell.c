@@ -36,9 +36,11 @@ void	minishell(t_data *data)
 {
 	while (1)
 	{
+		eputf("1\n");
 		signals();
 		signal_state(0);
 		reset_data(data);
+		eputf("2\n");
 		prompter(data);
 		if (data->line == NULL)
 		{
@@ -49,7 +51,10 @@ void	minishell(t_data *data)
 			continue ; 
 		grammer(data);
 		if (openallherdocs(data))
+		{
+			eputf("continuing\n");
 			continue ;
+		}
 		if (data->pipes_nb == 1 && data->cmds[0]->flags
 			&& check_builtin(data->cmds[0]->flags[0]))
 			builtin(data, data->cmds[0]);
