@@ -32,7 +32,6 @@ int	heredoc(t_data *data, t_list *node)
 	int		id;
 
 	rname = ft_strjoin_fc("/tmp/herdoc_", randomnbr(), 2);
-	eputf("rname is: %s\n", rname);
 	signal(SIGINT, SIG_IGN);
 	signal_state(1);
 	id = fork();
@@ -47,10 +46,8 @@ int	heredoc(t_data *data, t_list *node)
 		fill_herdoc(data, node, rname);
 	}
 	wait(&status);
-	(signals(), signal_state(0));
-	// ft_free(rname);
-	// ft_lstclear(&data->cmd_list);
-	// exit(0);
+	signals();
+	signal_state(0);
 	ft_free(node->content);
 	node->content = rname;
 	data->exit_code = exitestatus(status);

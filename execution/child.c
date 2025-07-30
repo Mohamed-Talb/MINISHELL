@@ -81,7 +81,7 @@ int	child(t_data *data, t_cmds *cmd)
 	}
 	else
 	{
-		eputf("minishell: fork: %s\n", strerror(errno)); // shouldnt we restore signal state to 0 here too?
+		eputf("minishell: fork: %s\n", strerror(errno)); // shouldnt we restore signal state to 0 here too? it might be usefull for this error msg before exit??
 		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
 		errors(NULL, EXIT_FAILURE);
 	}

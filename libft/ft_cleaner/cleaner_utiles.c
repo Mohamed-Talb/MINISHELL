@@ -37,30 +37,6 @@ void	free_all_adresses(void)
 	*head = NULL;
 }
 
-// void ft_free(void *ptr)
-// {
-//     t_cleaner **head;
-//     t_cleaner *curr;
-//     t_cleaner *prev;
-//     if (ptr == NULL)
-//         return ;
-//     head = gethead();
-//     curr = *head;
-//     prev = NULL;
-//     if (curr->adress == ptr)
-//     {
-//         if (prev)
-//             prev->next = curr->next;
-//         else
-//             *head = curr->next;
-//         free(curr->adress);
-//         free(curr);
-//         return ;
-//     }
-//     prev = curr;
-//     curr = curr->next;
-// }
-
 void	ft_free(void *ptr)
 {
 	t_cleaner	**head;

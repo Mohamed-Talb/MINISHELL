@@ -12,9 +12,10 @@
 
 #include "../minishell.h"
 
+//maybe after this grammer deserves a better opt?
 int	getredirections(t_data *data, t_list *list, int i)
 {
-	ft_lstback(&(data->cmds[i]->allred), list->content);
+	ft_lstback(&(data->cmds[i]->allred), ft_strdup(list->content));
 	ft_lstlast(data->cmds[i]->allred)->type = list->type;
 	return (0);
 }
