@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:04:28 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 10:58:38 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:59:22 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,46 +59,6 @@ void	childexec(t_data *data, t_cmds *command)
 		errors(NULL, 0);
 }
 
-#include <stdio.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <errno.h>
-
-void print_open_fds(void) {
-    DIR *dir = opendir("/proc/self/fd");
-    if (!dir) {
-        fprintf(stderr, "opendir failed: %s\n", strerror(errno));
-        return;
-    }
-
-    struct dirent *entry;
-    char path[PATH_MAX];
-    char target[PATH_MAX];
-    ssize_t len;
-
-    fprintf(stderr, "==== Open file descriptors (pid: %d) ====\n", getpid());
-    while ((entry = readdir(dir)) != NULL) {
-        if (entry->d_name[0] == '.')
-            continue;
-
-        snprintf(path, sizeof(path), "/proc/self/fd/%s", entry->d_name);
-        len = readlink(path, target, sizeof(target) - 1);
-        if (len != -1) {
-            target[len] = '\0';
-            fprintf(stderr, "FD %s → %s\n", entry->d_name, target);
-        } else {
-            fprintf(stderr, "FD %s → (unreadable: %s)\n", entry->d_name, strerror(errno));
-        }
-    }
-    fprintf(stderr, "=========================================\n");
-
-    closedir(dir);
-}
-
-
 int	child(t_data *data, t_cmds *cmd)
 {
 	int	pid;
@@ -110,22 +70,16 @@ int	child(t_data *data, t_cmds *cmd)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (duplication(data, cmd) == -1)
-			errors(NULL, 1);
-		// if (ft_strcmp("ls", cmd->cmd) == 0)
-		// {
-		// 	print_open_fds();
-		// }
+		duplication(data, cmd);
+		if (cmd->error)
+			errors(cmd->error, 1);
 		childexec(data, cmd);
 	}
 	else if (pid > 0)
-	{
-		signal_state(0);
-		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
-	}
+		(signal_state(0), ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
 	else
 	{
-		eputf("minishell: fork: %s\n", strerror(errno)); // shouldnt we restore signal state to 0 here too? it might be usefull for this error msg before exit??
+		eputf("minishell: fork: %s\n", strerror(errno));
 		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
 		errors(NULL, EXIT_FAILURE);
 	}

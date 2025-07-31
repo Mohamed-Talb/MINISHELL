@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:54:30 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 20:32:15 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 11:00:33 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_cmds
 	t_list			*allred;
 	char			**flags;
 	char			*cmd;
+	char			*error;
 }					t_cmds;
 
 typedef struct s_data
@@ -57,6 +58,7 @@ typedef struct s_data
 	char			*expand_rage;
 	int				pipes_nb;
 	int				exit_code;
+
 	t_cmds			**cmds;
 	t_list			*cmd_list;
 }					t_data;
@@ -74,7 +76,7 @@ t_list				*ft_lstnew(void *content);
 t_list				*ft_lstlast(t_list *lst);
 t_list				*ft_lstprevlast(t_list *lst);
 void				ft_lstclear(t_list **Head);
-int					duplication(t_data *data, t_cmds *cmd);
+void				duplication(t_data *data, t_cmds *cmd);
 t_list				*ft_lstback(t_list **head, void *content);
 t_list				*ft_lstfront(t_list **head, void *content);
 void				ft_lstiter(t_list *lst, void (*f)(void *));
@@ -106,7 +108,7 @@ t_list				*handle_arg(t_data *data, char **line);
 t_list				*hpipe(t_data *data, t_list *token, char **line);
 void				redirection(t_data *data, t_list *token, char **line);
 char				*single_q(t_data *data, char *token, char **line);
-char				*double_q(t_data *data, char *token, char **line);
+char				*double_q(t_data *data, char *token, char **start, char **line);
 char				*get_enclosed_text(char *token, char **line);
 char				*geth_enclosed_text(char *token, char **line);
 
@@ -127,7 +129,6 @@ int					ft_exit(int argc, char **argv, t_data *data);
 // EXPORT UTILES
 int					issame_var(char *str1, char *str2);
 int					isvalid_var(char *var);
-int					openredfiles(t_data *data, t_list *node);
 int					varname_size(char *var);
 char				**envup(char **env, char *var);
 char				**envrm(char **env, char *var);

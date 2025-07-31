@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 13:16:40 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 11:00:17 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_list	*regular_parse(t_data *data, t_list *token, char **line)
 		if (*s == '\'')
 			token->content = single_q(data, token->content, &s);
 		else if (*s == '"')
-			token->content = double_q(data, token->content, &s);
+			token->content = double_q(data, token->content, &data->line, &s);
 		else if (*s == '<' || *s == '>')
 			redirection(data, token, &s);
 		else

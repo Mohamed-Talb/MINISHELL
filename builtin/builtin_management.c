@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
 /*   Updated: 2025/07/30 18:46:26 by mtaleb           ###   ########.fr       */
+=======
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/07/31 10:41:36 by kel-mous         ###   ########.fr       */
+>>>>>>> 826f537 (duplication with error flag, double_q fix)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +68,17 @@ void	builtin(t_data *data, t_cmds *command)
 	stdin_dup = dup(0);
 	stdout_dup = dup(1);
 	cmdname = command->flags[0];
-	if (duplication(data, data->cmds[0]) != -1)
+	duplication(data, data->cmds[0]);
+	if (command->error == NULL)
 	{
 		exst = execute_builtin(data, command, cmdname);
 		data->exit_code = exst;
 	}
 	else
+	{
+		eputf(command->error);
 		data->exit_code = 1;
+	}
 	dup2(stdin_dup, 0);
 	dup2(stdout_dup, 1);
 }

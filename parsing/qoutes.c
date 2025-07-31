@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   qoutes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:52 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 20:13:36 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 11:00:23 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*single_q(t_data *data, char *token, char **line)
 	return (token);
 }
 
-char	*double_q(t_data *data, char *token, char **line)
+char	*double_q(t_data *data, char *token, char **start, char **line)
 {
 	char	*s;
 
@@ -84,7 +84,7 @@ char	*double_q(t_data *data, char *token, char **line)
 	while (*s != '"' && *s != 0)
 	{
 		if (*s == '$' && *(s + 1) != '"' && s >= data->expand_rage)
-			data->line = expand(data, data->line, &s);
+			*start = expand(data, *start, &s);
 		else
 		{
 			token = fappend(token, *s);

@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/07/31 10:58:27 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/31 10:59:58 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*get_dupname(t_data *data, char *line)
 		else if (*s == '\'')
 			filename = single_q(data, filename, &s);
 		else if (*s == '"')
-			filename = double_q(data, filename, &s);
+			filename = double_q(data, filename, &line, &s);
 		else
 			filename = fappend(filename, *s++);
 	}
@@ -42,27 +42,25 @@ char	*get_dupname(t_data *data, char *line)
 	return (filename);
 }
 
-int	getfilename(t_data *data, t_list *node)
+void	getfilename(t_data *data, t_list *node, t_cmds *cmd)
 {
 	char	*filename;
 
 	filename = get_dupname(data, ft_strdup(node->content));
 	if (filename == NULL)
 	{
-		eputf(AMBIGOUS_RED, node->content);
+		cmd->error = mprintf(AMBIGOUS_RED, node->content);
 		ft_free(filename);
-		return (-1);
 	}
 	node->content = filename;
-	return (0);
 }
 
-int	openredfiles(t_data *data, t_list *node)
+int	openredfiles(t_data *data, t_list *node, t_cmds *cmd)
 {
 	int	fd;
 
-	if (node->type != LEFT_HER && getfilename(data, node))
-		return (-1);
+	if (node->type != LEFT_HER)
+		getfilename(data, node, cmd);
 	if (node->type == RIGHT_HER)
 		fd = open(node->content, O_RDWR | O_CREAT | O_APPEND, 0644); // why open it as O_RDWR? only one opperation is needed
 	else if (node->type == RIGHT_RED)
@@ -70,14 +68,12 @@ int	openredfiles(t_data *data, t_list *node)
 	else
 		fd = open(node->content, O_RDONLY);
 	if (fd == -1)
-	{
-		eputf("minishell: %s: %s\n", node->content, strerror(errno));
-		return (-1);
-	}
+		cmd->error = mprintf("minishell: %s: %s\n",
+			node->content, strerror(errno));
 	return (fd);
 }
 
-int	fds_manager(t_data *data, t_cmds *cmd)
+void	fds_manager(t_data *data, t_cmds *cmd)
 {
 	t_list	*curr;
 	int		fd;
@@ -85,9 +81,7 @@ int	fds_manager(t_data *data, t_cmds *cmd)
 	curr = cmd->allred;
 	while (curr)
 	{
-		fd = openredfiles(data, curr);
-		if (fd < 0)
-			return (fd);
+		fd = openredfiles(data, curr, cmd);
 		if (curr->type == LEFT_HER || curr->type == LEFT_RED)
 		{
 			ft_close(cmd->inpipe[0]);
@@ -100,15 +94,12 @@ int	fds_manager(t_data *data, t_cmds *cmd)
 		}
 		curr = curr->next;
 	}
-	return (0);
 }
 
-int	duplication(t_data *data, t_cmds *cmd)
+void	duplication(t_data *data, t_cmds *cmd)
 {
-	// ft_close(cmd->inpipe[1]);
 	ft_close(cmd->outpipe[0]);
-	if (fds_manager(data, cmd) < 0)
-		return (-1);
+	fds_manager(data, cmd);
 	if (cmd->inpipe[0] != -1)
 	{
 		dup2(cmd->inpipe[0], 0);
@@ -116,9 +107,7 @@ int	duplication(t_data *data, t_cmds *cmd)
 	}
 	if (cmd->outpipe[1] != -1)
 	{
-		eputf("cmd: %s, out: %d\n", (char *) cmd->cmd, cmd->outpipe[1]);
 		dup2(cmd->outpipe[1], 1);
 		ft_close(cmd->outpipe[1]);
 	}
-	return (1);
 }
