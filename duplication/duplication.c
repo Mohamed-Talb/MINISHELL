@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/07/30 11:41:32 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/30 20:13:42 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ char	*get_dupname(t_data *data, char *line)
 	s = line;
 	while (*s)
 	{
+		// printf("%s\n", filename);
 		if (ft_iswhitespace(*s))
 		{
 			ft_free(line);
 			ft_free(filename);
 			return (NULL);
+			
 		}
 		else if (*s == '$')
 			line = expand(data, line, &s);
@@ -34,8 +36,7 @@ char	*get_dupname(t_data *data, char *line)
 		else if (*s == '"')
 			filename = double_q(data, filename, &s);
 		else
-			filename = fappend(filename, *s);
-		s++;
+			filename = fappend(filename, *s++);
 	}
 	ft_free(line);
 	return (filename);
@@ -104,7 +105,7 @@ int	fds_manager(t_data *data, t_cmds *cmd)
 
 int	duplication(t_data *data, t_cmds *cmd)
 {
-	ft_close(cmd->inpipe[1]); // should already be closed but we will close it anyway
+	// ft_close(cmd->inpipe[1]);
 	ft_close(cmd->outpipe[0]);
 	if (fds_manager(data, cmd) < 0)
 		return (-1);

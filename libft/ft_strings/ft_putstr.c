@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 10:43:12 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 10:45:52 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/30 20:19:19 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,5 @@ void	ft_putstr(char *s)
 {
 	if (!s)
 		return ;
-	while (*s)
-	{
-		write(1, s, 1);
-		s++;
-	}
+	write(1, s, ft_strlen(s));
 }

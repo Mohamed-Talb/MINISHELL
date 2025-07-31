@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/29 14:18:40 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/30 20:43:23 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,28 @@
 void	prompter(t_data *data)
 {
 	char	*str;
-	char	*line;
+	// char	*line;
 
-	if (data->exit_code == 0)
-		str = PROMPT_DEFAULT;
+	// if (data->exit_code == 0)
+	str = PROMPT_DEFAULT;
+	// else
+	// str = mprintf(PROMPT_ERR, data->exit_code);
+	// line = readline(str);
+	if (isatty(fileno(stdin)))
+		data->line = readline(str);
 	else
-		str = mprintf(PROMPT_ERR, data->exit_code);
-	line = readline(str);
-	if (!line)
+	{
+		char *ln;
+		ln = get_next_line(fileno(stdin));
+		data->line = ft_strtrim(ln, "\n");
+		free(ln);
+	}
+	if (!data->line)
 	{
 		data->line = NULL;
 		return ;
 	}
-	data->line = line;
+	// data->line = line;
 	add_history(data->line);
 }
 
@@ -67,5 +76,7 @@ int	main(int ac, char **av, char **penv)
 	data = init_data(penv);
 	minishell(data);
 	rl_clear_history();
+	// free_all_adresses();
+	exit(data->exit_code);
 	return (0);
 }

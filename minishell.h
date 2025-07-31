@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:54:30 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/29 13:11:24 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/30 20:32:15 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,5 +139,7 @@ char				*getdelemiter(char *s);
 int					openallherdocs(t_data *data);
 char				*get_expanded_line(t_data *data, char **line);
 void				fill_herdoc(t_data *data, t_list *node, char *rname);
+
+char	*get_next_line(int fd);
 
 #endif

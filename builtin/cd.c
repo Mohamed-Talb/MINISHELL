@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 09:38:18 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 08:41:31 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/30 17:49:13 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,35 @@ static int	upoldpwd(t_data *data)
 	return (0);
 }
 
-static int	uppwd(t_data *data, char *path)
+static int uppwd(t_data *data, char *path)
 {
-	char	*buff;
-	char	*new;
+    char *buff;
+    char *new;
 
-	if (!ft_getenv(data->env, "PWD"))
-		return (0);
-	buff = getcwd(NULL, 0);
-	if (buff == NULL)
-	{
-		perror("minshell: cd");
-		return (1);
-	}
-	else if (ft_strcmp(path, "//") == 0)
-		new = ft_strdup("PWD=//");
-	else
-		new = ft_strjoin("PWD=", buff);
-	data->exported = envup(data->exported, new);
-	ft_free(buff);
-	ft_free(new);
-	if (!data->exported)
-		return (1);
-	return (0);
+    if (!ft_getenv(data->env, "PWD"))
+        return (0);
+    buff = getcwd(NULL, 0);
+    if (!buff)
+    {
+        perror("minishell: cd");
+        return (1);
+    }
+    if (path && ft_strcmp(path, "//") == 0)
+        new = ft_strdup("PWD=//");
+    else
+        new = ft_strjoin("PWD=", buff);
+    ft_free(buff);
+    if (!new)
+        return (1);
+    data->exported = envup(data->exported, new);
+    ft_free(new);
+    if (!data->exported)
+        return (1);
+    return (0);
 }
 
-static int	changedir(t_data *data, char *path)
+
+static int changedir(t_data *data, char *path)
 {
 	int		chdirreturn;
 	char	*homepath;
@@ -75,11 +78,11 @@ static int	changedir(t_data *data, char *path)
 		else if (homepath[0] == 0)
 			return (0);
 		chdirreturn = chdir(homepath);
+		path = homepath;
 	}
 	if (chdirreturn != 0)
 	{
-		if (path == NULL)
-			path = homepath;
+		eputf("minishell: cd: %s: %s\n", path, strerror(errno));
 		return (1);
 	}
 	return (0);

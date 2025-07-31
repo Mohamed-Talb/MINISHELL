@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:59:48 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 14:43:20 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 10:14:45 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,42 @@
 
 static char	*check_cases(t_data *data, char **line)
 {
-	char	*exvalue;
-	char	*s;
-
-	s = *line + 1;
-	exvalue = ft_strdup("");
-	if (*s == '?')
-	{
-		exvalue = ft_strjoin_es(exvalue, ft_itoa(data->exit_code), 3);
-		s++;
-	}
-	else if (*s == '$')
-	{
-		exvalue = ft_strjoin_es(exvalue, "$$", 1);
-		s++;
-	}
-	else if (*s == '\0' || ft_iswhitespace(*s))
-		exvalue = fappend(exvalue, '$');
-	else if (ft_isdigit(*s))
-		s++;
-	else if (*s != '\'' && *s != '"')
-		return (ft_free(exvalue), NULL);
-	*line = s;
-	return (exvalue);
-}
-
-char	*getexvalue(t_data *data, char **line)
-{
-	char	*env_value;
-	char	*env_var;
 	char	*token;
 	char	*s;
 
-	token = check_cases(data, line);
-	if (token != NULL)
-		return (token);
 	s = *line + 1;
+	token = ft_strdup("");
+	if (*s == '?')
+	{
+		token = ft_strjoin_es(token, ft_itoa(data->exit_code), 3);
+		s++;
+	}
+	else if (*s == '$')
+		token = (s++, ft_strjoin_es(token, "$$", 1));
+	else if (*s == '\'' || *s == '"' || ft_isalpha(*s) || *s == '_')
+	{
+		ft_free(token);
+		token = NULL;
+	}
+	else if (isdigit(*s))
+		s++;
+	else if (!ft_isalpha(*s) && *s != '_')
+		token = fappend(token, '$');
+	*line = s;
+	return (token);
+}
+
+char *getexvalue(t_data *data, char **line)
+{
+    char *env_value;
+    char *env_var;
+    char *token;
+    char *s;
+
+    token = check_cases(data, line);
+    if (token != NULL)
+        return token;
+    s = *line;
 	env_var = ft_strdup("");
 	while (ft_isalnum(*s) || *s == '_')
 	{
@@ -61,6 +61,7 @@ char	*getexvalue(t_data *data, char **line)
 	*line = s;
 	return (token);
 }
+
 
 char	*expand(t_data *data, char *start, char **line)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/19 10:45:28 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/30 18:46:26 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execute_builtin(t_data *data, t_cmds *command, char *cmdname)
 	else if (!ft_strcmp(cmdname, "exit"))
 	{
 		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
-		eputf("exit\n");
+		printf("exit\n");
 		if (exst == -1)
 			exst = 1;
 		else
