@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:40:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 13:04:04 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 18:48:33 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*unexpected_redirect(char **line)
 
 	s = *line;
 	result = NULL;
+	if (*s == '\0')
+		return (mprintf(UNEXPECTED_TOKEN, "newline"));
 	if (in_set(REDIRECTION_SET, *s))
 	{
 		result = fappend(result, *s++);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 17:06:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 09:31:06 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 20:53:01 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ static int	abspath(t_cmds *command)
 		if (isdirectory(command->cmd))
 		{
 			eputf(IS_DIR, command->flags[0]);
-			errors(NULL, 126);
-		}
-		else if (command->cmd[strlen(command->cmd) - 1] == '/')
-		{
-			eputf(IS_NOT_DIR, command->flags[0]);
 			errors(NULL, 126);
 		}
 		return (1);

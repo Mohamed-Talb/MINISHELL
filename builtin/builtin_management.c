@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< HEAD
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 18:46:26 by mtaleb           ###   ########.fr       */
-=======
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 10:41:36 by kel-mous         ###   ########.fr       */
->>>>>>> 826f537 (duplication with error flag, double_q fix)
+/*   Updated: 2025/07/31 12:58:21 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +41,8 @@ int	execute_builtin(t_data *data, t_cmds *command, char *cmdname)
 		exst = ft_env(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "exit"))
 	{
+		printf("exit\n"); // maybe not stderr
 		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
-		printf("exit\n");
 		if (exst == -1)
 			exst = 1;
 		else

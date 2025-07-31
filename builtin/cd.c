@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 09:38:18 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 17:49:13 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 12:02:21 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	ft_cd(int argc, char **argv, t_data *data)
 {
 	if (argc > 2)
 	{
-		ft_putstr_fd(ARG_ERROR, 2);
+		eputf(ARG_ERROR, "cd");
 		return (1);
 	}
 	if (changedir(data, argv[1]))

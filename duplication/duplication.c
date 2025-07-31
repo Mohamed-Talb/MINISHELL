@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/07/31 10:59:58 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:34:28 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,15 @@ char	*get_dupname(t_data *data, char *line)
 	char	*filename;
 	char	*s;
 
-	filename = NULL;
+	filename = ft_strdup("");
 	s = line;
 	while (*s)
 	{
-		// printf("%s\n", filename);
 		if (ft_iswhitespace(*s))
 		{
 			ft_free(line);
 			ft_free(filename);
 			return (NULL);
-			
 		}
 		else if (*s == '$')
 			line = expand(data, line, &s);
@@ -42,7 +40,7 @@ char	*get_dupname(t_data *data, char *line)
 	return (filename);
 }
 
-void	getfilename(t_data *data, t_list *node, t_cmds *cmd)
+int	getfilename(t_data *data, t_list *node, t_cmds *cmd)
 {
 	char	*filename;
 
@@ -51,16 +49,25 @@ void	getfilename(t_data *data, t_list *node, t_cmds *cmd)
 	{
 		cmd->error = mprintf(AMBIGOUS_RED, node->content);
 		ft_free(filename);
+		return (1);
 	}
+	else if (ft_strcmp(filename, "") == 0)
+	{
+		cmd->error = mprintf(NO_SUCH_F_D, "");
+		ft_free(filename);
+		return (1);
+	}
+	ft_free(node->content);
 	node->content = filename;
+	return (0);
 }
 
 int	openredfiles(t_data *data, t_list *node, t_cmds *cmd)
 {
 	int	fd;
 
-	if (node->type != LEFT_HER)
-		getfilename(data, node, cmd);
+	if (node->type != LEFT_HER && getfilename(data, node, cmd))
+		return (-1);
 	if (node->type == RIGHT_HER)
 		fd = open(node->content, O_RDWR | O_CREAT | O_APPEND, 0644); // why open it as O_RDWR? only one opperation is needed
 	else if (node->type == RIGHT_RED)
@@ -73,7 +80,7 @@ int	openredfiles(t_data *data, t_list *node, t_cmds *cmd)
 	return (fd);
 }
 
-void	fds_manager(t_data *data, t_cmds *cmd)
+int	fds_manager(t_data *data, t_cmds *cmd)
 {
 	t_list	*curr;
 	int		fd;
@@ -92,14 +99,18 @@ void	fds_manager(t_data *data, t_cmds *cmd)
 			ft_close(cmd->outpipe[1]);
 			cmd->outpipe[1] = fd;
 		}
+		if (fd == -1)
+			return (-1);
 		curr = curr->next;
 	}
+	return (0);
 }
 
 void	duplication(t_data *data, t_cmds *cmd)
 {
 	ft_close(cmd->outpipe[0]);
-	fds_manager(data, cmd);
+	if (fds_manager(data, cmd) == -1)
+		return ;
 	if (cmd->inpipe[0] != -1)
 	{
 		dup2(cmd->inpipe[0], 0);

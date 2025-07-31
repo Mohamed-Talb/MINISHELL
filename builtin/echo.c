@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:34:40 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 22:24:22 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 14:49:18 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ft_echo(int argc, char **argv, t_data *data)
 	while (i < argc - 1)
 	{
 		ft_putstr(argv[i]);
-		ft_putchar(' ');
+		ft_putchar(' '); // might cause print mixing
 		i++;
 	}
 	if (argv[i] != NULL)

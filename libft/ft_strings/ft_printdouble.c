@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printdouble.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 10:43:01 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 10:43:02 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 17:46:55 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	ft_printdoule(char **str)
 	i = 0;
 	while (str[i])
 	{
-		ft_putstr(str[i]);
-		ft_putchar('\n');
+		ft_putendl_fd(str[i], 1);
 		i++;
 	}
 }

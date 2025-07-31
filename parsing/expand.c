@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:59:48 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 11:00:08 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/31 15:30:04 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ char *getexvalue(t_data *data, char **line)
 	*line = s;
 	return (token);
 }
-
 
 char	*expand(t_data *data, char *start, char **line)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 20:43:23 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 20:57:13 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,30 @@
 void	prompter(t_data *data)
 {
 	char	*str;
-	// char	*line;
+	char	*line;
 
 	// if (data->exit_code == 0)
 	str = PROMPT_DEFAULT;
-	// else
+	// elsee
 	// str = mprintf(PROMPT_ERR, data->exit_code);
-	// line = readline(str);
-	if (isatty(fileno(stdin)))
-		data->line = readline(str);
-	else
-	{
-		char *ln;
-		ln = get_next_line(fileno(stdin));
-		data->line = ft_strtrim(ln, "\n");
-		free(ln);
-	}
+	line = readline(str);
+	// if (isatty(fileno(stdin)))
+	// 	data->line = readline(str);
+	// else
+	// {
+	// 	char *ln;
+	// 	ln = get_next_line(fileno(stdin));
+	// 	data->line = ft_strtrim(ln, "\n");
+	// 	free(ln);
+	// }
 	if (!data->line)
 	{
 		data->line = NULL;
 		return ;
 	}
-	// data->line = line;
+	data->line = line;
 	add_history(data->line);
 }
-
 
 void	minishell(t_data *data)
 {
@@ -51,7 +50,7 @@ void	minishell(t_data *data)
 		prompter(data);
 		if (data->line == NULL)
 		{
-			// ft_putstr_fd("exit", 2);
+			// printf("exit\n"); // maybe not stderr
 			break ;
 		}
 		if (parser(data, data->line, 0))
@@ -76,7 +75,7 @@ int	main(int ac, char **av, char **penv)
 	data = init_data(penv);
 	minishell(data);
 	rl_clear_history();
-	// free_all_adresses();
+	free_all_adresses();
 	exit(data->exit_code);
 	return (0);
 }

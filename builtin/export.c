@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:34:52 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/24 17:22:57 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/07/31 18:26:44 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,16 @@ static char	*ascii_order(char **arr)
 
 static void	print_variable(char *var)
 {
-	while (*var)
-	{
-		ft_putchar(*var);
-		if (*var == '=')
-		{
-			printf("\"%s\"\n", var + 1);
-			return ;
-		}
-		var++;
-	}
-	ft_putchar('\n');
+	int name_size;
+	char *str;
+	char *key;
+
+	name_size = varname_size(var);
+	key = ft_substr(var, 0, name_size + 1);
+	str = mprintf("%s\"%s\"\n", key, &var[name_size + 1]);
+	ft_putstr(str);
+	ft_free(key);
+	ft_free(str);
 }
 
 static void	print_exported(char **exported)

@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 21:26:14 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/07/29 21:30:22 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:53:09 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 
 // HEREDOC
 # define HEREDOC_EOF "warning: here-document delimited by end-of-file (wanted `%s')\n"
-# define HEREDOC_PROMPT ">>> " // maybe change this to ">"
+# define HEREDOC_PROMPT "> " // maybe change this to ">"
 
 // PROMPT
 # define PROMPT_DEFAULT "minishell$ " 
@@ -49,13 +49,13 @@
 // "\001\e[1;96m\002[ minishell ]\001\e[0m\002 \001\e[38;5;246m\002%d\001\e[0m\002 \001\e[1;91m\002>>\001\e[0m\002 " // pretty sure escapes like \x7f are needed here too
 
 // CHECK
-# define IS_DIR "%s: Is a directory\n"
+# define IS_DIR "minishell: %s: Is a directory\n"
 # define IS_NOT_DIR "minishell: %s: Is Not a directory\n"
 
 /* BUILTIN-DEFINES: */
 // cd
 # define GETCWD_ERR "minishell: error retrieving current directory: getcwd:cannot access parent directories: %s\n"
-# define ARG_ERROR "minishell: cd: too many arguments\n"
+# define ARG_ERROR "minishell: %s: too many arguments\n"
 # define HOME_ERROR "minishell: cd: HOME not set\n"
 // exit:
 # define NUMREQ_ERR "minishell: exit: %s: numeric argument required\n"
