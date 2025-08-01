@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:54:30 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 11:00:33 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:36:13 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int					parser(t_data *data, char *line, int cmd_count);
 char				*expand(t_data *data, char *start, char **line);
 t_list				*handle_arg(t_data *data, char **line);
 t_list				*hpipe(t_data *data, t_list *token, char **line);
-void				redirection(t_data *data, t_list *token, char **line);
 char				*single_q(t_data *data, char *token, char **line);
 char				*double_q(t_data *data, char *token, char **start, char **line);
 char				*get_enclosed_text(char *token, char **line);
@@ -134,13 +133,13 @@ char				**envup(char **env, char *var);
 char				**envrm(char **env, char *var);
 void				sync_envs(t_data *data);
 char				*ft_getenv(char **env, char *var);
-
+t_list	*redirection(t_data *data, t_list *token, char **line);
 // HERDOC
 char				*getdelemiter(char *s);
 int					openallherdocs(t_data *data);
 char				*get_expanded_line(t_data *data, char **line);
 void				fill_herdoc(t_data *data, t_list *node, char *rname);
-
+t_data 				**get_data(void);
 char	*get_next_line(int fd);
 
 #endif

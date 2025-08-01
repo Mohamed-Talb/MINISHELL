@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:04:28 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 20:14:00 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:28:58 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ int	child(t_data *data, t_cmds *cmd)
 {
 	int	pid;
 
-	signal_state(2);
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
@@ -76,7 +75,10 @@ int	child(t_data *data, t_cmds *cmd)
 		childexec(data, cmd);
 	}
 	else if (pid > 0)
-		(signal_state(0), ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
+	{
+		signal_state(0);
+		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
+	}
 	else
 	{
 		eputf("minishell: fork: %s\n", strerror(errno));

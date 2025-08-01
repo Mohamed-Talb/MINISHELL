@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 11:00:17 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:36:22 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static t_list	*regular_parse(t_data *data, t_list *token, char **line)
 			token->content = single_q(data, token->content, &s);
 		else if (*s == '"')
 			token->content = double_q(data, token->content, &data->line, &s);
-		else if (*s == '<' || *s == '>')
-			redirection(data, token, &s);
 		else
 			token->content = fappend(token->content, *s++);
 	}
@@ -65,6 +63,8 @@ t_list	*handle_arg(t_data *data, char **line)
 			data->line = expand(data, data->line, &s);
 		else if (*s == '|' && s >= data->expand_rage)
 			token = hpipe(data, token, &s);
+		else if ((*s == '<' || *s == '>') && s >= data->expand_rage)
+			token = redirection(data, token, &s);
 		else
 			token = regular_parse(data, token, &s);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:53:44 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 14:09:51 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:29:21 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ int	parent(t_data *data)
 	while (data->cmds[i + 1])
 	{
 		if (pipe(end) == -1)
-		{
-			eputf("Pipe creation failed\n");
-			errors(NULL, 1);
-		}
+			(eputf("Pipe creation failed\n"), errors(NULL, 129));
 		ft_memcpy(data->cmds[i]->outpipe, end, 2 * sizeof(int));
 		child(data, data->cmds[i]);
 		ft_memcpy(data->cmds[i + 1]->inpipe, end, 2 * sizeof(int));
@@ -37,5 +34,7 @@ int	parent(t_data *data)
 	while (wait(NULL) > 0)
 		;
 	data->exit_code = exitestatus(status);
+	if (data->exit_code == 130)
+		write(1, "\n", 1);
 	return (data->exit_code);
 }

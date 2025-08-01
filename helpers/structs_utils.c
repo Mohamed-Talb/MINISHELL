@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:16:33 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 09:16:34 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/01 22:30:12 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,11 @@ int	init_cmds(t_data *data)
 	}
 	data->cmds[i] = NULL;
 	return (0);
+}
+
+t_data	**get_data(void)
+{
+	static t_data	*data = NULL;
+
+	return (&data);
 }

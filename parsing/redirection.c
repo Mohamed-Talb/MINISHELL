@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:40:05 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 18:48:33 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:31:47 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,34 +71,29 @@ void	redirect_helper(t_data *data, t_list *token, char **line)
 	*line = s;
 }
 
-void	redirection(t_data *data, t_list *token, char **line)
+t_list	*redirection(t_data *data, t_list *token, char **line)
 {
-	char	*s;
-
-	if (ft_strlen(token->content) != 0 || token->type != 0)
-		ft_lstback(&data->cmd_list, ft_strdup(""));
-	token = ft_lstlast(data->cmd_list);
-	s = *line;
-	if (*s == '>')
+	token = creat_node(data);
+	if (**line == '>')
 	{
-		s++;
+		(*line)++;
 		token->type = RIGHT_RED;
-		if (*s == '>')
+		if (**line == '>')
 		{
 			token->type = RIGHT_HER;
-			s++;
+			(*line)++;
 		}
 	}
-	else if (*s == '<')
+	else if (**line == '<')
 	{
-		s++;
+		(*line)++;
 		token->type = LEFT_RED;
-		if (*s == '<')
+		if (**line == '<')
 		{
 			token->type = LEFT_HER;
-			s++;
+			(*line)++;
 		}
 	}
-	redirect_helper(data, token, &s);
-	*line = s;
+	redirect_helper(data, token, line);
+	return (token);
 }

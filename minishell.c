@@ -3,40 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 20:57:13 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/01 22:36:44 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompter(t_data *data)
+void	prompter_gnl(t_data *data)
 {
 	char	*str;
-	char	*line;
 
-	// if (data->exit_code == 0)
 	str = PROMPT_DEFAULT;
-	// elsee
-	// str = mprintf(PROMPT_ERR, data->exit_code);
-	line = readline(str);
-	// if (isatty(fileno(stdin)))
-	// 	data->line = readline(str);
-	// else
-	// {
-	// 	char *ln;
-	// 	ln = get_next_line(fileno(stdin));
-	// 	data->line = ft_strtrim(ln, "\n");
-	// 	free(ln);
-	// }
+	if (isatty(fileno(stdin)))
+		data->line = readline(str);
+	else
+	{
+		char *ln;
+		ln = get_next_line(fileno(stdin));
+		data->line = ft_strtrim(ln, "\n");
+		free(ln);
+	}
 	if (!data->line)
 	{
 		data->line = NULL;
 		return ;
 	}
-	data->line = line;
+	add_history(data->line);
+}
+
+void	prompter(t_data *data)
+{
+	data->line = readline(PROMPT_DEFAULT);
+	if (!data->line)
+	{
+		data->line = NULL;
+		return ;
+	}
 	add_history(data->line);
 }
 
@@ -47,6 +52,7 @@ void	minishell(t_data *data)
 		signals();
 		signal_state(0);
 		reset_data(data);
+		// prompter_gnl(data);
 		prompter(data);
 		if (data->line == NULL)
 		{
@@ -72,10 +78,12 @@ int	main(int ac, char **av, char **penv)
 
 	(void)ac;
 	(void)av;
+	
 	data = init_data(penv);
+	*get_data() = data;
 	minishell(data);
 	rl_clear_history();
-	free_all_adresses();
+	// free_all_adresses();
 	exit(data->exit_code);
 	return (0);
 }
