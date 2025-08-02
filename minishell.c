@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/01 22:36:44 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/02 21:11:02 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 void	prompter_gnl(t_data *data)
 {
 	char	*str;
+	char	*ln;
 
-	str = PROMPT_DEFAULT;
+	str = mprintf("%s[ minishell ]%s %s>>%s ", CYAN, RESET, GREEN, RESET);
 	if (isatty(fileno(stdin)))
 		data->line = readline(str);
 	else
 	{
-		char *ln;
 		ln = get_next_line(fileno(stdin));
 		data->line = ft_strtrim(ln, "\n");
-		free(ln);
+		ft_free(ln);
 	}
 	if (!data->line)
 	{
@@ -36,7 +36,10 @@ void	prompter_gnl(t_data *data)
 
 void	prompter(t_data *data)
 {
-	data->line = readline(PROMPT_DEFAULT);
+	char	*str;
+
+	str = mprintf("%s[ minishell ]%s %s>>%s ", CYAN, RESET, GREEN, RESET);
+	data->line = readline(str);
 	if (!data->line)
 	{
 		data->line = NULL;
@@ -45,22 +48,22 @@ void	prompter(t_data *data)
 	add_history(data->line);
 }
 
-void	minishell(t_data *data)
+int	minishell(t_data *data)
 {
 	while (1)
 	{
 		signals();
 		signal_state(0);
 		reset_data(data);
-		// prompter_gnl(data);
-		prompter(data);
+		prompter_gnl(data);
+		// prompter(data);
 		if (data->line == NULL)
 		{
-			// printf("exit\n"); // maybe not stderr
+			// printf("exit\n");
 			break ;
 		}
 		if (parser(data, data->line, 0))
-			continue ; 
+			continue ;
 		grammer(data);
 		if (openallherdocs(data))
 			continue ;
@@ -70,20 +73,21 @@ void	minishell(t_data *data)
 		else
 			parent(data);
 	}
+	return (data->exit_code);
 }
 
 int	main(int ac, char **av, char **penv)
 {
 	t_data	*data;
+	int		extc;
 
 	(void)ac;
 	(void)av;
-	
 	data = init_data(penv);
 	*get_data() = data;
-	minishell(data);
+	extc = minishell(data);
 	rl_clear_history();
-	// free_all_adresses();
-	exit(data->exit_code);
+	free_all_adresses();
+	exit(extc);
 	return (0);
 }

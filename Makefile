@@ -1,4 +1,4 @@
-# PIPEX SOURCE FILES
+
 SHELL_SRC = \
 	minishell.c \
 	grammere/grammer.c \

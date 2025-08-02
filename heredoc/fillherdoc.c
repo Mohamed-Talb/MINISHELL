@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:58:13 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/29 12:13:22 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/02 21:03:56 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	handle_lines(t_data *data, t_list *node, int fd, char *del)
 		line = readline(HEREDOC_PROMPT);
 		if (!line)
 		{
-			eputf(HEREDOC_EOF, del);
+			eputf("%s (wanted `%s')\n", HEREDOC_EOF, del);
 			break ;
 		}
 		if (ft_strcmp(del, line) == 0)

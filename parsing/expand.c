@@ -39,17 +39,17 @@ static char	*check_cases(t_data *data, char **line)
 	return (token);
 }
 
-char *getexvalue(t_data *data, char **line)
+char	*getexvalue(t_data *data, char **line)
 {
-    char *env_value;
-    char *env_var;
-    char *token;
-    char *s;
+	char	*env_value;
+	char	*env_var;
+	char	*token;
+	char	*s;
 
-    token = check_cases(data, line);
-    if (token != NULL)
-        return token;
-    s = *line;
+	token = check_cases(data, line);
+	if (token != NULL)
+		return (token);
+	s = *line;
 	env_var = ft_strdup("");
 	while (ft_isalnum(*s) || *s == '_')
 	{

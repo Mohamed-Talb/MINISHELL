@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 09:38:18 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 12:02:21 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:28:33 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,35 +32,31 @@ static int	upoldpwd(t_data *data)
 	return (0);
 }
 
-static int uppwd(t_data *data, char *path)
+static	int	uppwd(t_data *data)
 {
-    char *buff;
-    char *new;
+	char	*buff;
+	char	*new;
 
-    if (!ft_getenv(data->env, "PWD"))
-        return (0);
-    buff = getcwd(NULL, 0);
-    if (!buff)
-    {
-        perror("minishell: cd");
-        return (1);
-    }
-    if (path && ft_strcmp(path, "//") == 0)
-        new = ft_strdup("PWD=//");
-    else
-        new = ft_strjoin("PWD=", buff);
-    ft_free(buff);
-    if (!new)
-        return (1);
-    data->exported = envup(data->exported, new);
-    ft_free(new);
-    if (!data->exported)
-        return (1);
-    return (0);
+	if (!ft_getenv(data->env, "PWD"))
+		return (0);
+	buff = getcwd(NULL, 0);
+	if (!buff)
+	{
+		perror("minishell: cd");
+		return (1);
+	}
+	new = ft_strjoin("PWD=", buff);
+	ft_free(buff);
+	if (!new)
+		return (1);
+	data->exported = envup(data->exported, new);
+	ft_free(new);
+	if (!data->exported)
+		return (1);
+	return (0);
 }
 
-
-static int changedir(t_data *data, char *path)
+static	int	changedir(t_data *data, char *path)
 {
 	int		chdirreturn;
 	char	*homepath;
@@ -99,7 +95,7 @@ int	ft_cd(int argc, char **argv, t_data *data)
 		return (1);
 	if (upoldpwd(data))
 		return (1);
-	if (uppwd(data, argv[1]))
+	if (uppwd(data))
 		return (1);
 	sync_envs(data);
 	return (0);

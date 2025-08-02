@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:34:49 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/19 10:34:50 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/02 17:39:02 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,24 @@ int	ft_exit(int argc, char **argv, t_data *data)
 {
 	int	result;
 
-	(void) data;
 	if (argc == 1)
-		return (data->exit_code);
-	result = exit_checker(ft_atoi_l(argv[1]), atoi_sign(argv[1]), argv[1]);
-	if (result == NUMREQ_CODE)
-		return (2);
-	if (argc > 2)
+		result = data->exit_code;
+	else
 	{
-		eputf(EXCESS_ARGS_ERR);
-		return (-1);
+		result = exit_checker(ft_atoi_l(argv[1]), atoi_sign(argv[1]), argv[1]);
+		if (result == NUMREQ_CODE)
+		{
+			ft_putstr_fd("exit\n", 2);
+			free_all_adresses();
+			exit(2);
+		}
+		if (argc > 2)
+		{
+			eputf(EXCESS_ARGS_ERR);
+			return (1);
+		}
 	}
-	return (result);
+	ft_putstr_fd("exit\n", 2);
+	free_all_adresses();
+	exit(result);
 }

@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:30:06 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/01 22:31:02 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/02 12:09:12 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	isdirectory(char *path)
 void	errors(char *error, int exitcode)
 {
 	ft_putstr_fd(error, 2);
-	// free_all_adresses();
+	free_all_adresses();
 	exit(exitcode);
 }

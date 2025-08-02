@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   duplication.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/07/31 20:34:28 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:33:22 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ int	openredfiles(t_data *data, t_list *node, t_cmds *cmd)
 	if (node->type != LEFT_HER && getfilename(data, node, cmd))
 		return (-1);
 	if (node->type == RIGHT_HER)
-		fd = open(node->content, O_RDWR | O_CREAT | O_APPEND, 0644); // why open it as O_RDWR? only one opperation is needed
+		fd = open(node->content, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (node->type == RIGHT_RED)
 		fd = open(node->content, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else
 		fd = open(node->content, O_RDONLY);
 	if (fd == -1)
-		cmd->error = mprintf("minishell: %s: %s\n",
-			node->content, strerror(errno));
+		cmd->error = mprintf("minishell: %s: %s\n", node->content,
+				strerror(errno));
 	return (fd);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 12:58:21 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:13:49 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 int	check_builtin(char *cmd)
 {
-	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd")
-		|| !ft_strcmp(cmd, "pwd") || !ft_strcmp(cmd, "export")
-		|| !ft_strcmp(cmd, "unset") || !ft_strcmp(cmd, "env")
-		|| !ft_strcmp(cmd, "exit"))
+	if (!ft_strcmp(cmd, "echo") || !ft_strcmp(cmd, "cd") || !ft_strcmp(cmd,
+			"pwd") || !ft_strcmp(cmd, "export") || !ft_strcmp(cmd, "unset")
+		|| !ft_strcmp(cmd, "env") || !ft_strcmp(cmd, "exit"))
 		return (1);
 	return (0);
 }
@@ -40,14 +39,7 @@ int	execute_builtin(t_data *data, t_cmds *command, char *cmdname)
 	else if (!ft_strcmp(cmdname, "env"))
 		exst = ft_env(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(cmdname, "exit"))
-	{
-		printf("exit\n"); // maybe not stderr
 		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
-		if (exst == -1)
-			exst = 1;
-		else
-			(free_all_adresses(), exit(exst));
-	}
 	return (exst);
 }
 

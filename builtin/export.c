@@ -46,9 +46,9 @@ static char	*ascii_order(char **arr)
 
 static void	print_variable(char *var)
 {
-	int name_size;
-	char *str;
-	char *key;
+	int		name_size;
+	char	*str;
+	char	*key;
 
 	name_size = varname_size(var);
 	key = ft_substr(var, 0, name_size + 1);

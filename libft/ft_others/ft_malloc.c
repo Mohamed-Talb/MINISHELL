@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 10:47:38 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 10:47:39 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/02 12:27:54 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	*ft_malloc(size_t size)
 	ptr = malloc(size);
 	if (!ptr)
 	{
-		ft_putstr_fd("memory allocation failed", 2);
+		write(2, "memory allocation failed\n", 25);
 		free_all_adresses();
 		exit(1);
 	}
 	head = gethead();
 	if (!ft_lstback(head, ptr))
 	{
-		ft_putstr_fd("memory allocation failed", 2);
+		write(2, "memory allocation failed\n", 25);
 		free(ptr);
 		free_all_adresses();
 		exit(1);
