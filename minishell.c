@@ -6,33 +6,11 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 22:13:17 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 22:13:53 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	prompter_gnl(t_data *data)
-{
-	char	*str;
-	char	*ln;
-
-	str = mprintf("%s[ minishell ]%s %s>>%s ", CYAN, RESET, GREEN, RESET);
-	if (isatty(fileno(stdin)))
-		data->line = readline(str);
-	else
-	{
-		ln = get_next_line(fileno(stdin));
-		data->line = ft_strtrim(ln, "\n");
-		ft_free(ln);
-	}
-	if (!data->line)
-	{
-		data->line = NULL;
-		return ;
-	}
-	add_history(data->line);
-}
 
 void	prompter(t_data *data)
 {
@@ -56,7 +34,6 @@ int	minishell(t_data *data)
 		signals();
 		reset_data(data);
 		prompter(data);
-		// prompter_gnl(data);
 		if (data->line == NULL)
 		{
 			ft_putstr_fd("exit\n", 2);
