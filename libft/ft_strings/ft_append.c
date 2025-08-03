@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_append.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 17:07:06 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/02/15 18:29:10 by mtaleb           ###   ########.fr       */
+/*   Created: 2025/08/03 22:05:53 by mtaleb            #+#    #+#             */
+/*   Updated: 2025/08/03 22:05:55 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../libft.h"
 
 char	*fappend(char *org, char c)

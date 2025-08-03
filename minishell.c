@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 21:30:09 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 22:13:17 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ int	minishell(t_data *data)
 		signal_state(0);
 		signals();
 		reset_data(data);
-		prompter_gnl(data);
-		// prompter(data);
+		prompter(data);
+		// prompter_gnl(data);
 		if (data->line == NULL)
 		{
-			// printf("exit\n");
+			ft_putstr_fd("exit\n", 2);
 			break ;
 		}
 		if (parser(data, data->line, 0))
