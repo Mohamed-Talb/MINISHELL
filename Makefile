@@ -7,8 +7,8 @@ SHELL_SRC = \
 	heredoc/heredocs.c heredoc/heredocdel.c heredoc/fillherdoc.c \
 	env_tools/ft_getenv.c env_tools/syncenvs.c env_tools/env_utils.c \
 	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c \
-	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c helpers/print_utils.c \
-	builtin/echo.c builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c builtin/unset.c builtin/builtin_management.c builtin/cd.c getnext.c
+	builtin/echo.c builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c builtin/unset.c builtin/builtin_management.c builtin/cd.c \
+	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c helpers/print_utils.c
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
@@ -44,6 +44,7 @@ clean:
 
 fclean: clean
 	@rm -f $(NAME)
+	@make -s -C $(LIBFT_DIR) fclean 
 
 re: fclean all
 
