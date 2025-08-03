@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:53:44 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/01 22:29:21 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 12:02:32 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,5 @@ int	parent(t_data *data)
 	while (wait(NULL) > 0)
 		;
 	data->exit_code = exitestatus(status);
-	if (data->exit_code == 130)
-		write(1, "\n", 1);
 	return (data->exit_code);
 }
