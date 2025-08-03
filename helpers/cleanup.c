@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:16:39 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/31 11:57:18 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/03 17:38:33 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	trach(t_data *data)
+static void	trach(t_data *data)
 {
 	int	i;
 
@@ -47,14 +47,4 @@ void	reset_data(t_data *data)
 	trach(data);
 	data->expand_rage = NULL;
 	data->pipes_nb = 1;
-}
-
-void	free_data(t_data *data)
-{
-	if (data != NULL)
-	{
-		reset_data(data);
-		ft_free(data);
-		data = NULL;
-	}
 }

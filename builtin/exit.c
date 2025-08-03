@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:34:49 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 17:39:02 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 12:12:57 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	ft_exit(int argc, char **argv, t_data *data)
 		result = exit_checker(ft_atoi_l(argv[1]), atoi_sign(argv[1]), argv[1]);
 		if (result == NUMREQ_CODE)
 		{
-			ft_putstr_fd("exit\n", 2);
 			free_all_adresses();
 			exit(2);
 		}
@@ -52,7 +51,6 @@ int	ft_exit(int argc, char **argv, t_data *data)
 			return (1);
 		}
 	}
-	ft_putstr_fd("exit\n", 2);
 	free_all_adresses();
 	exit(result);
 }

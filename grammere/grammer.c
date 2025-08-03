@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   grammer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:05:17 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/30 11:25:15 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/03 18:43:45 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//maybe after this grammer deserves a better opt?
 int	getredirections(t_data *data, t_list *list, int i)
 {
 	ft_lstback(&(data->cmds[i]->allred), ft_strdup(list->content));
@@ -51,15 +50,10 @@ void	grammer(t_data *data)
 
 	i = 0;
 	init_cmds(data);
-	list = (data->cmd_list);
+	list = data->cmd_list;
 	while (list)
 	{
 		type = list->type;
-		if (list->content == NULL)
-		{
-			list = list->next;
-			continue ;
-		}
 		if (type == PIPE)
 			i++;
 		else if (type == LEFT_HER || type == LEFT_RED || type == RIGHT_HER

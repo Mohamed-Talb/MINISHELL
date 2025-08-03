@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 16:44:33 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 17:59:29 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	parser(t_data *data, char *line, int cmd_count)
 			new = handle_arg(data, &line);
 			if (new != NULL)
 			{
-				if (new->content != NULL && new->type != PIPE && new_pipe == 1)
+				if (new->type != PIPE && new_pipe == 1)
 				{
 					cmd_count++;
 					new_pipe = 0;

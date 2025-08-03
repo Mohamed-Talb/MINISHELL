@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:37:22 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/29 11:55:25 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 17:02:23 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,20 @@ int	issame_var(char *str1, char *str2)
 
 char	**envrm(char **env, char *var)
 {
-	int	i;
+	char	**new;
+	int		i;
 
 	if (!env || !var)
 		return (NULL);
 	i = 0;
-	env = ft_strdup2(env);
 	while (env[i])
 	{
 		if (issame_var(env[i], var))
-			return (ft_remove2(env, i));
+		{
+			new = ft_remove2(env, i);
+			ft_free(env);
+			return (new);
+		}
 		i++;
 	}
 	return (env);
@@ -49,12 +53,12 @@ char	**envrm(char **env, char *var)
 
 char	**envup(char **env, char *var)
 {
-	int	i;
+	char	**new;
+	int		i;
 
 	if (!env || !var)
 		return (NULL);
 	i = 0;
-	env = ft_strdup2(env);
 	while (env[i])
 	{
 		if (issame_var(env[i], var))
@@ -65,5 +69,7 @@ char	**envup(char **env, char *var)
 		}
 		i++;
 	}
-	return (ft_append2(env, var, ft_strlen2(env)));
+	new = ft_append2(env, var, ft_strlen2(env));
+	ft_freedouble(env);
+	return (new);
 }

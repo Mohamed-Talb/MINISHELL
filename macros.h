@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 21:26:14 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/08/02 21:08:36 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 21:54:50 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define MACROS_H
 
 // ERRORS
-# define MALLOC_ERROR "memory allocation failed"
-# define CMD_NOTFOUND "command not found"
-# define PER_ERROR "Permission denied"
-# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `%s'\n"
 # define REDIRECTION_SET "<|>"
+# define PER_ERROR "Permission denied"
+# define CMD_NOTFOUND "command not found"
+# define MALLOC_ERROR "memory allocation failed"
 # define UNCLOSED_ERROR "minishell: syntax error: unclosed quote\n"
+# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token `%s'\n"
 
 // types macros
 # define CMD 1
@@ -58,11 +58,11 @@
 # define GCWD_ER_S "getcwd: cannot access parent directories"
 
 // exit:
+# define NUMREQ_CODE 256
 # define EXCESS_ARGS_ERR "minishell: exit: too many arguments\n"
 # define NUMREQ_ERR "minishell: exit: %s: numeric argument required\n"
 
 // export:
-# define NUMREQ_CODE 256
 # define INVALID_IDERR "minishell: export: `%s': not a valid identifier\n"
 
 #endif

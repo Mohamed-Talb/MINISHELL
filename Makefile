@@ -2,13 +2,13 @@
 SHELL_SRC = \
 	minishell.c \
 	grammere/grammer.c \
-	duplication/duplication.c\
-	heredoc/heredocs.c heredoc/heredocdel.c\
+	duplication/duplication.c \
 	execution/child.c execution/check.c execution/parent.c \
+	heredoc/heredocs.c heredoc/heredocdel.c heredoc/fillherdoc.c \
 	env_tools/ft_getenv.c env_tools/syncenvs.c env_tools/env_utils.c \
-	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c heredoc/fillherdoc.c\
-	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c helpers/print_utils.c\
-	builtin/echo.c builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c builtin/unset.c builtin/builtin_management.c  builtin/cd.c getnext.c\
+	parsing/parsing.c parsing/pipe.c parsing/expand.c parsing/qoutes.c parsing/redirection.c \
+	helpers/cleanup.c helpers/signals.c helpers/lst_utils.c helpers/structs_utils.c helpers/utils.c helpers/exitstatus.c helpers/print_utils.c \
+	builtin/echo.c builtin/env.c builtin/exit.c builtin/export.c builtin/pwd.c builtin/unset.c builtin/builtin_management.c builtin/cd.c getnext.c
 
 SHELL_OBJ = $(SHELL_SRC:.c=.o)
 
@@ -21,15 +21,15 @@ LDFLAGS = -lreadline
 NAME = minishell
 LIBFT_DIR = libft
 LIBFT_SRC = $(shell find $(LIBFT_DIR) -name '*.c' )
-LIBFT = $(LIBFT_DIR)/libft.a # should this be named NAME1 or something..?
+NAME_1 = $(LIBFT_DIR)/libft.a
 
 # RULES
 all: $(NAME)
 
-$(NAME): $(SHELL_OBJ) $(LIBFT)
+$(NAME): $(SHELL_OBJ) $(NAME_1)
 	@$(CC) $(SHELL_OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LDFLAGS)
 
-$(LIBFT): $(LIBFT_SRC)
+$(NAME_1): $(LIBFT_SRC)
 	@make -s -C $(LIBFT_DIR) 
 
 cleanup:

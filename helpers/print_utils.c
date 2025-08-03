@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:28:59 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 09:29:00 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 17:53:03 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	eputf(char *s, ...)
 {
 	va_list	args;
 	char	*result;
-	int		len;
+	size_t	len;
 
 	va_start(args, s);
 	result = margs_printf(s, args);
@@ -60,21 +60,4 @@ int	eputf(char *s, ...)
 	ft_free(result);
 	va_end(args);
 	return (len);
-}
-
-void	errcln(int exitcode, char *error, ...)
-{
-	char	*result;
-	va_list	args;
-
-	if (error)
-	{
-		va_start(args, error);
-		result = margs_printf(error, args);
-		ft_putstr_fd(result, 2);
-		va_end(args);
-		ft_free(result);
-	}
-	free_all_adresses();
-	exit(exitcode);
 }

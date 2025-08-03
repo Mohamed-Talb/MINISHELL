@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:04:28 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/01 22:28:58 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 21:57:17 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void	run_builtin(t_data *data, t_cmds *command)
 		exst = ft_env(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "exit"))
 	{
+		ft_putstr_fd("exit\n", 2);
 		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
-		if (exst == -1)
-			exst = 1;
 	}
+	free_all_adresses();
 	exit(exst);
 }
 
@@ -63,10 +63,10 @@ int	child(t_data *data, t_cmds *cmd)
 {
 	int	pid;
 
-	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
+		signal_state(2);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		duplication(data, cmd);
@@ -76,7 +76,7 @@ int	child(t_data *data, t_cmds *cmd)
 	}
 	else if (pid > 0)
 	{
-		signal_state(0);
+		signal(SIGINT, SIG_IGN);
 		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
 	}
 	else

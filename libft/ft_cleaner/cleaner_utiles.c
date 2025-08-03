@@ -6,11 +6,11 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 10:40:13 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 12:37:04 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 21:51:42 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cleaner.h"
+#include "../libft.h"
 
 t_cleaner	**gethead(void)
 {

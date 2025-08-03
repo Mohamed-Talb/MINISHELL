@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:16:26 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 12:03:18 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 17:36:17 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	hanlder(int sig)
 	(void)sig;
 	if (signal_state(-1) == 0)
 	{
-		write(1, "\n", 1);
 		data->exit_code = 130;
+		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

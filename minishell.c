@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 21:11:02 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 21:30:09 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	minishell(t_data *data)
 {
 	while (1)
 	{
-		signals();
 		signal_state(0);
+		signals();
 		reset_data(data);
 		prompter_gnl(data);
 		// prompter(data);
@@ -89,5 +89,4 @@ int	main(int ac, char **av, char **penv)
 	rl_clear_history();
 	free_all_adresses();
 	exit(extc);
-	return (0);
 }

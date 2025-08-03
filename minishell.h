@@ -6,17 +6,15 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:54:30 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 20:39:43 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 21:53:45 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// #define _POSIX_SOURCE
 # include "libft/libft.h"
 # include "macros.h"
-# include <dirent.h>
 # include <errno.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -24,11 +22,8 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include <stdbool.h>
-# include <stdio.h>
-# include <stdlib.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
-# include <unistd.h>
 
 typedef struct s_list
 {
@@ -77,7 +72,6 @@ void				duplication(t_data *data, t_cmds *cmd);
 t_list				*ft_lstback(t_list **head, void *content);
 
 // MANAGE DATA
-void				free_data(t_data *data);
 void				reset_data(t_data *data);
 int					init_cmds(t_data *data);
 t_data				*init_data(char **penv);

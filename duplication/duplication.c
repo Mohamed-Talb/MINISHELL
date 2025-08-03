@@ -6,13 +6,13 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/08/02 19:33:22 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/03 21:19:25 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_dupname(t_data *data, char *line)
+char	*get_dupname(t_data *data, char *line, int flag)
 {
 	char	*filename;
 	char	*s;
@@ -22,29 +22,30 @@ char	*get_dupname(t_data *data, char *line)
 	while (*s)
 	{
 		if (ft_iswhitespace(*s))
-		{
-			ft_free(line);
-			ft_free(filename);
-			return (NULL);
-		}
+			return (ft_free(line), ft_free(filename), NULL);
 		else if (*s == '$')
+		{
 			line = expand(data, line, &s);
+			continue ;
+		}
 		else if (*s == '\'')
 			filename = single_q(data, filename, &s);
 		else if (*s == '"')
 			filename = double_q(data, filename, &line, &s);
 		else
 			filename = fappend(filename, *s++);
+		flag = 1;
 	}
-	ft_free(line);
-	return (filename);
+	if (flag == 0)
+		return (ft_free(line), ft_free(filename), NULL);
+	return (ft_free(line), filename);
 }
 
 int	getfilename(t_data *data, t_list *node, t_cmds *cmd)
 {
 	char	*filename;
 
-	filename = get_dupname(data, ft_strdup(node->content));
+	filename = get_dupname(data, ft_strdup(node->content), 0);
 	if (filename == NULL)
 	{
 		cmd->error = mprintf(AMBIGOUS_RED, node->content);
