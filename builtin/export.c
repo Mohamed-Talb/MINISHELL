@@ -6,7 +6,7 @@
 /*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:00:01 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:20:56 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,27 @@ static char	*ascii_order(char **arr)
 
 static void	print_variable(char *var)
 {
-	int		name_size;
-	char	*str;
-	char	*key;
+	char	*result;
+	char	*varname;
 
-	name_size = varname_size(var);
-	key = ft_substr(var, 0, name_size + 1);
-	str = mprintf("%s\"%s\"\n", (char *[]){key, &var[name_size + 1]});
-	ft_putstr(str);
-	ft_free(key);
-	ft_free(str);
+	result = NULL;
+	varname = NULL;
+	while (*var)
+	{
+		varname = fappend(varname, *var);
+		if (*var == '=')
+		{
+			result = mprintf("%s\"%s\"\n", (char *[]){varname, var + 1});
+			ft_putstr(result);
+			ft_free(varname);
+			ft_free(result);
+			return ;
+		}
+		var++;
+	}
+	varname = fappend(varname, '\n');
+	ft_putstr(varname);
+	ft_free(varname);
 }
 
 static void	print_exported(char **exported)
