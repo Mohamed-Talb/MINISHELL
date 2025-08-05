@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:08:36 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 22:08:38 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*expand(t_data *data, char *start, char **line)
 	chunk2 = ft_substr(*line, 0, ft_strlen(*line));
 	len = ft_strlen(exvalue);
 	ft_free(start);
-	start = mprintf("%s%s%s", chunk1, exvalue, chunk2);
+	start = mprintf("%s%s%s", (char *[]){chunk1, exvalue, chunk2});
 	*line = start + old_pos;
 	data->expand_rage = *line + len;
 	ft_free(chunk1);

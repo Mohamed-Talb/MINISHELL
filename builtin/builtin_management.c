@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_management.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:35:55 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 20:43:03 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	builtin(t_data *data, t_cmds *command)
 	stdout_dup = dup(1);
 	if (stdout_dup == -1 || stdin_dup == -1)
 	{
-		eputf("minishell: dup: %s\n", strerror(errno));
+		eputf("minishell: dup: %s\n", (char *[]){strerror(errno)});
 		errors(NULL, 1);
 	}
 	cmdname = command->flags[0];
@@ -66,7 +66,7 @@ void	builtin(t_data *data, t_cmds *command)
 		data->exit_code = execute_builtin(data, command, cmdname);
 	else
 	{
-		eputf(command->error);
+		eputf(command->error, NULL);
 		data->exit_code = 1;
 	}
 	dup2(stdin_dup, 0);

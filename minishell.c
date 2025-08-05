@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:55:08 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 22:19:42 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:32 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	prompter(t_data *data)
 {
 	char	*str;
 
-	str = mprintf("%s[ minishell ]%s %s>>%s ", CYAN, RESET, GREEN, RESET);
+	str = mprintf("%s[ minishell ]%s %s>>%s ",
+			(char *[]){CYAN, RESET, GREEN, RESET});
 	data->line = readline(str);
 	if (!data->line)
 	{

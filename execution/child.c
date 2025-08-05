@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:03:31 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 22:03:34 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:06:17 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	childexec(t_data *data, t_cmds *command)
 		{
 			check(data, command);
 			execve(command->cmd, command->flags, data->env);
-			eputf("minishell: %s: %s\n", command->flags[0], strerror(errno));
+			eputf("minishell: %s: %s\n",
+				(char *[]){command->flags[0], strerror(errno)});
 			if (errno == ENOENT)
 				errors(NULL, 127);
 			else
@@ -81,7 +82,7 @@ int	child(t_data *data, t_cmds *cmd)
 	}
 	else
 	{
-		eputf("minishell: fork: %s\n", strerror(errno));
+		eputf("minishell: fork: %s\n", (char *[]){strerror(errno)});
 		(ft_close(cmd->inpipe[0]), ft_close(cmd->outpipe[1]));
 		errors(NULL, EXIT_FAILURE);
 	}

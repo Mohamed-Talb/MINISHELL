@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:53:44 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 21:06:01 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parent(t_data *data)
 	{
 		if (pipe(end) == -1)
 		{
-			eputf("minishell: pipe: %s\n", strerror(errno));
+			eputf("minishell: pipe: %s\n", (char *[]){strerror(errno)});
 			errors(NULL, 1);
 		}
 		ft_memcpy(data->cmds[i]->outpipe, end, 2 * sizeof(int));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:54:30 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 21:53:45 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:02:15 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,8 @@ int					exitestatus(int status);
 int					isdirectory(char *path);
 char				*unexpected_redirect(char **line);
 void				set_errors(t_data *data, char *error, int exitcode);
-void				errcln(int exitcode, char *error, ...);
-char				*margs_printf(char *s, va_list args);
-char				*mprintf(char *s, ...);
-int					eputf(char *s, ...);
+char				*mprintf(char *s, char **args);
+int					eputf(char *s, char **args);
 
 // PARSING
 int					parser(t_data *data, char *line, int cmd_count);

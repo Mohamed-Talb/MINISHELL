@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 10:34:49 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 12:12:57 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static int	exit_checker(unsigned long long value, int sign, char *arg)
 {
 	if (sign == 0)
 	{
-		eputf(NUMREQ_ERR, arg);
+		eputf(NUMREQ_ERR, (char *[]){arg});
 		return (NUMREQ_CODE);
 	}
 	if ((value == L_OVERFLOW && sign == 1) || value > L_OVERFLOW)
 	{
-		eputf(NUMREQ_ERR, arg);
+		eputf(NUMREQ_ERR, (char *[]){arg});
 		return (NUMREQ_CODE);
 	}
 	if (value == L_OVERFLOW && sign == -1)
@@ -47,7 +47,7 @@ int	ft_exit(int argc, char **argv, t_data *data)
 		}
 		if (argc > 2)
 		{
-			eputf(EXCESS_ARGS_ERR);
+			eputf(EXCESS_ARGS_ERR, NULL);
 			return (1);
 		}
 	}

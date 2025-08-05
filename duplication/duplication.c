@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   duplication.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 11:38:01 by kel-mous          #+#    #+#             */
-/*   Updated: 2025/08/03 21:19:25 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:06:44 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ int	getfilename(t_data *data, t_list *node, t_cmds *cmd)
 	filename = get_dupname(data, ft_strdup(node->content), 0);
 	if (filename == NULL)
 	{
-		cmd->error = mprintf(AMBIGOUS_RED, node->content);
+		cmd->error = mprintf(AMBIGOUS_RED, (char *[]){node->content});
 		ft_free(filename);
 		return (1);
 	}
 	else if (ft_strcmp(filename, "") == 0)
 	{
-		cmd->error = mprintf(NO_SUCH_F_D, "");
+		cmd->error = mprintf(NO_SUCH_F_D, (char *[]){""});
 		ft_free(filename);
 		return (1);
 	}
@@ -76,8 +76,8 @@ int	openredfiles(t_data *data, t_list *node, t_cmds *cmd)
 	else
 		fd = open(node->content, O_RDONLY);
 	if (fd == -1)
-		cmd->error = mprintf("minishell: %s: %s\n", node->content,
-				strerror(errno));
+		cmd->error = mprintf("minishell: %s: %s\n",
+				(char *[]){node->content, strerror(errno)});
 	return (fd);
 }
 

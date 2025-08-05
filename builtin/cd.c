@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 09:38:18 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 19:28:33 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static	int	changedir(t_data *data, char *path)
 		homepath = ft_getenv(data->exported, "HOME");
 		if (homepath == NULL)
 		{
-			eputf(HOME_ERROR, 2);
+			eputf(HOME_ERROR, NULL); // ???????????????????????????? why 2, i changed it to NULL
 			return (1);
 		}
 		else if (homepath[0] == 0)
@@ -78,7 +78,7 @@ static	int	changedir(t_data *data, char *path)
 	}
 	if (chdirreturn != 0)
 	{
-		eputf("minishell: cd: %s: %s\n", path, strerror(errno));
+		eputf("minishell: cd: %s: %s\n", (char *[]){path, strerror(errno)});
 		return (1);
 	}
 	return (0);
@@ -88,7 +88,7 @@ int	ft_cd(int argc, char **argv, t_data *data)
 {
 	if (argc > 2)
 	{
-		eputf(ARG_ERROR, "cd");
+		eputf(ARG_ERROR, (char *[]){"cd"});
 		return (1);
 	}
 	if (changedir(data, argv[1]))

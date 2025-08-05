@@ -3,61 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:28:59 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 17:53:03 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:03:21 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*margs_printf(char *s, va_list args)
+char	*mprintf(char *s, char **args)
 {
 	char	*result;
+	int		i;
 
+	i = 0;
 	result = NULL;
 	while (*s)
 	{
-		if (*s == '%')
+		if (*s == '%' && s[1] == 's')
 		{
 			s++;
-			if (*s == 'c')
-				result = fappend(result, va_arg(args, int));
-			else if (*s == 'd' || *s == 'i')
-				result = ft_strjoin_es(result, ft_itoa(va_arg(args, int)), 3);
-			else if (*s == 's')
-				result = ft_strjoin_es(result, va_arg(args, char *), 1);
-			s++;
+			result = ft_strjoin_es(result, args[i++], 1);
 		}
 		else
-			result = fappend(result, *s++);
+			result = fappend(result, *s);
+		s++;
 	}
 	return (result);
 }
 
-char	*mprintf(char *s, ...)
+int	eputf(char *s, char **args)
 {
-	va_list	args;
-	char	*result;
-
-	va_start(args, s);
-	result = margs_printf(s, args);
-	va_end(args);
-	return (result);
-}
-
-int	eputf(char *s, ...)
-{
-	va_list	args;
 	char	*result;
 	size_t	len;
 
-	va_start(args, s);
-	result = margs_printf(s, args);
+	result = mprintf(s, args);
 	ft_putstr_fd(result, 2);
 	len = ft_strlen(result);
 	ft_free(result);
-	va_end(args);
 	return (len);
 }

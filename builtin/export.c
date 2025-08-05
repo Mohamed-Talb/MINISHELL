@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:00:01 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 22:00:03 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	print_variable(char *var)
 
 	name_size = varname_size(var);
 	key = ft_substr(var, 0, name_size + 1);
-	str = mprintf("%s\"%s\"\n", key, &var[name_size + 1]);
+	str = mprintf("%s\"%s\"\n", (char *[]){key, &var[name_size + 1]});
 	ft_putstr(str);
 	ft_free(key);
 	ft_free(str);
@@ -98,7 +98,7 @@ int	ft_export(int argc, char **argv, t_data *data)
 		{
 			if (isvalid_var(argv[i]) == false)
 			{
-				eputf(INVALID_IDERR, argv[i]);
+				eputf(INVALID_IDERR, (char *[]){argv[i]});
 				data->exit_code = 1;
 				i++;
 				continue ;

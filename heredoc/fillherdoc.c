@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillherdoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:58:13 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/02 21:03:56 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	handle_lines(t_data *data, t_list *node, int fd, char *del)
 		line = readline(HEREDOC_PROMPT);
 		if (!line)
 		{
-			eputf("%s (wanted `%s')\n", HEREDOC_EOF, del);
+			eputf("%s (wanted `%s')\n", (char *[]){HEREDOC_EOF, del});
 			break ;
 		}
 		if (ft_strcmp(del, line) == 0)
@@ -67,7 +67,7 @@ void	fill_herdoc(t_data *data, t_list *node, char *rname)
 	fd = open(rname, O_WRONLY | O_CREAT | O_APPEND, 420);
 	if (fd < 0)
 	{
-		eputf("minishell: open: %s\n", strerror(errno));
+		eputf("minishell: open: %s\n", (char *[]){strerror(errno)});
 		errors(NULL, EXIT_FAILURE);
 	}
 	delemiter = getdelemiter(node->content);

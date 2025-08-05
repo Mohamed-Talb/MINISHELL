@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:48 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/07/28 14:45:47 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static void	pipe_errors(t_data *data, char *s, int check_prev)
 	strerror = NULL;
 	prev = ft_lstprevlast(data->cmd_list);
 	if (check_prev && prev == NULL)
-		strerror = mprintf(UNEXPECTED_TOKEN, "|");
+		strerror = mprintf(UNEXPECTED_TOKEN, (char *[]){"|"});
 	else if (*s == '|')
-		strerror = mprintf(UNEXPECTED_TOKEN, "||");
+		strerror = mprintf(UNEXPECTED_TOKEN, (char *[]){"||"});
 	else
 	{
 		while (ft_iswhitespace(*s))
 			s++;
 		if (*s == '|')
-			strerror = mprintf(UNEXPECTED_TOKEN, "|");
+			strerror = mprintf(UNEXPECTED_TOKEN, (char *[]){"|"});
 		else if (*s == '\0')
-			strerror = mprintf(UNEXPECTED_TOKEN, "newline");
+			strerror = mprintf(UNEXPECTED_TOKEN, (char *[]){"newline"});
 	}
 	if (strerror)
 		set_errors(data, strerror, 2);

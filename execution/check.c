@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:03:24 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 22:09:30 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ static void	printerrors(t_cmds *cmd)
 {
 	if (!cmd->found)
 	{
-		eputf(CMD_NOT_FOUND, cmd->flags[0]);
+		eputf(CMD_NOT_FOUND, (char *[]){cmd->flags[0]});
 		errors(NULL, 127);
 	}
 	else if (!cmd->permission)
 	{
-		eputf(PERMISSIONS_DENIED, cmd->flags[0]);
+		eputf(PERMISSIONS_DENIED, (char *[]){cmd->flags[0]});
 		errors(NULL, 126);
 	}
 }
@@ -32,7 +32,7 @@ static int	abspath(t_cmds *command)
 	{
 		if (isdirectory(command->cmd))
 		{
-			eputf(IS_DIR, command->flags[0]);
+			eputf(IS_DIR, (char *[]){command->flags[0]});
 			errors(NULL, 126);
 		}
 		return (1);
@@ -68,7 +68,7 @@ static char	**getpaths(t_data *data, char *cmd)
 	i = 0;
 	while (paths[i])
 	{
-		tmp = mprintf("%s/%s", paths[i], cmd);
+		tmp = mprintf("%s/%s", (char *[]){paths[i], cmd});
 		ft_free(paths[i]);
 		paths[i] = tmp;
 		i++;

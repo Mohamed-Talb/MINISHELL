@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 09:33:25 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 19:52:27 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*randomnbr(void)
 	fd = open("/dev/random", O_RDONLY);
 	if (fd < 0)
 	{
-		eputf("minishell: open: %s\n", strerror(errno));
+		eputf("minishell: open: %s\n", (char *[]){strerror(errno)});
 		errors(NULL, EXIT_FAILURE);
 	}
 	read(fd, &buff, 4);
@@ -40,7 +40,7 @@ int	heredoc(t_data *data, t_list *node)
 	id = fork();
 	if (id == -1)
 	{
-		eputf("minishell: fork: %s\n", strerror(errno));
+		eputf("minishell: fork: %s\n", (char *[]){strerror(errno)});
 		errors(NULL, EXIT_FAILURE);
 	}
 	if (id == 0)
