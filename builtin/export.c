@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:00:01 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/05 13:20:56 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/06 23:08:35 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ static void	print_exported(char **exported)
 
 int	ft_export(int argc, char **argv, t_data *data)
 {
-	int	i;
+	int		i;
+	char	*oldvar;
 
 	data->exit_code = 0;
 	if (argc == 1)
@@ -114,10 +115,11 @@ int	ft_export(int argc, char **argv, t_data *data)
 				i++;
 				continue ;
 			}
-			data->exported = envup(data->exported, argv[i]);
+			oldvar = ft_getenv(data->exported, argv[i]);
+			if (!(oldvar && !vhasvalue(argv[i]) && vhasvalue(oldvar)))
+				data->exported = envup(data->exported, argv[i]);
 			i++;
 		}
 	}
-	sync_envs(data);
-	return (data->exit_code);
+	return (sync_envs(data), data->exit_code);
 }

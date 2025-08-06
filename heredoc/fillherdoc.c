@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fillherdoc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:58:13 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/05 12:05:49 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/06 23:15:22 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,19 @@ char	*get_expanded_line(t_data *data, char **line)
 	newline = ft_strdup("");
 	while (*s)
 	{
-		if (*s == '$')
+		if (*s == '$' && s >= data->expand_rage)
 		{
 			if (s[1] == '\'' || s[1] == '"')
 				newline = fappend(newline, *s++);
 			else
+			{
 				*line = expand(data, *line, &s);
+			}
 		}
 		else
 			newline = fappend(newline, *s++);
 	}
+	data->expand_rage = NULL;
 	ft_free(*line);
 	return (newline);
 }

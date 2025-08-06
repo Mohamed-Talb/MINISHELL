@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:03:31 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/05 12:06:17 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:59:37 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	run_builtin(t_data *data, t_cmds *command)
 	else if (!ft_strcmp(command->flags[0], "env"))
 		exst = ft_env(ft_strlen2(command->flags), command->flags, data);
 	else if (!ft_strcmp(command->flags[0], "exit"))
-	{
-		ft_putstr_fd("exit\n", 2);
 		exst = ft_exit(ft_strlen2(command->flags), command->flags, data);
-	}
 	free_all_adresses();
 	exit(exst);
 }

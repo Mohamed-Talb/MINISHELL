@@ -6,7 +6,7 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 14:39:42 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 17:59:29 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/06 23:15:32 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ int	parser(t_data *data, char *line, int cmd_count)
 		else
 			line++;
 	}
-	data->expand_rage = 0;
+	data->expand_rage = NULL;
 	return (parsing_errors(data->cmd_list) || cmd_count == 0);
 }

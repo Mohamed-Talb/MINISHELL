@@ -6,11 +6,21 @@
 /*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/20 13:37:22 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/03 17:02:23 by mtaleb           ###   ########.fr       */
+/*   Updated: 2025/08/06 23:01:24 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int vhasvalue(char *var)
+{
+	int		name_size;
+
+	name_size = varname_size(var);
+	if (var[name_size] == '=')
+		return (1);
+	return (0);
+}
 
 int	varname_size(char *var)
 {

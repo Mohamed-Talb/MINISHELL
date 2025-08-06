@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kel-mous <kel-mous@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mtaleb <mtaleb@student.1337.ma>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:54:30 by mtaleb            #+#    #+#             */
-/*   Updated: 2025/08/05 12:02:15 by kel-mous         ###   ########.fr       */
+/*   Updated: 2025/08/06 23:10:19 by mtaleb           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,38 +58,38 @@ typedef struct s_data
 	t_list			*cmd_list;
 }					t_data;
 
+int					parent(t_data *data);
 void				grammer(t_data *data);
 void				check(t_data *data, t_cmds *command);
-int					parent(t_data *data);
 int					child(t_data *data, t_cmds *command);
 
 //  LIST UTILS
 int					ft_lstsize(t_list *lst);
 t_list				*ft_lstlast(t_list *lst);
-t_list				*ft_lstprevlast(t_list *lst);
 void				ft_lstclear(t_list **Head);
+t_list				*ft_lstprevlast(t_list *lst);
 void				duplication(t_data *data, t_cmds *cmd);
 t_list				*ft_lstback(t_list **head, void *content);
 
 // MANAGE DATA
-void				reset_data(t_data *data);
 int					init_cmds(t_data *data);
 t_data				*init_data(char **penv);
+void				reset_data(t_data *data);
 
 // UTILES
-void				errors(char *error, int exitcode);
-t_list				*creat_node(t_data *data);
-int					exitestatus(int status);
 int					isdirectory(char *path);
+int					exitestatus(int status);
+t_list				*creat_node(t_data *data);
+int					eputf(char *s, char **args);
+char				*mprintf(char *s, char **args);
+void				errors(char *error, int exitcode);
 char				*unexpected_redirect(char **line);
 void				set_errors(t_data *data, char *error, int exitcode);
-char				*mprintf(char *s, char **args);
-int					eputf(char *s, char **args);
 
 // PARSING
+t_list				*handle_arg(t_data *data, char **line);
 int					parser(t_data *data, char *line, int cmd_count);
 char				*expand(t_data *data, char *start, char **line);
-t_list				*handle_arg(t_data *data, char **line);
 t_list				*hpipe(t_data *data, t_list *token, char **line);
 char				*single_q(t_data *data, char *token, char **line);
 char				*double_q(t_data *data, char *token, char **start,
@@ -103,29 +103,30 @@ int					signal_state(int state);
 // BUILT-INS
 int					check_builtin(char *cmd);
 void				builtin(t_data *data, t_cmds *command);
-int					ft_echo(int argc, char **argv, t_data *data);
 int					ft_cd(int argc, char **argv, t_data *data);
 int					ft_pwd(int argc, char **argv, t_data *data);
-int					ft_export(int argc, char **argv, t_data *data);
-int					ft_unset(int argc, char **argv, t_data *data);
 int					ft_env(int argc, char **argv, t_data *data);
 int					ft_exit(int argc, char **argv, t_data *data);
+int					ft_echo(int argc, char **argv, t_data *data);
+int					ft_unset(int argc, char **argv, t_data *data);
+int					ft_export(int argc, char **argv, t_data *data);
 
 // EXPORT UTILES
-int					issame_var(char *str1, char *str2);
+int					vhasvalue(char *var);
 int					isvalid_var(char *var);
 int					varname_size(char *var);
+void				sync_envs(t_data *data);
 char				**envup(char **env, char *var);
 char				**envrm(char **env, char *var);
-void				sync_envs(t_data *data);
 char				*ft_getenv(char **env, char *var);
+int					issame_var(char *str1, char *str2);
 t_list				*redirection(t_data *data, t_list *token, char **line);
+
 // HERDOC
+t_data				**get_data(void);
 char				*getdelemiter(char *s);
 int					openallherdocs(t_data *data);
 char				*get_expanded_line(t_data *data, char **line);
 void				fill_herdoc(t_data *data, t_list *node, char *rname);
-t_data				**get_data(void);
-char				*get_next_line(int fd);
 
 #endif
