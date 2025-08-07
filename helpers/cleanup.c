@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-static void	trach(t_data *data)
+static void	clean_cmds(t_data *data)
 {
 	int	i;
 
@@ -21,13 +21,25 @@ static void	trach(t_data *data)
 		i = 0;
 		while (data->cmds[i])
 		{
+			if (data->cmds[i]->flags)
+				ft_freedouble(data->cmds[i]->flags);
+			if (data->cmds[i]->allred)
+				ft_lstclear(&data->cmds[i]->allred);
 			ft_free(data->cmds[i]->cmd);
+			ft_free(data->cmds[i]->error);
 			ft_free(data->cmds[i]);
 			i++;
 		}
 		ft_free(data->cmds);
 		data->cmds = NULL;
 	}
+}
+
+void	reset_data(t_data *data)
+{
+	if (data == NULL)
+		return ;
+	clean_cmds(data);
 	if (data->cmd_list != NULL)
 	{
 		ft_lstclear(&data->cmd_list);
@@ -38,13 +50,6 @@ static void	trach(t_data *data)
 		ft_free(data->line);
 		data->line = NULL;
 	}
-}
-
-void	reset_data(t_data *data)
-{
-	if (data == NULL)
-		return ;
-	trach(data);
 	data->expand_rage = NULL;
 	data->pipes_nb = 1;
 }

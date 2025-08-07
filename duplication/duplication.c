@@ -49,7 +49,6 @@ int	getfilename(t_data *data, t_list *node, t_cmds *cmd)
 	if (filename == NULL)
 	{
 		cmd->error = mprintf(AMBIGOUS_RED, (char *[]){node->content});
-		ft_free(filename);
 		return (1);
 	}
 	else if (ft_strcmp(filename, "") == 0)

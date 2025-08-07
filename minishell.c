@@ -19,11 +19,9 @@ void	prompter(t_data *data)
 	str = mprintf("%s[ minishell ]%s %s>>%s ",
 			(char *[]){CYAN, RESET, GREEN, RESET});
 	data->line = readline(str);
+	ft_free(str);
 	if (!data->line)
-	{
-		data->line = NULL;
 		return ;
-	}
 	add_history(data->line);
 }
 

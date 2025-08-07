@@ -53,7 +53,6 @@ typedef struct s_data
 	char			*expand_rage;
 	int				pipes_nb;
 	int				exit_code;
-
 	t_cmds			**cmds;
 	t_list			*cmd_list;
 }					t_data;
