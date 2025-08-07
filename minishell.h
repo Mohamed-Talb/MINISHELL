@@ -118,6 +118,7 @@ int					varname_size(char *var);
 void				sync_envs(t_data *data);
 char				**envup(char **env, char *var);
 char				**envrm(char **env, char *var);
+char				*rgetenv(char **env, char *var);
 char				*ft_getenv(char **env, char *var);
 int					issame_var(char *str1, char *str2);
 t_list				*redirection(t_data *data, t_list *token, char **line);

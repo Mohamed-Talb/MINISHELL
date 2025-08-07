@@ -115,7 +115,7 @@ int	ft_export(int argc, char **argv, t_data *data)
 				i++;
 				continue ;
 			}
-			oldvar = ft_getenv(data->exported, argv[i]);
+			oldvar = rgetenv(data->exported, argv[i]);
 			if (!(oldvar && !vhasvalue(argv[i]) && vhasvalue(oldvar)))
 				data->exported = envup(data->exported, argv[i]);
 			i++;

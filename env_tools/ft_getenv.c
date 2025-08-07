@@ -33,3 +33,26 @@ char	*ft_getenv(char **env, char *var)
 	}
 	return (NULL);
 }
+
+char	*rgetenv(char **env, char *var)
+{
+	int	i;
+	int	j;
+
+	if (!env || !var)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j])
+		{
+			if ((env[i][j + 1] == '\0' || env[i][j] == '=')
+				&& issame_var(env[i], var))
+				return (env[i]);
+			j++;
+		}
+		i++;
+	}
+	return (NULL);
+}

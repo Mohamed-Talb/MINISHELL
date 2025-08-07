@@ -37,7 +37,7 @@ static	int	uppwd(t_data *data)
 	char	*buff;
 	char	*new;
 
-	if (!ft_getenv(data->env, "PWD"))
+	if (!rgetenv(data->exported, "PWD"))
 		return (0);
 	buff = getcwd(NULL, 0);
 	if (!buff)
@@ -68,7 +68,7 @@ static	int	changedir(t_data *data, char *path)
 		homepath = ft_getenv(data->exported, "HOME");
 		if (homepath == NULL)
 		{
-			eputf(HOME_ERROR, NULL); // ???????????????????????????? why 2, i changed it to NULL
+			eputf(HOME_ERROR, NULL);
 			return (1);
 		}
 		else if (homepath[0] == 0)
