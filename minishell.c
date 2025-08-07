@@ -22,7 +22,8 @@ void	prompter(t_data *data)
 	ft_free(str);
 	if (!data->line)
 		return ;
-	add_history(data->line);
+	if (data->line[0] != '\0')
+		add_history(data->line);
 }
 
 int	minishell(t_data *data)
