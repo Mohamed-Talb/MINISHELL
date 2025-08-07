@@ -1,4 +1,4 @@
-
+#MINISHELL SRC
 SHELL_SRC = \
 	minishell.c \
 	grammere/grammer.c \
@@ -19,6 +19,8 @@ LDFLAGS = -lreadline
 
 # OUTPUT EXECUTABLE
 NAME = minishell
+
+# LIBFT SRCS
 LIBFT_DIR = libft
 LIBFT_SRC = \
 	libft/ft_cleaner/cleaner_utiles.c libft/ft_fd/ft_putchar_fd.c libft/ft_fd/ft_putendl_fd.c libft/ft_fd/ft_putnbr_fd.c \
@@ -33,30 +35,24 @@ LIBFT_SRC = \
 	libft/ft_strings/ft_strnstr.c libft/ft_strings/ft_strrchr.c libft/ft_strings/ft_strtrim.c libft/ft_strings/ft_substr.c libft/ft_strings/ft_tolower.c \
 	libft/ft_strings/ft_toupper.c libft/ft_strings/ft_uitoa.c
 
-NAME_1 = $(LIBFT_DIR)/libft.a
+LIBFT_OBJ = $(LIBFT_SRC:.c=.o)
 
 # RULES
 all: $(NAME)
 
-$(NAME): $(SHELL_OBJ) $(NAME_1)
-	@$(CC) $(SHELL_OBJ) -L$(LIBFT_DIR) -lft -o $(NAME) $(LDFLAGS)
+$(NAME): $(SHELL_OBJ) $(LIBFT_OBJ)
+	@$(CC) $(SHELL_OBJ) $(LIBFT_OBJ) -o $(NAME) $(LDFLAGS)
 
-$(NAME_1): $(LIBFT_SRC)
-	@make -s -C $(LIBFT_DIR) 
-
-cleanup:
-	@rm -f $(SHELL_OBJ)
+$(NAME_1): $(LIBFT_SRC) 
 
 %.o: %.c
 	@$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(SHELL_OBJ)
-	@make -s -C $(LIBFT_DIR) clean 
+	@rm -f $(SHELL_OBJ) $(LIBFT_OBJ)
 
 fclean: clean
 	@rm -f $(NAME)
-	@make -s -C $(LIBFT_DIR) fclean 
 
 re: fclean all
 
