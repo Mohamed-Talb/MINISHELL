@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int vhasvalue(char *var)
+int	vhasvalue(char *var)
 {
 	int		name_size;
 
