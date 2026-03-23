@@ -2,7 +2,7 @@
 
 ## **DEMO**
 
-![Minishell Demo](assets/demo.gif)
+![Minishell Demo](Demo.gif)
 
 ## **ABOUT**
 

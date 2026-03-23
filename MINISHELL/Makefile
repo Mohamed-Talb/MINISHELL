@@ -40,16 +40,16 @@ NAME = minishell
 all: $(NAME)
 
 $(NAME): $(SHELL_OBJ) $(LIBFT_OBJ)
-	@$(CC) $(SHELL_OBJ) $(LIBFT_OBJ) -o $(NAME) $(LDFLAGS)
+	$(CC) $(SHELL_OBJ) $(LIBFT_OBJ) -o $(NAME) $(LDFLAGS)
 
 %.o: %.c
-	@$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
-	@rm -f $(SHELL_OBJ) $(LIBFT_OBJ)
+	rm -f $(SHELL_OBJ) $(LIBFT_OBJ)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
 
