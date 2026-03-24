@@ -1,0 +1,8 @@
+# Ignore all files in the .vscode folder
+.vscode
+
+*.o
+*.a
+*.out
+libft.a
+minishell
